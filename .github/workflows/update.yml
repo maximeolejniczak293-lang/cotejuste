@@ -66,16 +66,17 @@ jobs:
           path: cache
           key: api-cache-${{ github.run_id }}
 
-      - name: Archiver les nouveaux résultats dans raw/
-        if: env.MODE == 'full'
+      - name: Archiver résultats (raw/) et journal des cotes (data/)
+        if: env.MODE == 'full' || steps.lineups.outputs.changed == 'true'
         run: |
           git config user.name "cotejuste-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add raw/
+          git add raw/ data/
           if git diff --cached --quiet; then
-            echo "Aucun nouveau résultat."
+            echo "Rien de nouveau à archiver."
           else
-            git commit -m "Résultats ajoutés le $(date -u +%F)"
+            git commit -m "Données du $(date -u '+%F %H:%M') UTC ($MODE)"
+            git pull --rebase --quiet origin main
             git push
           fi
 

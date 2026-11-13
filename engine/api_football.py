@@ -236,6 +236,12 @@ class Client:
             return _slim_injuries(self._http("injuries", {"fixture": fixture["id"]})["response"])
         return self._cached(f"injuries/{fixture['id']}", max_age, fetch, lambda _: _started(fixture))
 
+    def closing_odds(self, fixture: dict) -> dict:
+        """Cotes de clôture : lues une seule fois, juste avant le coup d'envoi, et gardées pour toujours."""
+        def fetch():
+            return _slim_odds(self._http("odds", {"fixture": fixture["id"]})["response"])
+        return self._cached(f"closing/{fixture['id']}", 0, fetch, lambda _: True)
+
     def lineups(self, fixture: dict) -> list[dict]:
         """Compositions : redemandées tant qu'elles ne sont pas publiées, gardées pour toujours ensuite."""
         def fetch():
@@ -307,7 +313,7 @@ def summarize_odds(slim: dict | None) -> dict | None:
     """Médiane et meilleure cote parmi les bookmakers, + probabilités implicites (marge retirée)."""
     if not slim or not slim.get("bookmakers"):
         return None
-    out = {"n": len(slim["bookmakers"]), "update": slim.get("update"), "median": {}, "best": {}}
+    out = {"n": len(slim["bookmakers"]), "update": slim.get("update"), "median": {}, "mean": {}, "best": {}}
     for key, (bet, side) in {"h": ("1n2", "h"), "d": ("1n2", "d"), "a": ("1n2", "a"),
                              "o25": ("ou25", "o"), "u25": ("ou25", "u")}.items():
         vals = []
@@ -320,6 +326,7 @@ def summarize_odds(slim: dict | None) -> dict | None:
                 vals.append((v, b["name"]))
         if vals:
             out["median"][key] = round(statistics.median(v for v, _ in vals), 2)
+            out["mean"][key] = round(statistics.fmean(v for v, _ in vals), 3)
             best = max(vals)
             out["best"][key] = [best[0], best[1]]
     m = out["median"]

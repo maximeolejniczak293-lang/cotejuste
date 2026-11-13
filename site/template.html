@@ -181,6 +181,14 @@ td.r, th.r { text-align: right; }
 details summary { cursor: pointer; color: var(--ink-2); font-size: 14px; }
 .stamp { font-size: 12px; color: var(--muted); }
 
+/* bilan */
+.pos-v { color: var(--good-ink); } .neg-v { color: var(--critical); }
+.chart svg { display: block; width: 100%; height: auto; touch-action: none; }
+.chart .grid line { stroke: var(--line); }
+.chart text { fill: var(--muted); font-size: 11px; font-family: var(--font-body); }
+.res { font-weight: 700; font-size: 13px; }
+.res.won { color: var(--good-ink); } .res.lost { color: var(--critical); } .res.wait { color: var(--muted); font-weight: 500; }
+
 /* forme */
 .form { display: flex; gap: 4px; }
 .form span { width: 24px; height: 24px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font: 700 13px/1 var(--font-display); color: #fff; }
@@ -245,6 +253,7 @@ footer { border-top: 1px solid var(--line); padding: 20px 0 40px; color: var(--m
       <nav class="tabs" aria-label="Sections">
         <a href="#matchs" data-tab="matchs">Matchs</a>
         <a href="#classements" data-tab="classements">Classements</a>
+        <a href="#bilan" data-tab="bilan">Bilan</a>
         <a href="#methode" data-tab="methode">Méthode</a>
       </nav>
     </div>
@@ -266,7 +275,7 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem("cotejuste:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem("cotejuste:" + k, JSON.stringify(v)); } catch (e) {} }
 };
-const state = { league: store.get("league", "all"), bankroll: store.get("bankroll", 15) };
+const state = { league: store.get("league", "all"), bankroll: store.get("bankroll", 15), bilanVar: store.get("bilanVar", "moy") };
 
 // ---------- utilitaires
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -615,6 +624,117 @@ function viewStandings() {
   </table></div></section>`).join("")}`;
 }
 
+// ---------- vue : bilan
+const LNAME = Object.fromEntries(LEAGUES.map(L => [L.code, L.name]));
+const signedEuro = x => (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x).toFixed(2).replace(".", ",") + " €";
+const signedP1 = x => x == null ? "–" : (x > 0 ? "+" : x < 0 ? "−" : "") + Math.abs(x * 100).toFixed(1).replace(".", ",") + " %";
+const tone = x => x == null || Math.abs(x) < 1e-9 ? "" : x > 0 ? "pos-v" : "neg-v";
+const ll3 = x => x == null ? "–" : x.toFixed(3).replace(".", ",");
+const fmtKo = iso => new Intl.DateTimeFormat("fr-FR", { timeZone: tz, day: "numeric", month: "short" }).format(new Date(iso));
+
+function niceStep(range) {
+  const raw = range / 4, mag = Math.pow(10, Math.floor(Math.log10(raw || 1)));
+  return [1, 2, 5, 10].map(m => m * mag).find(s => s >= raw) || mag * 10;
+}
+function gainsChart(bets) {
+  const done = bets.filter(b => b.resultat);
+  if (!done.length) return `<p class="hint" style="margin:0">Aucun pari réglé pour l'instant : la courbe apparaîtra après les premiers matchs.</p>`;
+  let cum = 0;
+  const pts = [{ i: 0, y: 0 }].concat(done.map((b, k) => ({ i: k + 1, y: (cum += b.gain), b })));
+  const W = 640, H = 260, P = { l: 52, r: 16, t: 14, b: 34 };
+  const ys = pts.map(p => p.y), step = niceStep(Math.max(1, Math.max(...ys, 0) - Math.min(...ys, 0)));
+  const y0 = Math.floor(Math.min(...ys, 0) / step) * step, y1 = Math.ceil(Math.max(...ys, 0) / step) * step || step;
+  const X = i => P.l + i / Math.max(1, done.length) * (W - P.l - P.r), Y = v => H - P.b - (v - y0) / (y1 - y0) * (H - P.t - P.b);
+  const ticks = []; for (let v = y0; v <= y1 + 1e-9; v += step) ticks.push(v);
+  const path = pts.map((p, k) => (k ? "L" : "M") + X(p.i).toFixed(1) + "," + Y(p.y).toFixed(1)).join("");
+  const last = pts[pts.length - 1];
+  return `<div class="chart" id="gchart">
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gains cumulés : ${signedEuro(last.y)} après ${done.length} paris">
+      <g class="grid">${ticks.map(v => `<line x1="${P.l}" x2="${W - P.r}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${P.l - 8}" y="${Y(v) + 4}" text-anchor="end">${v.toLocaleString("fr-FR")} €</text>`).join("")}</g>
+      <line x1="${P.l}" x2="${W - P.r}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--ink-2)" stroke-width="1"/>
+      <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${X(last.i)}" cy="${Y(last.y)}" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
+      <text x="${Math.min(X(last.i), W - P.r - 4)}" y="${Y(last.y) - 10}" text-anchor="end" style="fill:var(--ink);font-weight:700;font-size:12px;paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round">${signedEuro(last.y)}</text>
+      <text x="${P.l}" y="${H - 10}">1er pari</text><text x="${W - P.r}" y="${H - 10}" text-anchor="end">${done.length}e pari (ordre chronologique)</text>
+      <line id="gx" y1="${P.t}" y2="${H - P.b}" stroke="var(--ink-2)" stroke-dasharray="3 3" visibility="hidden"/>
+      <circle id="gd" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" visibility="hidden"/>
+      <rect id="gh" x="${P.l}" y="0" width="${W - P.l - P.r}" height="${H}" fill="transparent"/>
+    </svg></div>`;
+  // le survol est branché par setupChart()
+}
+let CHART_PTS = null;
+function setupChart(bets) {
+  const svg = document.querySelector("#gchart svg"); if (!svg) return;
+  const done = bets.filter(b => b.resultat); let cum = 0;
+  CHART_PTS = done.map((b, k) => ({ i: k + 1, y: (cum += b.gain), b }));
+  const hit = svg.querySelector("#gh"), gx = svg.querySelector("#gx"), gd = svg.querySelector("#gd");
+  const P = { l: 52, r: 16 }, W = 640;
+  hit.addEventListener("pointermove", e => {
+    const r = svg.getBoundingClientRect(), xv = (e.clientX - r.left) / r.width * W;
+    const k = Math.max(1, Math.min(done.length, Math.round((xv - P.l) / (W - P.l - P.r) * done.length)));
+    const p = CHART_PTS[k - 1], ref = svg.querySelectorAll("path")[0];
+    // position du point : on relit l'échelle à partir du tracé
+    const seg = ref.getAttribute("d").split(/[ML]/).filter(Boolean)[k].split(",");
+    gx.setAttribute("x1", seg[0]); gx.setAttribute("x2", seg[0]); gx.setAttribute("visibility", "visible");
+    gd.setAttribute("cx", seg[0]); gd.setAttribute("cy", seg[1]); gd.setAttribute("visibility", "visible");
+    hit.dataset.tip = `Pari n° ${k} · ${fmtKo(p.b.coup_envoi)} · ${p.b.domicile} – ${p.b.exterieur} · ${p.b.label} à ${n2(p.b.cote)} : ${p.b.resultat} (${signedEuro(p.b.gain)}) · cumul ${signedEuro(p.y)}`;
+  });
+  hit.addEventListener("pointerleave", () => { gx.setAttribute("visibility", "hidden"); gd.setAttribute("visibility", "hidden"); });
+}
+
+function viewBilan() {
+  const B = DATA.bilan;
+  const head = `<div class="section-head"><div><h2>Bilan</h2><p>À chaque mise à jour, CoteJuste note ses probabilités et les cotes des bookmakers (fichier <code class="f">data/journal.csv</code>). Voici ce qu'auraient donné les paris « valeur » (cote × probabilité ≥ 1,05), à raison d'1 € par pari.</p></div></div>`;
+  if (!B || !B.journal_rows) return head + `<section class="card"><h3>Pas encore de données</h3><p class="hint" style="margin:0">Le journal se remplit dès que des matchs ont des cotes, c'est-à-dire moins de 48 h avant le coup d'envoi. Les premiers paris seront réglés le lendemain de ces matchs.</p></section>`;
+  const V = B.variants[state.bilanVar] || B.variants.moy, s = V.summary, L = B.logloss;
+  const toggle = `<div class="chips" role="group" aria-label="Cote utilisée">${[["moy", "Cote moyenne"], ["max", "Meilleure cote"]].map(([k, v]) =>
+    `<button class="chip" data-bvar="${k}" aria-pressed="${state.bilanVar === k}">${v}</button>`).join("")}</div>`;
+  const dLL = L.n ? L.model - L.book : null;
+  const recent = V.bets.slice().reverse().slice(0, 40);
+  return head + `
+  <div class="controls">${toggle}<span class="stamp">${B.journal_rows} relevé(s) de cotes sur ${B.matches} match(s) · ${state.bilanVar === "moy" ? "cote moyenne des bookmakers : ce qu'obtient un parieur ordinaire" : "meilleure cote disponible : il faut des comptes chez plusieurs bookmakers"}</span></div>
+  <div class="kpis">
+    <div class="kpi"><div class="v num">${s.n}</div><div class="l">Paris « valeur »</div><div class="c">${s.settled} réglé(s), ${s.won} gagné(s)${s.pending ? `, ${s.pending} en attente` : ""}</div></div>
+    <div class="kpi"><div class="v num ${tone(s.roi)}">${signedP1(s.roi)}</div><div class="l">ROI</div><div class="c">${s.settled ? `${signedEuro(s.profit)} pour ${s.stake.toLocaleString("fr-FR")} € misés` : "aucun pari réglé"}</div></div>
+    <div class="kpi"><div class="v num ${tone(s.clv_mean)}">${signedP1(s.clv_mean)}</div><div class="l">CLV moyenne</div><div class="c">${s.clv_n ? `${pct(s.clv_pos)} des paris ont battu la clôture (${s.clv_n} avec cote de clôture)` : "pas encore de cote de clôture"}</div></div>
+    <div class="kpi"><div class="v num ${dLL == null ? "" : dLL < 0 ? "pos-v" : "neg-v"}">${ll3(L.model)}</div><div class="l">Log loss du modèle</div><div class="c">${L.n ? `bookmakers : ${ll3(L.book)} sur ${L.n} match(s)` : "aucun match terminé"}</div></div>
+  </div>
+  <div class="grid2">
+    <section class="card"><h3>Gains cumulés (1 € par pari)</h3>
+      <p class="hint">Chaque pari réglé ajoute (cote − 1) € s'il est gagné, retire 1 € s'il est perdu. Survole la courbe pour le détail.</p>
+      ${gainsChart(V.bets)}
+    </section>
+    <section class="card"><h3>Modèle contre bookmakers</h3>
+      <p class="hint">Log loss sur le 1N2 : plus c'est bas, mieux on avait prévu. Probabilités des bookmakers tirées de leurs cotes moyennes, marge retirée.</p>
+      <div class="tablewrap"><table><thead><tr><th>Comparaison</th><th class="r">Matchs</th><th class="r">Modèle</th><th class="r">Bookmakers</th></tr></thead><tbody>
+        <tr><td>Au moment du relevé</td><td class="r num">${L.n}</td><td class="r num"><b>${ll3(L.model)}</b></td><td class="r num">${ll3(L.book)}</td></tr>
+        <tr><td>Contre la clôture</td><td class="r num">${L.n_close}</td><td class="r num"><b>${ll3(L.model_close)}</b></td><td class="r num">${ll3(L.close)}</td></tr>
+      </tbody></table></div>
+      <p class="hint" style="margin:0">${!L.n ? "La comparaison démarre après les premiers matchs suivis." : `${dLL < 0 ? "Le modèle a fait mieux" : "Les bookmakers ont fait mieux"} (écart de ${Math.abs(dLL).toFixed(3).replace(".", ",")}). ${L.n < 100 ? "Moins de 100 matchs : l'écart peut encore être dû au hasard." : ""}`}</p>
+    </section>
+  </div>
+  <section class="card"><h3>Par type de pari</h3>
+    ${V.by_market.length ? `<div class="tablewrap"><table><thead><tr><th>Pari</th><th class="r">Paris</th><th class="r">Réglés</th><th class="r">Gagnés</th><th class="r">Cote moy.</th><th class="r">Gain</th><th class="r">ROI</th><th class="r">CLV moy.</th></tr></thead><tbody>
+      ${V.by_market.map(g => `<tr><td><b>${esc(g.label)}</b></td><td class="r num">${g.n}</td><td class="r num">${g.settled}</td><td class="r num">${g.won}</td><td class="r num">${g.avg_odds ? n2(g.avg_odds) : "–"}</td>
+        <td class="r num ${tone(g.profit)}">${g.settled ? signedEuro(g.profit) : "–"}</td><td class="r num ${tone(g.roi)}">${signedP1(g.roi)}</td><td class="r num ${tone(g.clv_mean)}">${signedP1(g.clv_mean)}</td></tr>`).join("")}
+    </tbody></table></div>` : `<p class="hint" style="margin:0">Aucun pari valeur pour l'instant.</p>`}
+  </section>
+  <section class="card"><h3>Derniers paris</h3>
+    ${recent.length ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>Match</th><th>Pari</th><th class="r">Proba</th><th class="r">Cote prise</th><th class="r">Clôture</th><th class="r">CLV</th><th>Résultat</th><th class="r">Gain</th></tr></thead><tbody>
+      ${recent.map(b => `<tr><td class="num" style="white-space:nowrap">${esc(fmtKo(b.coup_envoi))}</td><td>${esc(b.domicile)} – ${esc(b.exterieur)}${b.score ? ` <small class="pos">${esc(b.score)}</small>` : ""}</td><td>${esc(b.label)}</td>
+        <td class="r num">${pct(b.proba)}</td><td class="r num">${n2(b.cote)}</td><td class="r num">${b.cloture ? n2(b.cloture) : "–"}</td><td class="r num ${tone(b.clv)}">${signedP1(b.clv)}</td>
+        <td>${b.resultat ? `<span class="res ${b.resultat === "gagné" ? "won" : "lost"}">${b.resultat === "gagné" ? "✓ gagné" : "✕ perdu"}</span>` : `<span class="res wait">en attente</span>`}</td>
+        <td class="r num ${tone(b.gain)}">${b.gain == null ? "" : signedEuro(b.gain)}</td></tr>`).join("")}
+    </tbody></table></div>` : `<p class="hint" style="margin:0">Aucun pari valeur pour l'instant.</p>`}
+  </section>
+  <section class="card"><h3>Comment lire ce bilan</h3><div class="prose">
+    <p><b>ROI</b> = gain net ÷ somme misée. +5 % veut dire 5 centimes gagnés par euro misé. Sur moins de quelques centaines de paris, il dépend surtout de la chance : une série de nuls ou un but à la 90e suffit à le faire basculer.</p>
+    <p><b>CLV</b> (closing line value) = cote prise ÷ cote de clôture − 1. Positive, tu as obtenu une meilleure cote que le marché juste avant le match : c'est le signe le plus fiable qu'un pari avait de la valeur, bien avant que le ROI ne devienne significatif.</p>
+    <p><b>Log loss</b> : la qualité des probabilités, pari ou pas. Si le modèle reste au-dessus des bookmakers, ses « valeurs » sont surtout des erreurs du modèle, pas du marché.</p>
+    <p><b>Méthode.</b> Pour chaque match, on garde le dernier relevé de cotes avant le coup d'envoi. Un pari est retenu quand cote × probabilité ≥ 1,05, sur 1, N, 2, +2,5 et −2,5 buts (plusieurs paris possibles par match). La cote de clôture est relevée moins de 30 minutes avant le match. Détail pari par pari : <code class="f">data/paris.csv</code>.</p>
+  </div></section>`;
+}
+
 // ---------- vue : méthode
 function viewMethod() {
   const bt = DATA.backtest, o = bt.overall;
@@ -673,6 +793,7 @@ function route() {
   document.title = "CoteJuste";
   if (h === "classements") { setTab("classements"); app.innerHTML = viewStandings(); return; }
   if (h === "methode") { setTab("methode"); app.innerHTML = viewMethod(); return; }
+  if (h === "bilan") { setTab("bilan"); app.innerHTML = viewBilan(); if (DATA.bilan) setupChart((DATA.bilan.variants[state.bilanVar] || DATA.bilan.variants.moy).bets); return; }
   setTab("matchs"); app.innerHTML = viewMatches();
 }
 
@@ -682,6 +803,8 @@ document.addEventListener("click", e => {
     updateCalc((location.hash || "").slice(1));
     return;
   }
+  const bv = e.target.closest("[data-bvar]");
+  if (bv) { state.bilanVar = bv.dataset.bvar; store.set("bilanVar", state.bilanVar); route(); return; }
   const b = e.target.closest("[data-league]");
   if (b) { state.league = b.dataset.league; store.set("league", state.league); route(); }
 });

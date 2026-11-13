@@ -60,8 +60,15 @@ python update.py --lineups    # compositions des matchs qui commencent dans l'he
 | Matchs d'hier, d'aujourd'hui et de demain | 3 |
 | Cotes + absents d'un match dans les 48 h | 2 la veille, 2 le jour du match |
 | Compositions | 1 à 3 par match, dans l'heure avant le coup d'envoi |
+| Cotes de clôture (bilan) | 1 par match, moins de 30 min avant le coup d'envoi |
 
-Jour sans match : 3 requêtes. Samedi matin chargé : environ 45 à 50, en gardant de quoi récupérer les compositions de la journée. Le garde-fou s'arrête à 90.
+Jour sans match : 3 requêtes. Le matin, le script garde 4 requêtes par match du jour pour les compositions et la clôture, et reporte si besoin les rafraîchissements les moins utiles. Le garde-fou s'arrête à 90.
+
+## Suivi des performances (onglet Bilan)
+
+- `data/journal.csv` : à chaque mise à jour où les cotes d'un match à venir sont relues, une ligne « releve » avec les probabilités du modèle, la cote moyenne et la meilleure cote pour 1, N, 2, +2,5, −2,5. Moins de 30 min avant le match, une ligne « cloture ».
+- `data/paris.csv` : recalculé à chaque fois. Ce sont les paris « valeur » (cote moyenne × probabilité ≥ 1,05) pris au dernier relevé avant le match, avec le résultat, le gain pour 1 € et la CLV (cote prise ÷ cote de clôture − 1).
+- Les deux fichiers s'ouvrent dans Excel (séparateur `;`, virgule décimale). Le robot les enregistre dans le dépôt après chaque mise à jour.
 
 ## Ce que vaut le modèle (backtest sur 1 374 matchs jamais vus)
 

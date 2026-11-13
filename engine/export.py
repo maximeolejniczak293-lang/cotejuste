@@ -15,7 +15,8 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from data import CACHE, CURRENT, calendar, load_league, table  # noqa: E402
+import bilan  # noqa: E402
+from data import CACHE, CURRENT, calendar, load_current, load_league, table  # noqa: E402
 from model import DixonColes  # noqa: E402
 from names import LEAGUES  # noqa: E402
 
@@ -137,6 +138,7 @@ def build_league(lg, live):
         fx = dict(
             id=f"{lg}-{h}-{a}".replace(" ", "_"), league=lg, kickoff=u["kickoff"], time_known=u["time_known"],
             source=u["source"], status=u["status"], round=u["round"], venue=u["venue"], home=h, away=a,
+            api_id=lv.get("id"), closing=lv.get("closing"),
             p=dict(h=pr["p_home"], d=pr["p_draw"], a=pr["p_away"]),
             market=odds.get("implied") if odds else None,
             odds=odds,
@@ -217,6 +219,18 @@ if __name__ == "__main__":
         live=dict(updated=live.get("generated"), window=live.get("window"), quota=live.get("quota")),
         leagues=[build_league(lg, live) for lg in LEAGUES],
     )
+
+    # --- suivi des performances : journal des cotes puis bilan des paris « valeur »
+    added = bilan.record([f for L in data["leagues"] for f in L["fixtures"]])
+    results = {}
+    for lg in LEAGUES:
+        for r in load_current(lg).itertuples():
+            results[(lg, r.home, r.away)] = (int(r.hg), int(r.ag))
+    data["bilan"] = bilan.compute(bilan.read_journal(), results)
+    bilan.write_paris(data["bilan"])
+    s = data["bilan"]["variants"]["moy"]["summary"]
+    print(f"journal : {added} relevé(s) ajouté(s), {data['bilan']['journal_rows']} au total ; "
+          f"{s['n']} pari(s) valeur dont {s['settled']} réglé(s)")
 
     def clean(o):
         if isinstance(o, dict):

@@ -31,6 +31,8 @@ REFRESH = 12 * 3600                    # cotes et absents : rafraîchis s'ils on
 LINEUP_FROM = timedelta(minutes=50)    # compositions cherchées à partir de 50 min avant le coup d'envoi
 LINEUP_UNTIL = timedelta(minutes=20)   # ... et jusqu'à 20 min après
 LINEUP_TRIES = 3                       # au plus 3 essais par match
+CLOSING_FROM = timedelta(minutes=30)   # cotes de clôture : 1 requête par match, moins de 30 min avant
+RESERVE_PER_MATCH = LINEUP_TRIES + 1   # requêtes gardées le matin pour chaque match du jour
 IN_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
 
 
@@ -82,6 +84,13 @@ def fetched_at(name):
     return hit["fetched"] if hit else None
 
 
+def closing_of(client, f):
+    s = af.summarize_odds(client.cached_data(f"closing/{f['id']}"))
+    if s:
+        s["fetched"] = fetched_at(f"closing/{f['id']}")
+    return s
+
+
 def enrich(client, f, previous=None):
     lg = f["league"]
     inj = client.cached_data(f"injuries/{f['id']}")
@@ -91,8 +100,10 @@ def enrich(client, f, previous=None):
         injuries=None if inj is None else {k: [{x: i[x] for x in ("player", "type", "reason")} for i in v]
                                            for k, v in by_side(inj, f).items()},
         lineups=lineups_of(client, f),
+        closing=closing_of(client, f),
         checked={"odds": fetched_at(f"odds/{f['id']}"), "injuries": fetched_at(f"injuries/{f['id']}")},
         lineup_tries=(previous or {}).get("lineup_tries", 0),
+        closing_tried=(previous or {}).get("closing_tried", False),
     )
 
 
@@ -161,8 +172,8 @@ def full_update(client):
     pre = [f for f in upcoming if kickoff(f) > now]
 
     log(f"3) Cotes et absents de {len(pre)} match(s) à venir dans les 48 h")
-    # on garde de quoi chercher les compositions des matchs du jour
-    reserve = LINEUP_TRIES * sum(1 for f in pre if kickoff(f) - now < timedelta(hours=20) and kickoff(f) - now > LINEUP_FROM)
+    # on garde de quoi chercher les compositions et les cotes de clôture des matchs du jour
+    reserve = RESERVE_PER_MATCH * sum(1 for f in pre if kickoff(f) - now < timedelta(hours=20) and kickoff(f) - now > LINEUP_FROM)
     tasks = []
     for f in pre:
         match_day = kickoff(f) - now < timedelta(hours=30)
@@ -213,6 +224,12 @@ def lineup_targets(live, now):
             and -LINEUP_UNTIL <= kickoff(f) - now <= LINEUP_FROM]
 
 
+def closing_targets(live, now):
+    return [f for f in live.get("fixtures", [])
+            if f.get("odds") and f.get("closing") is None and not f.get("closing_tried")
+            and -LINEUP_UNTIL <= kickoff(f) - now <= CLOSING_FROM]
+
+
 def lineups_update(client, check_only):
     live = af._read_json(LIVE)
     if not live:
@@ -221,12 +238,25 @@ def lineups_update(client, check_only):
         return False
     now = af.utcnow()
     targets = lineup_targets(live, now)
+    closing = closing_targets(live, now)
     if check_only:
         log(f"{len(targets)} match(s) dont on attend les compositions" +
             "".join(f"\n   {f['home']} - {f['away']} ({f['kickoff']})" for f in targets))
-        set_output("needed", "true" if targets else "false")
+        log(f"{len(closing)} match(s) dont on relève les cotes de clôture" +
+            "".join(f"\n   {f['home']} - {f['away']} ({f['kickoff']})" for f in closing))
+        set_output("needed", "true" if targets or closing else "false")
         return False
     changed = False
+    for f in closing:  # cotes de clôture d'abord : elles servent au bilan (CLV)
+        f["closing_tried"] = True
+        try:
+            client.closing_odds(f)
+        except af.ApiError as e:
+            warn(f"cotes de clôture {f['home']}-{f['away']} : {e}")
+            continue
+        f["closing"] = closing_of(client, f)
+        log(f"   {f['home']} - {f['away']} : cotes de clôture " + ("relevées" if f["closing"] else "indisponibles"))
+        changed = changed or bool(f["closing"])
     for f in targets:
         f["lineup_tries"] = f.get("lineup_tries", 0) + 1
         try:
