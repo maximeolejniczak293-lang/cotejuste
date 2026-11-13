@@ -1,0 +1,101 @@
+name: Mise à jour CoteJuste
+
+on:
+  schedule:
+    - cron: "15 5 * * *"          # chaque matin à 5h15 UTC (6h15 à Paris en hiver, 7h15 en été)
+    - cron: "*/20 10-19 * * *"    # toutes les 20 min de 10h à 19h40 UTC : compositions des matchs imminents
+  workflow_dispatch:                # bouton « Run workflow » pour lancer une mise à jour complète à la main
+
+permissions:
+  contents: write   # enregistrer les nouveaux résultats dans raw/
+  pages: write      # publier le site
+  id-token: write
+
+concurrency:
+  group: cotejuste
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.full.outputs.changed == 'true' || steps.lineups.outputs.changed == 'true' }}
+    env:
+      API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      MODE: ${{ github.event.schedule == '*/20 10-19 * * *' && 'lineups' || 'full' }}
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Récupérer le cache des réponses de l'API
+        uses: actions/cache/restore@v4
+        with:
+          path: cache
+          key: api-cache-${{ github.run_id }}
+          restore-keys: api-cache-
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Des compositions à chercher ?
+        id: check
+        if: env.MODE == 'lineups'
+        run: python update.py --lineups --check
+
+      - name: Installer les bibliothèques et l'historique openfootball
+        if: env.MODE == 'full' || steps.check.outputs.needed == 'true'
+        run: |
+          pip install --quiet -r requirements.txt
+          git clone --quiet --depth 1 https://github.com/openfootball/football.json.git football.json
+
+      - name: Mise à jour complète (API, modèle, site)
+        id: full
+        if: env.MODE == 'full'
+        run: python update.py
+
+      - name: Compositions des matchs imminents
+        id: lineups
+        if: env.MODE == 'lineups' && steps.check.outputs.needed == 'true'
+        run: python update.py --lineups
+
+      - name: Sauvegarder le cache
+        if: always() && (env.MODE == 'full' || steps.check.outputs.needed == 'true')
+        uses: actions/cache/save@v4
+        with:
+          path: cache
+          key: api-cache-${{ github.run_id }}
+
+      - name: Archiver les nouveaux résultats dans raw/
+        if: env.MODE == 'full'
+        run: |
+          git config user.name "cotejuste-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add raw/
+          if git diff --cached --quiet; then
+            echo "Aucun nouveau résultat."
+          else
+            git commit -m "Résultats ajoutés le $(date -u +%F)"
+            git push
+          fi
+
+      - name: Préparer la page
+        if: steps.full.outputs.changed == 'true' || steps.lineups.outputs.changed == 'true'
+        run: mkdir -p _site && cp site/index.html _site/index.html
+
+      - uses: actions/upload-pages-artifact@v4
+        if: steps.full.outputs.changed == 'true' || steps.lineups.outputs.changed == 'true'
+        with:
+          path: _site
+
+  deploy:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publier sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

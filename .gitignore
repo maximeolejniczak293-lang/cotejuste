@@ -1,0 +1,11 @@
+# secrets : la clé API reste sur ton ordinateur (et dans les secrets GitHub)
+.env
+
+# fichiers recréés automatiquement
+cache/
+football.json/
+__pycache__/
+out/data.json
+out/_apercu*
+site/index.html
+_site/

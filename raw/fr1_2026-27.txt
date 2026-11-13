@@ -1,0 +1,90 @@
+2026-11-08 | 10 | Lens | 1 | 2 | Olympique Marseille
+2026-11-08 | 10 | Angers SCO | 0 | 2 | Nice
+2026-11-08 | 10 | Brest | 2 | 0 | Olympique Lyonnais
+2026-11-08 | 10 | Le Havre | 0 | 2 | Lorient
+2026-11-08 | 10 | Le Mans | 1 | 1 | Monaco
+2026-11-08 | 10 | Rennes | 1 | 2 | LOSC Lille
+2026-11-07 | 10 | Paris Saint Germain | 1 | 0 | Troyes
+2026-11-07 | 10 | Auxerre | 0 | 1 | Paris
+2026-11-06 | 10 | Toulouse | 3 | 1 | Strasbourg
+2026-11-02 | 9 | Lorient | 0 | 2 | Brest
+2026-11-01 | 9 | Olympique Marseille | 2 | 0 | Toulouse
+2026-11-01 | 9 | Paris | 3 | 1 | Monaco
+2026-11-01 | 9 | Olympique Lyonnais | 2 | 0 | Angers SCO
+2026-11-01 | 9 | Strasbourg | 5 | 1 | Auxerre
+2026-10-31 | 9 | Troyes | 2 | 0 | Le Mans
+2026-10-30 | 9 | LOSC Lille | 1 | 0 | Lens
+2026-10-30 | 9 | Nice | 5 | 2 | Rennes
+2026-10-30 | 9 | Le Havre | 1 | 5 | Paris Saint Germain
+2026-10-26 | 8 | Paris Saint Germain | 2 | 0 | Olympique Lyonnais
+2026-10-25 | 8 | Angers SCO | 0 | 0 | Lorient
+2026-10-25 | 8 | Auxerre | 1 | 1 | Le Mans
+2026-10-25 | 8 | Olympique Marseille | 4 | 3 | Le Havre
+2026-10-25 | 8 | Rennes | 3 | 0 | Strasbourg
+2026-10-25 | 8 | Toulouse | 0 | 0 | Troyes
+2026-10-25 | 8 | Monaco | 1 | 1 | LOSC Lille
+2026-10-24 | 8 | Lens | 2 | 1 | Paris
+2026-10-23 | 8 | Brest | 1 | 2 | Nice
+2026-10-18 | 7 | Olympique Lyonnais | 2 | 1 | Nice
+2026-10-18 | 7 | Le Havre | 1 | 3 | Auxerre
+2026-10-18 | 7 | Lorient | 1 | 0 | Monaco
+2026-10-18 | 7 | Paris | 4 | 3 | Rennes
+2026-10-18 | 7 | Angers SCO | 2 | 5 | Olympique Marseille
+2026-10-17 | 7 | LOSC Lille | 1 | 1 | Brest
+2026-10-17 | 7 | Troyes | 1 | 3 | Lens
+2026-10-17 | 7 | Strasbourg | 1 | 3 | Paris Saint Germain
+2026-10-16 | 7 | Le Mans | 0 | 3 | Toulouse
+2026-10-11 | 6 | Troyes | 0 | 2 | Olympique Marseille
+2026-10-11 | 6 | Rennes | 4 | 1 | Auxerre
+2026-10-11 | 6 | Nice | 2 | 1 | Strasbourg
+2026-10-10 | 6 | Brest | 5 | 1 | Angers SCO
+2026-10-10 | 6 | Lorient | 1 | 0 | Paris
+2026-10-10 | 6 | Monaco | 2 | 2 | Toulouse
+2026-10-10 | 6 | Paris Saint Germain | 3 | 1 | Le Mans
+2026-10-10 | 6 | LOSC Lille | 1 | 0 | Le Havre
+2026-10-09 | 6 | Lens | 2 | 1 | Olympique Lyonnais
+2026-09-20 | 5 | Olympique Marseille | 1 | 2 | Paris Saint Germain
+2026-09-20 | 5 | Nice | 2 | 1 | LOSC Lille
+2026-09-20 | 5 | Auxerre | 2 | 1 | Brest
+2026-09-19 | 5 | Angers SCO | 2 | 0 | Troyes
+2026-09-19 | 5 | Le Mans | 2 | 1 | Lorient
+2026-09-19 | 5 | Olympique Lyonnais | 4 | 0 | Rennes
+2026-09-19 | 5 | Toulouse | 3 | 2 | Le Havre
+2026-09-19 | 5 | Paris | 2 | 1 | Strasbourg
+2026-09-18 | 5 | Monaco | 2 | 1 | Lens
+2026-09-13 | 4 | Brest | 0 | 1 | Paris Saint Germain
+2026-09-13 | 4 | Le Mans | 2 | 2 | Lens
+2026-09-13 | 4 | LOSC Lille | 2 | 0 | Troyes
+2026-09-12 | 4 | Auxerre | 1 | 0 | Nice
+2026-09-12 | 4 | Le Havre | 0 | 0 | Angers SCO
+2026-09-12 | 4 | Lorient | 2 | 2 | Toulouse
+2026-09-12 | 4 | Paris | 0 | 0 | Olympique Lyonnais
+2026-09-12 | 4 | Strasbourg | 1 | 1 | Monaco
+2026-09-11 | 4 | Rennes | 1 | 0 | Olympique Marseille
+2026-09-06 | 3 | Olympique Marseille | 2 | 3 | Paris
+2026-09-06 | 3 | Angers SCO | 1 | 2 | Rennes
+2026-09-06 | 3 | Troyes | 2 | 6 | Strasbourg
+2026-09-05 | 3 | Le Havre | 1 | 2 | Brest
+2026-09-05 | 3 | Nice | 1 | 1 | Le Mans
+2026-09-05 | 3 | Lens | 0 | 1 | Lorient
+2026-09-04 | 3 | Paris Saint Germain | 1 | 2 | Monaco
+2026-09-04 | 3 | Olympique Lyonnais | 3 | 1 | Auxerre
+2026-09-03 | 3 | Toulouse | 0 | 1 | LOSC Lille
+2026-08-30 | 2 | Monaco | 2 | 0 | Olympique Marseille
+2026-08-30 | 2 | Rennes | 3 | 2 | Le Mans
+2026-08-30 | 2 | Paris | 3 | 0 | Nice
+2026-08-29 | 2 | Auxerre | 1 | 3 | Angers SCO
+2026-08-29 | 2 | Brest | 2 | 2 | Toulouse
+2026-08-29 | 2 | Lorient | 1 | 2 | Troyes
+2026-08-29 | 2 | Olympique Lyonnais | 1 | 1 | Le Havre
+2026-08-29 | 2 | Strasbourg | 2 | 1 | Lens
+2026-08-28 | 2 | LOSC Lille | 2 | 2 | Paris Saint Germain
+2026-08-23 | 1 | Rennes | 2 | 2 | Paris Saint Germain
+2026-08-23 | 1 | Le Havre | 0 | 1 | Monaco
+2026-08-23 | 1 | Angers SCO | 0 | 2 | LOSC Lille
+2026-08-22 | 1 | Toulouse | 0 | 2 | Olympique Lyonnais
+2026-08-22 | 1 | Le Mans | 2 | 2 | Brest
+2026-08-22 | 1 | Nice | 0 | 0 | Lorient
+2026-08-22 | 1 | Troyes | 0 | 0 | Paris
+2026-08-22 | 1 | Lens | 5 | 2 | Auxerre
+2026-08-21 | 1 | Olympique Marseille | 4 | 0 | Strasbourg

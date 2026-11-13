@@ -1,0 +1,119 @@
+2026-11-08 | 12 | Atlético de Madrid | 1 | 2 | FC Barcelona
+2026-11-08 | 12 | Celta de Vigo | 0 | 0 | Levante
+2026-11-08 | 12 | Villarreal | 2 | 0 | Getafe
+2026-11-08 | 12 | Real Sociedad | 1 | 0 | Rayo Vallecano
+2026-11-08 | 12 | Elche | 0 | 2 | Real Betis
+2026-11-07 | 12 | Valencia | 0 | 3 | Real Madrid
+2026-11-07 | 12 | Osasuna | 1 | 1 | Athletic Club
+2026-11-07 | 12 | Espanyol | 0 | 0 | Deportivo A Coruña
+2026-11-07 | 12 | Málaga | 1 | 2 | Racing Santander
+2026-11-06 | 12 | Sevilla | 0 | 0 | Deportivo Alavés
+2026-11-02 | 11 | Deportivo A Coruña | 2 | 1 | Osasuna
+2026-11-01 | 11 | Athletic Club | 2 | 1 | Real Sociedad
+2026-11-01 | 11 | Elche | 0 | 1 | Valencia
+2026-11-01 | 11 | Racing Santander | 0 | 3 | Real Madrid
+2026-11-01 | 11 | Getafe | 3 | 1 | Sevilla
+2026-10-31 | 11 | FC Barcelona | 6 | 1 | Deportivo Alavés
+2026-10-31 | 11 | Real Betis | 2 | 1 | Málaga
+2026-10-31 | 11 | Rayo Vallecano | 3 | 0 | Celta de Vigo
+2026-10-31 | 11 | Levante | 0 | 2 | Atlético de Madrid
+2026-10-30 | 11 | Villarreal | 0 | 1 | Espanyol
+2026-10-26 | 10 | Sevilla | 2 | 0 | Osasuna
+2026-10-25 | 10 | FC Barcelona | 1 | 2 | Real Madrid
+2026-10-25 | 10 | Real Sociedad | 2 | 1 | Levante
+2026-10-25 | 10 | Celta de Vigo | 0 | 0 | Real Betis
+2026-10-25 | 10 | Athletic Club | 4 | 0 | Getafe
+2026-10-24 | 10 | Atlético de Madrid | 1 | 0 | Deportivo A Coruña
+2026-10-24 | 10 | Valencia | 1 | 2 | Villarreal
+2026-10-24 | 10 | Racing Santander | 2 | 1 | Espanyol
+2026-10-24 | 10 | Rayo Vallecano | 0 | 3 | Elche
+2026-10-23 | 10 | Deportivo Alavés | 1 | 1 | Málaga
+2026-10-21 | 6 | Levante | 3 | 1 | Athletic Club
+2026-10-19 | 9 | Getafe | 1 | 1 | Rayo Vallecano
+2026-10-18 | 9 | Real Madrid | 4 | 1 | Sevilla
+2026-10-18 | 9 | Málaga | 2 | 5 | Real Sociedad
+2026-10-18 | 9 | Celta de Vigo | 2 | 1 | Deportivo Alavés
+2026-10-18 | 9 | Osasuna | 2 | 0 | Racing Santander
+2026-10-17 | 9 | Valencia | 0 | 0 | Athletic Club
+2026-10-17 | 9 | Real Betis | 2 | 5 | FC Barcelona
+2026-10-17 | 9 | Villarreal | 0 | 0 | Elche
+2026-10-17 | 9 | Espanyol | 0 | 1 | Atlético de Madrid
+2026-10-16 | 9 | Deportivo A Coruña | 1 | 1 | Levante
+2026-10-12 | 8 | Levante | 3 | 3 | Sevilla
+2026-10-11 | 8 | Racing Santander | 2 | 2 | Valencia
+2026-10-11 | 8 | Real Betis | 5 | 2 | Osasuna
+2026-10-11 | 8 | Real Sociedad | 3 | 2 | Deportivo A Coruña
+2026-10-11 | 8 | Elche | 0 | 0 | Celta de Vigo
+2026-10-10 | 8 | Real Madrid | 1 | 0 | Villarreal
+2026-10-10 | 8 | FC Barcelona | 3 | 0 | Getafe
+2026-10-10 | 8 | Deportivo Alavés | 1 | 2 | Atlético de Madrid
+2026-10-09 | 8 | Málaga | 1 | 1 | Espanyol
+2026-09-20 | 7 | Valencia | 2 | 3 | Real Sociedad
+2026-09-20 | 7 | Deportivo A Coruña | 1 | 1 | Real Betis
+2026-09-20 | 7 | Villarreal | 3 | 1 | Levante
+2026-09-20 | 7 | Atlético de Madrid | 2 | 1 | Real Madrid
+2026-09-20 | 7 | Getafe | 1 | 0 | Málaga
+2026-09-19 | 7 | Sevilla | 1 | 3 | FC Barcelona
+2026-09-19 | 7 | Celta de Vigo | 5 | 0 | Racing Santander
+2026-09-19 | 7 | Athletic Club | 0 | 0 | Deportivo Alavés
+2026-09-19 | 7 | Osasuna | 1 | 1 | Rayo Vallecano
+2026-09-18 | 7 | Espanyol | 1 | 3 | Elche
+2026-09-17 | 6 | Málaga | 1 | 3 | Villarreal
+2026-09-17 | 6 | Real Betis | 1 | 0 | Getafe
+2026-09-16 | 6 | FC Barcelona | 7 | 2 | Racing Santander
+2026-09-16 | 6 | Deportivo A Coruña | 0 | 1 | Sevilla
+2026-09-16 | 6 | Atlético de Madrid | 4 | 0 | Osasuna
+2026-09-15 | 6 | Elche | 2 | 3 | Real Madrid
+2026-09-15 | 6 | Deportivo Alavés | 0 | 1 | Valencia
+2026-09-15 | 6 | Rayo Vallecano | 2 | 1 | Espanyol
+2026-09-14 | 5 | Villarreal | 1 | 2 | Real Betis
+2026-09-13 | 5 | Real Sociedad | 0 | 3 | Atlético de Madrid
+2026-09-13 | 5 | Getafe | 1 | 1 | Deportivo A Coruña
+2026-09-13 | 5 | Levante | 2 | 4 | FC Barcelona
+2026-09-13 | 5 | Celta de Vigo | 1 | 1 | Málaga
+2026-09-12 | 5 | Real Madrid | 4 | 1 | Rayo Vallecano
+2026-09-12 | 5 | Athletic Club | 1 | 1 | Elche
+2026-09-12 | 5 | Osasuna | 0 | 2 | Espanyol
+2026-09-12 | 5 | Racing Santander | 2 | 1 | Deportivo Alavés
+2026-09-11 | 5 | Sevilla | 1 | 0 | Valencia
+2026-09-07 | 4 | Elche | 2 | 3 | Real Sociedad
+2026-09-07 | 4 | Getafe | 1 | 1 | Celta de Vigo
+2026-09-06 | 4 | Espanyol | 1 | 1 | Sevilla
+2026-09-06 | 4 | Deportivo Alavés | 5 | 2 | Osasuna
+2026-09-06 | 4 | Málaga | 0 | 0 | Levante
+2026-09-06 | 4 | Valencia | 0 | 5 | FC Barcelona
+2026-09-05 | 4 | Villarreal | 2 | 3 | Deportivo A Coruña
+2026-09-05 | 4 | Rayo Vallecano | 3 | 2 | Racing Santander
+2026-09-05 | 4 | Athletic Club | 3 | 0 | Atlético de Madrid
+2026-09-04 | 4 | Real Betis | 1 | 0 | Real Madrid
+2026-09-03 | 6 | Real Sociedad | 0 | 0 | Celta de Vigo
+2026-08-31 | 3 | FC Barcelona | 5 | 2 | Rayo Vallecano
+2026-08-31 | 3 | Osasuna | 1 | 0 | Getafe
+2026-08-30 | 3 | Celta de Vigo | 0 | 2 | Athletic Club
+2026-08-30 | 3 | Deportivo A Coruña | 3 | 1 | Valencia
+2026-08-30 | 3 | Real Madrid | 4 | 0 | Málaga
+2026-08-29 | 3 | Sevilla | 1 | 3 | Atlético de Madrid
+2026-08-29 | 3 | Real Sociedad | 2 | 1 | Espanyol
+2026-08-29 | 3 | Levante | 5 | 2 | Real Betis
+2026-08-28 | 3 | Deportivo Alavés | 1 | 0 | Villarreal
+2026-08-28 | 3 | Racing Santander | 3 | 2 | Elche
+2026-08-27 | 1 | FC Barcelona | 2 | 0 | Athletic Club
+2026-08-27 | 1 | Celta de Vigo | 1 | 2 | Osasuna
+2026-08-26 | 1 | Real Madrid | 4 | 1 | Real Sociedad
+2026-08-25 | 1 | Valencia | 0 | 1 | Real Betis
+2026-08-24 | 2 | Málaga | 1 | 1 | Deportivo A Coruña
+2026-08-24 | 2 | Osasuna | 0 | 0 | Levante
+2026-08-23 | 2 | Elche | 0 | 5 | FC Barcelona
+2026-08-23 | 2 | Getafe | 1 | 0 | Racing Santander
+2026-08-23 | 2 | Atlético de Madrid | 2 | 2 | Villarreal
+2026-08-22 | 2 | Espanyol | 1 | 2 | Real Madrid
+2026-08-22 | 2 | Valencia | 0 | 0 | Celta de Vigo
+2026-08-22 | 2 | Athletic Club | 1 | 3 | Sevilla
+2026-08-21 | 2 | Real Betis | 1 | 0 | Real Sociedad
+2026-08-20 | 2 | Rayo Vallecano | 1 | 1 | Deportivo Alavés
+2026-08-19 | 1 | Atlético de Madrid | 2 | 0 | Málaga
+2026-08-17 | 1 | Deportivo A Coruña | 1 | 1 | Elche
+2026-08-16 | 1 | Espanyol | 3 | 0 | Levante
+2026-08-16 | 1 | Racing Santander | 2 | 2 | Villarreal
+2026-08-15 | 1 | Sevilla | 2 | 1 | Rayo Vallecano
+2026-08-15 | 1 | Deportivo Alavés | 3 | 0 | Getafe
