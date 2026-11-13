@@ -158,7 +158,7 @@ th { text-align: left; font: 600 12px/1.2 var(--font-body); text-transform: uppe
 td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
 tr:last-child td { border-bottom: 0; }
 td.r, th.r { text-align: right; }
-.tablewrap { overflow-x: auto; }
+.tablewrap { overflow-x: auto; position: relative; }
 
 /* calculateur de valeur */
 .valtable input { width: 78px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); text-align: right; font-variant-numeric: tabular-nums; }
@@ -182,6 +182,30 @@ td.r, th.r { text-align: right; }
 .plist .pos { color: var(--muted); font-size: 12px; }
 details summary { cursor: pointer; color: var(--ink-2); font-size: 14px; }
 .stamp { font-size: 12px; color: var(--muted); }
+
+/* recos du jour */
+.recos { display: grid; gap: 12px; }
+.recos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 12px; }
+.reco { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.reco.fun { border-style: dashed; }
+.reco .kind { display: flex; justify-content: space-between; align-items: center; gap: 8px; font: 700 13px/1 var(--font-display); text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+.reco .what { font: 700 21px/1.15 var(--font-display); text-transform: uppercase; }
+.reco .leg { display: grid; gap: 2px; }
+.reco .leg small { color: var(--ink-2); font-size: 13px; }
+.reco dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 10px; margin: 0; }
+.reco dt { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.reco dd { margin: 0; font: 700 18px/1.2 var(--font-display); font-variant-numeric: tabular-nums; }
+.reco dd.key { color: var(--accent); }
+.reco ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink-2); display: grid; gap: 3px; }
+.reco .stakeline { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 10px; }
+.conf { font: 700 11px/1 var(--font-body); padding: 4px 7px; border-radius: 999px; letter-spacing: .03em; text-transform: none; }
+.conf.Élevée { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good-ink); }
+.conf.Moyenne { background: color-mix(in srgb, var(--led) 22%, transparent); color: var(--ink-2); }
+.conf.Faible { background: color-mix(in srgb, var(--critical) 10%, transparent); color: var(--critical); }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: var(--surface); border-radius: 8px; padding: 7px 12px; font-weight: 600; font-size: 14px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.probtable td, .probtable th { text-align: right; } .probtable td:first-child, .probtable th:first-child { text-align: left; }
+.probtable td.fin { font-weight: 700; color: var(--accent); }
 
 /* combiné */
 .mwrap { display: grid; }
@@ -274,6 +298,11 @@ footer { border-top: 1px solid var(--line); padding: 20px 0 40px; color: var(--m
   nav.tabs a { padding: 7px 10px; font-size: 15px; }
 }
 @media (max-width: 520px) {
+  .wrap { padding: 0 16px; }
+  nav.tabs { gap: 2px; justify-content: space-between; }
+  nav.tabs a { padding: 7px 6px; font-size: 14px; letter-spacing: .02em; }
+  .brand b { font-size: 24px; }
+  .reco dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .scoreboard { grid-template-columns: 1fr 1fr; }
   .sb-mid { grid-column: 1 / -1; order: 3; }
   .stats { grid-template-columns: 1fr; }
@@ -317,7 +346,7 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem("cotejuste:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem("cotejuste:" + k, JSON.stringify(v)); } catch (e) {} }
 };
-const state = { league: store.get("league", "all"), bankroll: store.get("bankroll", 15), bilanVar: store.get("bilanVar", "moy") };
+const state = { league: store.get("league", "all"), bankroll: store.get("bankroll", 15), bilanSerie: store.get("bilanSerie", "toutes_finale") };
 
 // ---------- utilitaires
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -335,7 +364,9 @@ const dayKey = iso => new Intl.DateTimeFormat("en-CA", { timeZone: tz }).format(
 
 // liste plate des matchs avec slug stable
 const MATCHES = [];
-LEAGUES.forEach(L => L.fixtures.forEach(f => MATCHES.push(Object.assign({}, f, { slug: "m-" + f.id, L }))));
+LEAGUES.forEach(L => L.fixtures.forEach(f => MATCHES.push(Object.assign({}, f, { slug: "m-" + f.id, L,
+  // proba finale (modèle + marché) sur le 1N2 ; modèle seul si pas de cotes
+  F: f.pf ? { h: f.pf.h, d: f.pf.d, a: f.pf.a } : f.p }))));
 MATCHES.sort((a, b) => a.kickoff.localeCompare(b.kickoff));
 const bySlug = Object.fromEntries(MATCHES.map(m => [m.slug, m]));
 
@@ -344,7 +375,7 @@ function bar(p, cls = "", labels = true) {
   return `<div class="bar1n2 ${cls}">${seg("h", p.h, p.hn || "Victoire domicile")}${seg("d", p.d, "Match nul")}${seg("a", p.a, p.an || "Victoire extérieur")}</div>`;
 }
 function formChips(form) {
-  return `<div class="form">${form.slice(0, 5).map(m =>
+  return `<div class="form" aria-label="5 derniers matchs, le plus récent à gauche">${form.slice(0, 5).map(m =>
     `<span class="${m.res}" data-tip="${esc(fmtShort(m.date))} · ${m.venue === "D" ? "dom." : "ext."} vs ${esc(m.opp)} : ${m.gf}-${m.ga}">${m.res}</span>`).join("")}</div>`;
 }
 function leagueOf(code) { return LEAGUES.find(L => L.code === code); }
@@ -391,9 +422,9 @@ function viewMatches() {
       <p class="hint" style="margin:0">Aucun match ${state.league === "all" ? "" : "de ce championnat "}dans les 14 prochains jours (trêve internationale ?). Le site se met à jour tout seul chaque matin.</p>
     </section>
   </section>`;
-  const fav = list.slice().sort((a, b) => Math.max(b.p.h, b.p.a) - Math.max(a.p.h, a.p.a))[0];
-  const open = list.slice().sort((a, b) => Math.max(a.p.h, a.p.d, a.p.a) - Math.max(b.p.h, b.p.d, b.p.a))[0];
-  const favSide = fav.p.h >= fav.p.a ? "h" : "a";
+  const fav = list.slice().sort((a, b) => Math.max(b.F.h, b.F.a) - Math.max(a.F.h, a.F.a))[0];
+  const open = list.slice().sort((a, b) => Math.max(a.F.h, a.F.d, a.F.a) - Math.max(b.F.h, b.F.d, b.F.a))[0];
+  const favSide = fav.F.h >= fav.F.a ? "h" : "a";
   const tName = (m, s) => s === "h" ? m.home : m.away;
   const withMk = list.filter(m => m.market);
   let third;
@@ -421,20 +452,21 @@ function viewMatches() {
   list.forEach(m => (days[dayKey(m.kickoff)] = days[dayKey(m.kickoff)] || []).push(m));
 
   return `
+  ${recosBlock()}
   <section class="board" aria-label="À la une">
     <div class="board-label">À la une · prochaine journée</div>
     <div class="highlights">
       <a class="hl" href="#${fav.slug}">
         <span class="what">Favori le plus solide</span>
         <span class="teams">${esc(tName(fav, favSide))}</span>
-        <span class="led big">${pct(fav.p[favSide])}</span>
-        <span class="sub">${esc(fav.home)} – ${esc(fav.away)} · cote juste ${odd(fav.p[favSide])}</span>
+        <span class="led big">${pct(fav.F[favSide])}</span>
+        <span class="sub">${esc(fav.home)} – ${esc(fav.away)} · cote juste ${odd(fav.F[favSide])}</span>
       </a>
       <a class="hl" href="#${open.slug}">
         <span class="what">Match le plus indécis</span>
         <span class="teams">${esc(open.home)} – ${esc(open.away)}</span>
-        <span class="led big">${pct(open.p.h)} · ${pct(open.p.d)} · ${pct(open.p.a)}</span>
-        <span class="sub">Aucune issue ne dépasse ${pct(Math.max(open.p.h, open.p.d, open.p.a))}</span>
+        <span class="led big">${pct(open.F.h)} · ${pct(open.F.d)} · ${pct(open.F.a)}</span>
+        <span class="sub">Aucune issue ne dépasse ${pct(Math.max(open.F.h, open.F.d, open.F.a))}</span>
       </a>
       ${third}
     </div>
@@ -452,9 +484,9 @@ function viewMatches() {
         <a class="match" href="#${m.slug}" aria-label="${esc(m.home)} contre ${esc(m.away)} : voir l'analyse">
           <div class="time">${m.time_known ? fmtTime(m.kickoff) : "–"}<small><span class="flagtag">${TAG[m.league]}</span>${m.source === "calendrier" ? ` <span class="flagtag" data-tip="Date du calendrier, à confirmer. Horaire exact, cotes et absents arrivent quand le match est à moins de 48 h.">PROV.</span>` : ""}${m.lineups ? ` <span class="flagtag" data-tip="Compositions officielles publiées">XI</span>` : ""}</small></div>
           <div class="team h">${esc(m.home)}<small>${m.L.teams[m.home].rank}e · forme ${m.L.teams[m.home].form_pts}/15</small></div>
-          ${bar(Object.assign({}, m.p, { hn: "Victoire " + m.home, an: "Victoire " + m.away }))}
+          ${bar(Object.assign({}, m.F, { hn: "Victoire " + m.home, an: "Victoire " + m.away }))}
           <div class="team a">${esc(m.away)}<small>${m.L.teams[m.away].rank}e · forme ${m.L.teams[m.away].form_pts}/15</small></div>
-          <div class="odds num"><span><b>${odd(m.p.h)}</b>1</span><span><b>${odd(m.p.d)}</b>N</span><span><b>${odd(m.p.a)}</b>2</span></div>
+          <div class="odds num" data-tip="${m.sans_marche ? "Cotes justes du modèle seul (pas encore de cotes bookmakers)" : "Cotes justes de la proba finale (modèle + marché)"}"><span><b>${odd(m.F.h)}</b>1</span><span><b>${odd(m.F.d)}</b>N</span><span><b>${odd(m.F.a)}</b>2</span></div>
           <span class="chev" aria-hidden="true">›</span>
         </a>
         <div class="pickbar"><span>Ajouter au combiné :</span>${Object.keys(PICKS).map(k => pickBtn(m, k)).join("")}</div></div>`).join("")}
@@ -506,13 +538,14 @@ function lineupsCard(m) {
 function viewMatch(m) {
   const L = m.L, th = L.teams[m.home], ta = L.teams[m.away];
   const saved = store.get("odds:" + m.slug, {});
-  const api = {};
-  if (m.odds && m.odds.median) Object.keys(ODDS_KEYS).forEach(k => { if (m.odds.median[k]) api[k] = n2(m.odds.median[k]); });
+  const api = {}, prefOdds = m.odds && m.odds.pref ? m.odds.pref.odds : null;
+  if (m.odds && m.odds.median) Object.keys(ODDS_KEYS).forEach(k => { const v = (prefOdds && prefOdds[k]) || m.odds.median[k]; if (v) api[k] = n2(v); });
+  const PF = m.pf || { h: m.p.h, d: m.p.d, a: m.p.a, o25: m.markets.over25, u25: 1 - m.markets.over25 };
   const best = k => m.odds && m.odds.best && m.odds.best[k] ? ` · meilleure ${n2(m.odds.best[k][0])} chez ${m.odds.best[k][1]}` : "";
   const mk = m.markets;
   const markets = [
-    ["h", "1 · " + m.home, m.p.h], ["d", "N · Match nul", m.p.d], ["a", "2 · " + m.away, m.p.a],
-    ["o25", "Plus de 2,5 buts", mk.over25], ["u25", "Moins de 2,5 buts", 1 - mk.over25],
+    ["h", "1 · " + m.home, PF.h], ["d", "N · Match nul", PF.d], ["a", "2 · " + m.away, PF.a],
+    ["o25", "Plus de 2,5 buts", PF.o25], ["u25", "Moins de 2,5 buts", PF.u25],
     ["by", "Les deux équipes marquent", mk.btts], ["bn", "Une équipe ne marque pas", 1 - mk.btts],
   ];
   const maxCell = Math.max(...m.matrix.flat());
@@ -526,20 +559,31 @@ function viewMatch(m) {
     <div class="sb-mid"><span class="ko">${esc(fmtDay(m.kickoff))} · ${m.time_known ? fmtTime(m.kickoff) : "horaire à confirmer"}${m.source === "calendrier" ? " · date provisoire" : ""}</span><span class="led xg">${n2(m.xg.h)} – ${n2(m.xg.a)}</span><span class="board-label">buts attendus</span></div>
     <div class="sb-team a"><span class="board-label">Extérieur · ${ta.rank}e</span><span class="nm">${esc(m.away)}</span><span class="meta">forme ${ta.form_pts}/15</span></div>
     <div class="sb-probs">
-      <div><span class="k">1</span><span class="led">${pct(m.p.h)}</span><small>cote juste ${odd(m.p.h)}</small></div>
-      <div><span class="k">N</span><span class="led">${pct(m.p.d)}</span><small>cote juste ${odd(m.p.d)}</small></div>
-      <div><span class="k">2</span><span class="led">${pct(m.p.a)}</span><small>cote juste ${odd(m.p.a)}</small></div>
+      <div><span class="k">1</span><span class="led">${pct(m.F.h)}</span><small>cote juste ${odd(m.F.h)}</small></div>
+      <div><span class="k">N</span><span class="led">${pct(m.F.d)}</span><small>cote juste ${odd(m.F.d)}</small></div>
+      <div><span class="k">2</span><span class="led">${pct(m.F.a)}</span><small>cote juste ${odd(m.F.a)}</small></div>
+      <small style="grid-column:1/-1;text-align:center;color:var(--board-muted)">${m.sans_marche ? "Modèle seul : sans marché (pas encore de cotes bookmakers)" : `Proba finale = ${pct(DATA.config.w)} modèle + ${pct(1 - DATA.config.w)} marché`}</small>
     </div>
   </section>
 
   <div class="warn">Le modèle ne voit que les résultats : il ne tient compte ni des absents ni des compositions. Ils sont affichés plus bas pour que tu ajustes toi-même. Méfie-toi si un joueur clé manque.</div>
 
+  <section class="card" aria-labelledby="pr-t">
+    <h3 id="pr-t">Probabilités${m.sans_marche ? " · sans marché" : ""}</h3>
+    <div class="tablewrap"><table class="probtable">
+      <thead><tr><th>Issue</th><th>Modèle</th><th>Marché</th><th>Finale</th></tr></thead>
+      <tbody>${[["h", "1 · " + m.home], ["d", "N · nul"], ["a", "2 · " + m.away], ["o25", "+2,5 buts"], ["u25", "−2,5 buts"]].map(([k, l]) => `
+        <tr><td>${esc(l)}</td><td class="num">${pct((m.pm || {})[k] != null ? m.pm[k] : PF[k], 1)}</td><td class="num">${m.pk && m.pk[k] != null ? pct(m.pk[k], 1) : "–"}</td><td class="num fin">${pct(PF[k], 1)}</td></tr>`).join("")}</tbody>
+    </table></div>
+    <p class="hint" style="margin:0">${m.sans_marche ? "Pas encore de cotes pour ce match : la proba finale est celle du modèle seul, et aucune reco n'est possible." : `Marché = cotes moyennes de ${m.odds.n} bookmakers, marge retirée. Finale = ${pct(DATA.config.w)} modèle + ${pct(1 - DATA.config.w)} marché : c'est elle qu'utilisent le calculateur, le combiné et les recos.`}</p>
+  </section>
+
   <div class="grid2">
     <section class="card" aria-labelledby="calc-t">
       <h3 id="calc-t">Calculateur de valeur</h3>
-      <p class="hint">${Object.keys(api).length ? `Cotes pré-remplies : médiane de ${m.odds.n} bookmakers (API-Football, relevé le ${esc(stamp(m.checked && m.checked.odds))}). Remplace-les par celles de ton bookmaker.` : "Entre les cotes de ton bookmaker (elles seront pré-remplies quand le match sera à moins de 48 h)."} Valeur = cote × probabilité : au-dessus de 1, le pari est rentable à long terme si le modèle a raison.</p>
+      <p class="hint">${Object.keys(api).length ? `Cotes pré-remplies : ${prefOdds ? `cotes ${esc(m.odds.pref.name)}` : `médiane de ${m.odds.n} bookmakers (${esc(BOOK)} absent de l'API pour ce match)`}, relevé le ${esc(stamp(m.checked && m.checked.odds))}. Remplace-les par celles de ton bookmaker si elles ont bougé.` : "Entre les cotes de ton bookmaker (elles seront pré-remplies quand le match sera à moins de 48 h)."} Valeur = cote × proba finale : au-dessus de 1, le pari est rentable à long terme si la proba est juste.</p>
       <div class="tablewrap"><table class="valtable">
-        <thead><tr><th>Pari</th><th class="r">Proba</th><th class="r">Cote juste</th><th class="r">Ta cote</th><th>Verdict</th><th class="r">Mise</th><th><span class="sr">Combiné</span></th></tr></thead>
+        <thead><tr><th>Pari</th><th class="r">Proba finale</th><th class="r">Cote juste</th><th class="r">Ta cote</th><th>Verdict</th><th class="r">Mise</th><th><span class="sr">Combiné</span></th></tr></thead>
         <tbody>${markets.map(([k, label, p]) => {
           const v = saved[k] !== undefined ? saved[k] : (api[k] || "");
           return `
@@ -558,7 +602,7 @@ function viewMatch(m) {
       <ul class="insights">${m.insights.map(s => `<li>${esc(s)}</li>`).join("") || "<li>Rien de particulier à signaler.</li>"}</ul>
       ${m.market ? `<div style="display:grid;gap:8px">
         <div class="cmp">
-          <span>CoteJuste</span>${bar(Object.assign({}, m.p, { hn: "Victoire " + m.home, an: "Victoire " + m.away }), "", true)}
+          <span>Modèle</span>${bar(Object.assign({}, m.p, { hn: "Victoire " + m.home, an: "Victoire " + m.away }), "", true)}
           <span>Bookmakers</span>${bar(Object.assign({}, m.market, { hn: "Victoire " + m.home, an: "Victoire " + m.away }), "", true)}
         </div>
         <p class="hint" style="margin:0">Bookmakers : probabilités tirées des cotes médianes de ${m.odds.n} bookmakers, marge de ${pct(m.odds.margin || 0, 1)} retirée. Un gros écart veut dire : vérifie l'actualité des deux équipes avant de suivre l'un ou l'autre.</p>
@@ -610,7 +654,7 @@ function viewMatch(m) {
       ${[[m.home, th, "var(--home)", hRec, "à domicile"], [m.away, ta, "var(--away)", aRec, "à l'extérieur"]].map(([name, t, col, rec, where]) => `
       <div class="teamcol">
         <h4><i style="background:${col}"></i>${esc(name)}</h4>
-        ${formChips(t.form)}
+        ${formChips(t.form)}<span class="stamp">Forme : le match le plus récent est à gauche</span>
         <div class="stats">
           <div><span>Classement</span><b>${t.rank}e</b></div>
           <div><span>Rang de puissance (modèle)</span><b>${t.power_rank}e</b></div>
@@ -662,7 +706,7 @@ function viewStandings() {
   return `<div class="section-head"><div><h2>Classements</h2><p>Classement réel et « rang de puissance » du modèle, qui tient compte des buts marqués et encaissés et de la force des adversaires. Un gros écart entre les deux signale une équipe sur- ou sous-cotée par le classement.</p></div></div>
   ${controls()}
   ${ls.map(L => `<section class="card"><h3>${esc(L.name)}</h3><div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>Équipe</th><th class="r">MJ</th><th class="r">V</th><th class="r">N</th><th class="r">D</th><th class="r">Buts</th><th class="r">Diff</th><th class="r">Pts</th><th>Forme</th><th class="r">Rang modèle</th></tr></thead>
+    <thead><tr><th>#</th><th>Équipe</th><th class="r">MJ</th><th class="r">V</th><th class="r">N</th><th class="r">D</th><th class="r">Buts</th><th class="r">Diff</th><th class="r">Pts</th><th>Forme <span style="text-transform:none;letter-spacing:0">(← plus récent)</span></th><th class="r">Rang modèle</th></tr></thead>
     <tbody>${L.standings.map(s => { const t = L.teams[s.team]; const d = s.rank - t.power_rank; return `<tr>
       <td class="num">${s.rank}</td><td><b>${esc(s.team)}</b></td><td class="r num">${s.P}</td><td class="r num">${s.W}</td><td class="r num">${s.D}</td><td class="r num">${s.L}</td>
       <td class="r num">${s.GF}:${s.GA}</td><td class="r num">${s.GD > 0 ? "+" : ""}${s.GD}</td><td class="r num"><b>${s.Pts}</b></td><td>${formChips(t.form)}</td>
@@ -723,61 +767,66 @@ function setupChart(bets) {
     const seg = ref.getAttribute("d").split(/[ML]/).filter(Boolean)[k].split(",");
     gx.setAttribute("x1", seg[0]); gx.setAttribute("x2", seg[0]); gx.setAttribute("visibility", "visible");
     gd.setAttribute("cx", seg[0]); gd.setAttribute("cy", seg[1]); gd.setAttribute("visibility", "visible");
-    hit.dataset.tip = `Pari n° ${k} · ${fmtKo(p.b.coup_envoi)} · ${p.b.domicile} – ${p.b.exterieur} · ${p.b.label} à ${n2(p.b.cote)} : ${p.b.resultat} (${signedEuro(p.b.gain)}) · cumul ${signedEuro(p.y)}`;
+    hit.dataset.tip = `Pari n° ${k} · ${fmtKo(p.b.coup_envoi)} · ${p.b.match} · ${p.b.pari} à ${n2(p.b.cote)} : ${p.b.resultat} (${signedEuro(p.b.gain)}) · cumul ${signedEuro(p.y)}`;
   });
   hit.addEventListener("pointerleave", () => { gx.setAttribute("visibility", "hidden"); gd.setAttribute("visibility", "hidden"); });
 }
 
+const SERIE_SHORT = { secu: "Sécu", valeur: "Valeur", combine: "Combiné", grosse: "Grosse cote", toutes_modele: "Valeurs · modèle seul", toutes_finale: "Valeurs · proba finale" };
 function viewBilan() {
   const B = DATA.bilan;
-  const head = `<div class="section-head"><div><h2>Bilan</h2><p>À chaque mise à jour, CoteJuste note ses probabilités et les cotes des bookmakers (fichier <code class="f">data/journal.csv</code>). Voici ce qu'auraient donné les paris « valeur » (cote × probabilité ≥ 1,05), à raison d'1 € par pari.</p></div></div>`;
-  if (!B || !B.journal_rows) return head + `<section class="card"><h3>Pas encore de données</h3><p class="hint" style="margin:0">Le journal se remplit dès que des matchs ont des cotes, c'est-à-dire moins de 48 h avant le coup d'envoi. Les premiers paris seront réglés le lendemain de ces matchs.</p></section>`;
-  const V = B.variants[state.bilanVar] || B.variants.moy, s = V.summary, L = B.logloss;
-  const toggle = `<div class="chips" role="group" aria-label="Cote utilisée">${[["moy", "Cote moyenne"], ["max", "Meilleure cote"]].map(([k, v]) =>
-    `<button class="chip" data-bvar="${k}" aria-pressed="${state.bilanVar === k}">${v}</button>`).join("")}</div>`;
-  const dLL = L.n ? L.model - L.book : null;
+  const head = `<div class="section-head"><div><h2>Bilan</h2><p>Chaque reco est enregistrée au moment où elle apparaît (<code class="f">data/recos.csv</code>), et chaque relevé de cotes dans <code class="f">data/journal.csv</code>. Voici ce qu'auraient rapporté ces paris, à 1 € par pari, à la cote ${esc(BOOK)} quand l'API la donne, sinon à la cote moyenne.</p></div></div>`;
+  if (!B || (!B.journal_rows && !B.recos)) return head + `<section class="card"><h3>Pas encore de données</h3><p class="hint" style="margin:0">Le journal se remplit dès que des matchs ont des cotes, c'est-à-dire moins de 48 h avant le coup d'envoi. Les premiers paris seront réglés le lendemain de ces matchs.</p></section>`;
+  const sel = B.series[state.bilanSerie] ? state.bilanSerie : "toutes_finale";
+  const V = B.series[sel], s = V.summary, L = B.logloss;
+  const chips = `<div class="chips" role="group" aria-label="Série affichée">${Object.keys(SERIE_SHORT).map(k =>
+    `<button class="chip" data-bserie="${k}" aria-pressed="${sel === k}">${SERIE_SHORT[k]}</button>`).join("")}</div>`;
   const recent = V.bets.slice().reverse().slice(0, 40);
+  const dLL = L.n ? L.final - L.book : null;
   return head + `
-  <div class="controls">${toggle}<span class="stamp">${B.journal_rows} relevé(s) de cotes sur ${B.matches} match(s) · ${state.bilanVar === "moy" ? "cote moyenne des bookmakers : ce qu'obtient un parieur ordinaire" : "meilleure cote disponible : il faut des comptes chez plusieurs bookmakers"}</span></div>
+  <div class="controls">${chips}<span class="stamp">${B.journal_rows} relevé(s) de cotes sur ${B.matches} match(s) · ${B.recos} reco(s) enregistrée(s)</span></div>
+  ${s.small ? `<div class="warn"><b>Échantillon trop petit pour conclure</b> : ${s.settled} pari(s) réglé(s) dans « ${esc(B.labels[sel])} », il en faut au moins ${B.echantillon_min}. Les chiffres ci-dessous peuvent encore changer du tout au tout.</div>` : ""}
   <div class="kpis">
-    <div class="kpi"><div class="v num">${s.n}</div><div class="l">Paris « valeur »</div><div class="c">${s.settled} réglé(s), ${s.won} gagné(s)${s.pending ? `, ${s.pending} en attente` : ""}</div></div>
-    <div class="kpi"><div class="v num ${tone(s.roi)}">${signedP1(s.roi)}</div><div class="l">ROI</div><div class="c">${s.settled ? `${signedEuro(s.profit)} pour ${s.stake.toLocaleString("fr-FR")} € misés` : "aucun pari réglé"}</div></div>
+    <div class="kpi"><div class="v num">${s.n}</div><div class="l">Paris · ${esc(B.labels[sel])}</div><div class="c">${s.settled} réglé(s)${s.pending ? `, ${s.pending} en attente` : ""}</div></div>
+    <div class="kpi"><div class="v num">${s.hit == null ? "–" : pct(s.hit)}</div><div class="l">Taux de réussite</div><div class="c">${s.won} gagné(s) sur ${s.settled}${s.avg_odds ? ` · cote moyenne ${n2(s.avg_odds)}` : ""}</div></div>
+    <div class="kpi"><div class="v num ${tone(s.roi)}">${signedP1(s.roi)}</div><div class="l">ROI (1 € par pari)</div><div class="c">${s.settled ? `${signedEuro(s.profit)} pour ${s.stake.toLocaleString("fr-FR")} € misés` : "aucun pari réglé"}</div></div>
     <div class="kpi"><div class="v num ${tone(s.clv_mean)}">${signedP1(s.clv_mean)}</div><div class="l">CLV moyenne</div><div class="c">${s.clv_n ? `${pct(s.clv_pos)} des paris ont battu la clôture (${s.clv_n} avec cote de clôture)` : "pas encore de cote de clôture"}</div></div>
-    <div class="kpi"><div class="v num ${dLL == null ? "" : dLL < 0 ? "pos-v" : "neg-v"}">${ll3(L.model)}</div><div class="l">Log loss du modèle</div><div class="c">${L.n ? `bookmakers : ${ll3(L.book)} sur ${L.n} match(s)` : "aucun match terminé"}</div></div>
   </div>
-  <div class="grid2">
-    <section class="card"><h3>Gains cumulés (1 € par pari)</h3>
-      <p class="hint">Chaque pari réglé ajoute (cote − 1) € s'il est gagné, retire 1 € s'il est perdu. Survole la courbe pour le détail.</p>
-      ${gainsChart(V.bets)}
-    </section>
-    <section class="card"><h3>Modèle contre bookmakers</h3>
-      <p class="hint">Log loss sur le 1N2 : plus c'est bas, mieux on avait prévu. Probabilités des bookmakers tirées de leurs cotes moyennes, marge retirée.</p>
-      <div class="tablewrap"><table><thead><tr><th>Comparaison</th><th class="r">Matchs</th><th class="r">Modèle</th><th class="r">Bookmakers</th></tr></thead><tbody>
-        <tr><td>Au moment du relevé</td><td class="r num">${L.n}</td><td class="r num"><b>${ll3(L.model)}</b></td><td class="r num">${ll3(L.book)}</td></tr>
-        <tr><td>Contre la clôture</td><td class="r num">${L.n_close}</td><td class="r num"><b>${ll3(L.model_close)}</b></td><td class="r num">${ll3(L.close)}</td></tr>
-      </tbody></table></div>
-      <p class="hint" style="margin:0">${!L.n ? "La comparaison démarre après les premiers matchs suivis." : `${dLL < 0 ? "Le modèle a fait mieux" : "Les bookmakers ont fait mieux"} (écart de ${Math.abs(dLL).toFixed(3).replace(".", ",")}). ${L.n < 100 ? "Moins de 100 matchs : l'écart peut encore être dû au hasard." : ""}`}</p>
-    </section>
-  </div>
-  <section class="card"><h3>Par type de pari</h3>
-    ${V.by_market.length ? `<div class="tablewrap"><table><thead><tr><th>Pari</th><th class="r">Paris</th><th class="r">Réglés</th><th class="r">Gagnés</th><th class="r">Cote moy.</th><th class="r">Gain</th><th class="r">ROI</th><th class="r">CLV moy.</th></tr></thead><tbody>
-      ${V.by_market.map(g => `<tr><td><b>${esc(g.label)}</b></td><td class="r num">${g.n}</td><td class="r num">${g.settled}</td><td class="r num">${g.won}</td><td class="r num">${g.avg_odds ? n2(g.avg_odds) : "–"}</td>
-        <td class="r num ${tone(g.profit)}">${g.settled ? signedEuro(g.profit) : "–"}</td><td class="r num ${tone(g.roi)}">${signedP1(g.roi)}</td><td class="r num ${tone(g.clv_mean)}">${signedP1(g.clv_mean)}</td></tr>`).join("")}
-    </tbody></table></div>` : `<p class="hint" style="margin:0">Aucun pari valeur pour l'instant.</p>`}
+  <section class="card"><h3>Gains cumulés · ${esc(B.labels[sel])}</h3>
+    <p class="hint">Chaque pari réglé ajoute (cote prise − 1) € s'il est gagné, retire 1 € s'il est perdu. Survole la courbe pour le détail.</p>
+    ${gainsChart(V.bets)}
   </section>
-  <section class="card"><h3>Derniers paris</h3>
+  <section class="card"><h3>Toutes les séries</h3>
+    <div class="tablewrap"><table><thead><tr><th>Série</th><th class="r">Paris</th><th class="r">Réglés</th><th class="r">Réussite</th><th class="r">Gain</th><th class="r">ROI</th><th class="r">CLV moy.</th><th></th></tr></thead><tbody>
+      ${Object.keys(SERIE_SHORT).map(k => { const g = B.series[k].summary; return `<tr><td><b>${esc(B.labels[k])}</b></td><td class="r num">${g.n}</td><td class="r num">${g.settled}</td>
+        <td class="r num">${g.hit == null ? "–" : pct(g.hit)}</td><td class="r num ${tone(g.profit)}">${g.settled ? signedEuro(g.profit) : "–"}</td><td class="r num ${tone(g.roi)}">${signedP1(g.roi)}</td>
+        <td class="r num ${tone(g.clv_mean)}">${signedP1(g.clv_mean)}</td><td class="stamp">${g.small ? "échantillon trop petit" : ""}</td></tr>`; }).join("")}
+    </tbody></table></div>
+    <p class="hint" style="margin:0">« Valeurs » : tous les paris où cote prise × proba ≥ 1,05 au dernier relevé avant le match. Comparer « modèle seul » et « proba finale » montre ce qu'apporte le mélange avec le marché.</p>
+  </section>
+  <section class="card"><h3>Probabilités contre bookmakers</h3>
+    <p class="hint">Log loss sur le 1N2 : plus c'est bas, mieux on avait prévu. Marché = cotes moyennes, marge retirée.</p>
+    <div class="tablewrap"><table><thead><tr><th>Comparaison</th><th class="r">Matchs</th><th class="r">Modèle seul</th><th class="r">Proba finale</th><th class="r">Marché</th></tr></thead><tbody>
+      <tr><td>Au moment du relevé</td><td class="r num">${L.n}</td><td class="r num">${ll3(L.model)}</td><td class="r num"><b>${ll3(L.final)}</b></td><td class="r num">${ll3(L.book)}</td></tr>
+      <tr><td>Contre la clôture</td><td class="r num">${L.n_close}</td><td class="r num">${ll3(L.model_close)}</td><td class="r num"><b>${ll3(L.final_close)}</b></td><td class="r num">${ll3(L.close)}</td></tr>
+    </tbody></table></div>
+    <p class="hint" style="margin:0">${!L.n ? "La comparaison démarre après les premiers matchs suivis." : `${dLL < 0 ? "La proba finale a fait mieux que le marché" : "Le marché a fait mieux que la proba finale"} (écart de ${Math.abs(dLL).toFixed(3).replace(".", ",")}). ${L.n < 100 ? "Moins de 100 matchs : l'écart peut encore être dû au hasard." : ""}`}</p>
+  </section>
+  <section class="card"><h3>Derniers paris · ${esc(B.labels[sel])}</h3>
     ${recent.length ? `<div class="tablewrap"><table><thead><tr><th>Date</th><th>Match</th><th>Pari</th><th class="r">Proba</th><th class="r">Cote prise</th><th class="r">Clôture</th><th class="r">CLV</th><th>Résultat</th><th class="r">Gain</th></tr></thead><tbody>
-      ${recent.map(b => `<tr><td class="num" style="white-space:nowrap">${esc(fmtKo(b.coup_envoi))}</td><td>${esc(b.domicile)} – ${esc(b.exterieur)}${b.score ? ` <small class="pos">${esc(b.score)}</small>` : ""}</td><td>${esc(b.label)}</td>
-        <td class="r num">${pct(b.proba)}</td><td class="r num">${n2(b.cote)}</td><td class="r num">${b.cloture ? n2(b.cloture) : "–"}</td><td class="r num ${tone(b.clv)}">${signedP1(b.clv)}</td>
+      ${recent.map(b => `<tr><td class="num" style="white-space:nowrap">${esc(fmtKo(b.coup_envoi))}</td><td>${esc(b.match)}${b.score ? ` <small class="pos">${esc(b.score)}</small>` : ""}</td><td>${esc(b.pari)}</td>
+        <td class="r num">${pct(b.proba)}</td><td class="r num" data-tip="${b.base === "bookmaker" ? "Cote " + esc(BOOK) : b.base === "moyenne" ? "Cote moyenne des bookmakers" : "Cotes mixtes"}">${n2(b.cote)}${b.base === "bookmaker" ? " <small class='pos'>" + esc(BOOK) + "</small>" : ""}</td>
+        <td class="r num">${b.cloture ? n2(b.cloture) : "–"}</td><td class="r num ${tone(b.clv)}">${signedP1(b.clv)}</td>
         <td>${b.resultat ? `<span class="res ${b.resultat === "gagné" ? "won" : "lost"}">${b.resultat === "gagné" ? "✓ gagné" : "✕ perdu"}</span>` : `<span class="res wait">en attente</span>`}</td>
         <td class="r num ${tone(b.gain)}">${b.gain == null ? "" : signedEuro(b.gain)}</td></tr>`).join("")}
-    </tbody></table></div>` : `<p class="hint" style="margin:0">Aucun pari valeur pour l'instant.</p>`}
+    </tbody></table></div>` : `<p class="hint" style="margin:0">Aucun pari dans cette série pour l'instant.</p>`}
   </section>
   <section class="card"><h3>Comment lire ce bilan</h3><div class="prose">
-    <p><b>ROI</b> = gain net ÷ somme misée. +5 % veut dire 5 centimes gagnés par euro misé. Sur moins de quelques centaines de paris, il dépend surtout de la chance : une série de nuls ou un but à la 90e suffit à le faire basculer.</p>
-    <p><b>CLV</b> (closing line value) = cote prise ÷ cote de clôture − 1. Positive, tu as obtenu une meilleure cote que le marché juste avant le match : c'est le signe le plus fiable qu'un pari avait de la valeur, bien avant que le ROI ne devienne significatif.</p>
-    <p><b>Log loss</b> : la qualité des probabilités, pari ou pas. Si le modèle reste au-dessus des bookmakers, ses « valeurs » sont surtout des erreurs du modèle, pas du marché.</p>
-    <p><b>Méthode.</b> Pour chaque match, on garde le dernier relevé de cotes avant le coup d'envoi. Un pari est retenu quand cote × probabilité ≥ 1,05, sur 1, N, 2, +2,5 et −2,5 buts (plusieurs paris possibles par match). La cote de clôture est relevée moins de 30 minutes avant le match. Détail pari par pari : <code class="f">data/paris.csv</code>.</p>
+    <p><b>Taux de réussite</b> : part des paris gagnés. Seul, il ne veut rien dire : 70 % de réussite à 1,30 de cote fait perdre de l'argent.</p>
+    <p><b>ROI</b> = gain net ÷ somme misée. +5 % veut dire 5 centimes gagnés par euro misé. Sur moins de quelques centaines de paris, il dépend surtout de la chance.</p>
+    <p><b>CLV</b> (closing line value) = cote prise ÷ cote de clôture − 1, en comparant toujours deux cotes du même type (${esc(BOOK)} contre ${esc(BOOK)}, moyenne contre moyenne). Positive, tu as eu une meilleure cote que le marché juste avant le match : c'est le signe le plus fiable qu'un pari avait de la valeur.</p>
+    <p><b>Log loss</b> : la qualité des probabilités, pari ou pas. Si la proba finale reste au-dessus du marché, ses « valeurs » sont surtout des erreurs, pas des occasions.</p>
+    <p><b>Méthode.</b> Les recos sont jugées à la cote prise (${esc(BOOK)} si l'API la donne pour ce match, sinon la cote moyenne), pas à la meilleure cote affichée. Un combiné n'est gagné que si toutes ses sélections passent. Détail pari par pari : <code class="f">data/paris.csv</code>.</p>
   </div></section>`;
 }
 
@@ -826,9 +875,85 @@ function viewMethod() {
     <p><b>3. Les matchs récents comptent plus.</b> Un match pèse <code class="f">exp(−${DATA.model.xi} × jours écoulés)</code>. Les équipes promues partent d'un niveau un peu inférieur à la moyenne, puis le modèle s'ajuste à leurs résultats.</p>
     <p><b>4. Des probabilités aux cotes.</b> <code class="f">cote juste = 1 / probabilité</code> et <code class="f">valeur = cote du bookmaker × probabilité</code>. Mise conseillée : <code class="f">Kelly = (cote × p − 1) / (cote − 1)</code>, divisé par 4 et plafonné à 5 % de la bankroll.</p>
     <p><b>5. Les données du jour.</b> Chaque matin, une tâche automatique interroge API-Football : résultats de la veille, horaires exacts, cotes de plusieurs bookmakers (1N2 et +/− 2,5 buts) et absents des matchs des 48 h à venir. Les compositions sont récupérées dans l'heure qui précède le coup d'envoi. Au-delà de 48 h, les matchs viennent du calendrier officiel (date provisoire).</p>
-    <p><b>Les limites, honnêtement.</b> Le modèle ne voit que les scores : les absents et les compositions sont affichés mais pas intégrés au calcul, pas plus que la fatigue des Coupes d'Europe ou les xG. Il bat nettement un pronostic naïf, mais les bookmakers font en général un peu mieux (log loss ≈ 0,97 contre ${o.model.logloss.toFixed(2).replace(".", ",")} ici). Sur le nombre de buts (+/− 2,5), il n'apporte quasiment rien (Brier ${bt.over25.brier.toFixed(4).replace(".", ",")} contre ${bt.over25.base_brier.toFixed(4).replace(".", ",")} pour la moyenne). Une « valeur » affichée est donc une piste à vérifier, pas un pari sûr.</p>
-    <p><b>Prochaines étapes.</b> Tenir compte des absents dans le calcul ; ajouter les xG ; Serie A et Bundesliga ; mesurer le modèle contre les cotes de clôture des bookmakers, désormais archivées chaque jour.</p>
+    <p><b>6. Modèle + marché.</b> La probabilité du marché se lit dans la cote moyenne des bookmakers, une fois leur marge retirée : <code class="f">p_marché = (1/cote) ÷ somme des (1/cote)</code>, sur les 3 issues du 1N2 et sur les 2 issues de +/− 2,5 buts. La <b>proba finale</b> = <code class="f">${String(DATA.config.w).replace(".", ",")} × modèle + ${String(Math.round((1 - DATA.config.w) * 100) / 100).replace(".", ",")} × marché</code>. Sans cotes, c'est le modèle seul (« sans marché ») et aucune reco n'est possible. ${(() => { const W = DATA.bilan && DATA.bilan.w; if (!W) return ""; return W.best == null ? `Le poids idéal sera estimé quand ${W.needed} matchs auront une cote de clôture (${W.n} pour l'instant).` : `Sur ${W.n} matchs, le poids qui aurait minimisé le log loss est <b>${String(W.best).replace(".", ",")}</b> (log loss ${ll3(W.ll_best)} contre ${ll3(W.ll_current)} avec le réglage actuel). Il n'est pas appliqué automatiquement : à changer à la main dans engine/config.py si l'écart se confirme.`; })()}</p>
+    <p><b>7. Recos du jour.</b> Candidats : 1, N, 2, +2,5 et −2,5 des matchs à moins de 48 h, pas encore commencés, avec cotes ; valeur = meilleure cote × proba finale.
+      <b>Sécu</b> : proba ≥ 65 %, meilleure cote ≥ 1,30, valeur ≥ 1 (on garde la plus haute proba ; cote minimale = 1 ÷ proba).
+      <b>Valeur</b> : valeur ≥ 1,05 sur le 1N2 et ≥ 1,08 sur les buts (le modèle y est moins fiable), proba ≥ 35 % (on garde la plus haute valeur ; cote minimale = 1,05 ÷ proba).
+      <b>Combiné</b> : 2 ou 3 matchs différents, chaque proba ≥ 55 %, chance combinée ≥ 30 % et valeur combinée ≥ 1.
+      <b>Grosse cote</b> : cote ≥ 5 et valeur ≥ 1, mise fixe d'1 €, pour s'amuser.
+      Mise : ¼ de Kelly <code class="f">(cote × p − 1) ÷ (cote − 1)</code> sur la meilleure cote, plafonnée à 5 % de la bankroll, minimum 0,50 €, arrondie à 0,10 € ; total des mises ≤ 40 % de la bankroll. Confiance élevée quand modèle et marché sont d'accord à 5 points près et que les absents sont connus. Si rien ne passe les filtres, il n'y a pas de reco : on n'en force jamais.</p>
+    <p><b>Les limites, honnêtement.</b> Le modèle ne voit que les scores : les absents et les compositions sont affichés mais pas intégrés au calcul, pas plus que la fatigue des Coupes d'Europe ou les xG. Les recos sont choisies avec la meilleure cote du marché, qu'on ne trouve pas forcément chez ${esc(BOOK)} : la cote minimale dit en dessous de quoi renoncer, et le Bilan juge les recos à la cote ${esc(BOOK)} (si l'API la donne) ou à la cote moyenne. Il bat nettement un pronostic naïf, mais les bookmakers font en général un peu mieux (log loss ≈ 0,97 contre ${o.model.logloss.toFixed(2).replace(".", ",")} ici). Sur le nombre de buts (+/− 2,5), il n'apporte quasiment rien (Brier ${bt.over25.brier.toFixed(4).replace(".", ",")} contre ${bt.over25.base_brier.toFixed(4).replace(".", ",")} pour la moyenne). Une « valeur » affichée est donc une piste à vérifier, pas un pari sûr.</p>
+    <p><b>Prochaines étapes.</b> Tenir compte des absents dans le calcul ; ajouter les xG ; Serie A et Bundesliga ; ajuster le poids modèle/marché quand le Bilan aura assez de matchs.</p>
   </div></section>`;
+}
+
+// ---------- recos du jour
+const RECO_KIND = { secu: "Pari sécu", valeur: "Pari valeur", combine: "Combiné du jour", grosse: "Grosse cote · pour s'amuser" };
+const RK = (DATA.recos && DATA.recos.regles && DATA.recos.regles.kelly) || { fraction: 0.25, plafond: 0.05, mise_min: 0.5, plafond_total: 0.4 };
+const BOOK = (DATA.config && DATA.config.bookmaker) || "ton bookmaker";
+function liveRecos() {  // on masque une reco dès qu'un de ses matchs a commencé
+  const now = Date.now();
+  return ((DATA.recos && DATA.recos.items) || []).filter(it => it.legs.every(l => Date.parse(l.kickoff) > now));
+}
+// Mises : 1/4 de Kelly (fraction calculée côté Python), min 0,50 €, arrondi à 0,10 €, total <= 40 % de la bankroll.
+function recoStakes(items, bankroll) {
+  const r1 = x => Math.round(x * 10) / 10, cap = bankroll * RK.plafond_total;
+  let st = items.map(it => it.mise_fixe != null ? it.mise_fixe : Math.max(RK.mise_min, r1(bankroll * (it.kelly || 0))));
+  const capped = items.map(() => false), sum = () => st.reduce((a, b) => a + b, 0);
+  if (sum() > cap + 1e-9) {  // on réduit d'abord les mises Kelly au prorata
+    const fixed = items.reduce((s, it, i) => s + (it.mise_fixe != null ? st[i] : 0), 0);
+    const kel = sum() - fixed, room = cap - fixed;
+    if (room > 0 && kel > 0) st = st.map((s, i) => items[i].mise_fixe != null ? s : Math.max(RK.mise_min, Math.floor(s * room / kel * 10) / 10));
+  }
+  for (let i = items.length - 1; i >= 0 && sum() > cap + 1e-9; i--) { st[i] = 0; capped[i] = true; }  // puis on retire la grosse cote, le combiné…
+  return { stakes: st, capped, total: sum(), cap };
+}
+function recosBlock() {
+  const items = liveRecos(), R = DATA.recos || {};
+  const head = `<div class="section-head"><div><h2>Recos du jour</h2><p>Sélections des matchs à moins de 48 h qui passent tous les filtres (détail dans Méthode). Probabilité = proba finale (modèle + marché).</p></div></div>`;
+  if (!items.length) return `<section class="recos" aria-label="Recos du jour">${head}
+    <div class="card"><h3>Rien d'intéressant aujourd'hui</h3><p class="hint" style="margin:0">Ne pas parier fait partie de la stratégie.${R.candidats ? ` ${R.candidats} sélection(s) examinée(s) sur ${R.matchs} match(s) avec cotes : aucune ne passe les filtres.` : " Aucun match avec cotes à moins de 48 h pour l'instant."}</p></div></section>`;
+  const S = recoStakes(items, state.bankroll);
+  const cards = items.map((it, i) => {
+    const leg = it.legs[0], single = it.legs.length === 1;
+    const prefTxt = single && leg.pref ? `<div class="cmsg${leg.pref + 1e-9 < it.cote_min ? " err" : ""}">${esc(leg.pref_name || BOOK)} : ${n2(leg.pref)}${leg.pref + 1e-9 < it.cote_min ? " — sous la cote minimale : ne joue pas chez eux" : " — au-dessus de la cote minimale"}</div>` : "";
+    return `<article class="reco${it.type === "grosse" ? " fun" : ""}">
+      <div class="kind"><span>${RECO_KIND[it.type]}</span><span class="conf ${it.confiance}" data-tip="Élevée : modèle et marché d'accord à 5 points près et absents connus. Moyenne : une seule des deux conditions. Faible : aucune.">Confiance ${it.confiance.toLowerCase()}</span></div>
+      ${it.legs.map(l => `<div class="leg"><span class="what">${esc(l.pick)}</span><small><span class="flagtag">${TAG[l.league]}</span> ${esc(l.home)} – ${esc(l.away)} · ${esc(fmtDay(l.kickoff))} à ${fmtTime(l.kickoff)}${single ? "" : ` · ${pct(l.p)} · meilleure ${n2(l.best)}`}</small></div>`).join("")}
+      <dl>
+        <div><dt>Cote minimale</dt><dd class="key" data-tip="${it.type === "valeur" ? "1,05 ÷ proba" : "1 ÷ proba"} : en dessous, le pari n'a plus de valeur">${n2(it.cote_min)}</dd></div>
+        <div><dt>${single ? "Probabilité" : "Chance"}</dt><dd>${pct(it.chance)}</dd></div>
+        <div><dt>Valeur</dt><dd data-tip="Meilleure cote × proba finale">${n2(it.valeur)}</dd></div>
+        <div><dt>Meilleure cote</dt><dd data-tip="À titre d'information${single ? " : " + esc(leg.best_bk) : ""}">${n2(it.cote)}</dd></div>
+        <div><dt>Cote moyenne</dt><dd>${n2(it.cote_moyenne)}</dd></div>
+        ${single ? `<div><dt>Modèle / marché</dt><dd style="font-size:15px">${pct(leg.pm)} / ${pct(leg.pk)}</dd></div>` : ""}
+      </dl>
+      ${prefTxt}
+      <ul>${it.raisons.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+      <div class="stakeline"><span>Mise conseillée : <b>${S.capped[i] ? "0 € (plafond de 40 % atteint)" : euro(S.stakes[i])}</b>${it.type === "grosse" ? " · mise fixe" : ""}</span>
+        <button class="btn ghost" type="button" data-addreco="${i}">Ajouter au combiné</button></div>
+    </article>`;
+  }).join("");
+  return `<section class="recos" aria-label="Recos du jour">${head}
+    <div class="recos-grid">${cards}</div>
+    <div class="warn">Vérifie les compositions avant de parier : elles sortent environ 40 min avant le coup d'envoi (fiche du match). Ne joue que si ta cote est au moins égale à la cote minimale. Total des mises conseillées : ${euro(S.total)} pour une bankroll de ${euro(state.bankroll)} (plafond ${Math.round(RK.plafond_total * 100)} % = ${euro(S.cap)}).</div>
+  </section>`;
+}
+function addReco(i) {
+  const it = liveRecos()[i]; if (!it) return;
+  cartMsg = null;
+  const blocked = [];
+  it.legs.forEach(l => {
+    const m = byId[l.id]; if (!m) return;
+    const cur = cart.find(c => c.id === m.id);
+    if (cur && cur.k === l.k) return;
+    if (cur) { blocked.push(`${m.home} – ${m.away} (déjà « ${pickName(cur)} »)`); return; }
+    const info = pickInfo(m, l.k);
+    cart.push({ id: m.id, slug: m.slug, league: m.league, home: m.home, away: m.away, kickoff: m.kickoff, k: l.k,
+      odds: info.odds ? n2(info.odds) : "", src: info.src, pModel: info.pModel, pMkt: info.pMkt });
+  });
+  if (blocked.length) cartMsg = { err: true, text: `Une seule sélection par match : non ajouté pour ${blocked.join(", ")}.` };
+  saveCart(); renderCart(); openCart();
 }
 
 // ---------- combiné (panier gardé dans le navigateur)
@@ -839,23 +964,21 @@ let cart = store.get("panier", []);
 if (!Array.isArray(cart)) cart = [];
 let cartMsg = null;
 
-function pickInfo(m, k) {
-  const pModel = { h: m.p.h, d: m.p.d, a: m.p.a, o25: m.markets.over25, u25: 1 - m.markets.over25 }[k];
-  let pMkt = null;
-  if (m.market && m.market[k] != null) pMkt = m.market[k];
-  else if ((k === "o25" || k === "u25") && m.odds && m.odds.median && m.odds.median.o25 && m.odds.median.u25) {
-    const io = 1 / m.odds.median.o25, iu = 1 / m.odds.median.u25; pMkt = (k === "o25" ? io : iu) / (io + iu);
-  }
+function pickInfo(m, k) {  // pModel = proba finale (modèle + marché), ou modèle seul si pas de cotes
+  const pModel = m.pf ? m.pf[k] : { h: m.p.h, d: m.p.d, a: m.p.a, o25: m.markets.over25, u25: 1 - m.markets.over25 }[k];
+  const pMkt = m.pk && m.pk[k] != null ? m.pk[k] : null;
   const saved = store.get("odds:" + m.slug, {}), mine = saved[k] ? parseNum(saved[k]) : NaN;
   const median = m.odds && m.odds.median ? m.odds.median[k] : null;
-  return { pModel, pMkt, median, odds: mine > 1 ? mine : median || null, src: mine > 1 ? "ta cote" : median ? "médiane bookmakers" : "" };
+  const book = m.odds && m.odds.pref && m.odds.pref.odds ? m.odds.pref.odds[k] : null;
+  const odds = mine > 1 ? mine : book || median || null;
+  return { pModel, pMkt, median: book || median, odds, src: mine > 1 ? "ta cote" : book ? m.odds.pref.name : median ? "médiane bookmakers" : "" };
 }
 const inCart = (id, k) => cart.some(c => c.id === id && c.k === k);
 const pickName = (c) => c.k === "h" ? PICK_LONG.h + c.home : c.k === "a" ? PICK_LONG.a + c.away : PICK_LONG[c.k];
 function pickBtn(m, k) {
   const i = pickInfo(m, k);
   const shown = i.median ? `<b>${n2(i.median)}</b>` : `<b>${odd(i.pModel)}</b>`;
-  const tipTxt = i.median ? `Cote médiane des bookmakers · proba modèle ${pct(i.pModel)}` : `Pas encore de cote bookmaker : cote juste du modèle (${pct(i.pModel)})`;
+  const tipTxt = i.median ? `Cote ${i.src === "médiane bookmakers" ? "médiane des bookmakers" : esc(i.src)} · proba finale ${pct(i.pModel)}` : `Pas encore de cote bookmaker : cote juste du modèle seul (${pct(i.pModel)})`;
   return `<button class="pick${i.median ? "" : " fair"}" type="button" data-pick="${m.slug}|${k}" aria-pressed="${inCart(m.id, k)}" data-tip="${esc(tipTxt)}">${PICKS[k]}${shown}</button>`;
 }
 function saveCart() { store.set("panier", cart); }
@@ -907,14 +1030,14 @@ function renderCart() {
         <div class="sel">${esc(pickName(c))}</div></div>
         <button class="xbtn" type="button" data-cart-rm="${i}" aria-label="Retirer ${esc(pickName(c))}">×</button></div>
       <div class="row"><label>Cote <input class="cart-odds" data-i="${i}" inputmode="decimal" value="${esc(c.odds)}" placeholder="à saisir" aria-label="Cote pour ${esc(pickName(c))}"></label>
-        <span>modèle ${pct(c.pModel, 1)}</span><span>marché ${c.pMkt != null ? pct(c.pMkt, 1) : "–"}</span></div>
+        <span>proba finale ${pct(c.pModel, 1)}</span><span>marché ${c.pMkt != null ? pct(c.pMkt, 1) : "–"}</span></div>
       ${c.src ? `<span class="stamp">cote pré-remplie : ${esc(c.src)}</span>` : `<span class="stamp">pas de cote bookmaker pour l'instant : saisis la tienne</span>`}
     </div>`).join("") : `<p class="hint" style="margin:0">Ton combiné est vide. Clique sur 1, N, 2, +2,5 ou −2,5 sous un match pour l'ajouter.</p>`);
   document.getElementById("cart-foot").innerHTML = T.L.length ? `
     <div class="ctot"><span>Cote combinée</span><b id="ct-odds">${T.odds ? n2(T.odds) : "complète les cotes"}</b></div>
-    <div class="ctot"><span>Chance selon le modèle</span><b id="ct-pm">${pct(T.pm, 1)}</b></div>
+    <div class="ctot"><span>Chance (proba finale)</span><b id="ct-pm">${pct(T.pm, 1)}</b></div>
     <div class="ctot"><span>Chance selon le marché</span><b id="ct-pk">${T.pk != null ? pct(T.pk, 1) : "–"}</b></div>
-    <div class="ctot big"><span>Valeur (cote × chance modèle)</span><b id="ct-val">${verdictOf(T.value)}</b></div>
+    <div class="ctot big"><span>Valeur (cote × chance)</span><b id="ct-val">${verdictOf(T.value)}</b></div>
     <div class="ctot"><label for="cart-stake">Mise</label><span><input id="cart-stake" inputmode="decimal" value="${esc(String(store.get("cartStake", "2")))}"> €</span></div>
     <div class="ctot"><span>Gain si tout passe</span><b id="ct-gain">${T.odds ? euro(T.stake * T.odds) + ` (bénéfice ${euro(T.stake * (T.odds - 1))})` : "–"}</b></div>
     <p class="stamp" style="margin:0">Chances multipliées comme si les matchs étaient indépendants. <button class="linkbtn" id="cart-clear" type="button">Vider le combiné</button></p>` : "";
@@ -935,13 +1058,15 @@ function route() {
   document.title = "CoteJuste";
   if (h === "classements") { setTab("classements"); app.innerHTML = viewStandings(); return; }
   if (h === "methode") { setTab("methode"); app.innerHTML = viewMethod(); return; }
-  if (h === "bilan") { setTab("bilan"); app.innerHTML = viewBilan(); if (DATA.bilan) setupChart((DATA.bilan.variants[state.bilanVar] || DATA.bilan.variants.moy).bets); return; }
+  if (h === "bilan") { setTab("bilan"); app.innerHTML = viewBilan(); const B = DATA.bilan; if (B && B.series) setupChart((B.series[state.bilanSerie] || B.series.toutes_finale).bets); return; }
   setTab("matchs"); app.innerHTML = viewMatches();
 }
 
 document.addEventListener("click", e => {
   const pk = e.target.closest("[data-pick]");
   if (pk) { e.preventDefault(); const [s, k] = pk.dataset.pick.split("|"); togglePick(s, k); return; }
+  const ar = e.target.closest("[data-addreco]");
+  if (ar) { addReco(+ar.dataset.addreco); return; }
   const rm = e.target.closest("[data-cart-rm]");
   if (rm) { cart.splice(+rm.dataset.cartRm, 1); cartMsg = null; saveCart(); renderCart(); return; }
   if (e.target.id === "cart-btn") { cartMsg = null; renderCart(); openCart(); return; }
@@ -952,8 +1077,8 @@ document.addEventListener("click", e => {
     updateCalc((location.hash || "").slice(1));
     return;
   }
-  const bv = e.target.closest("[data-bvar]");
-  if (bv) { state.bilanVar = bv.dataset.bvar; store.set("bilanVar", state.bilanVar); route(); return; }
+  const bs = e.target.closest("[data-bserie]");
+  if (bs) { state.bilanSerie = bs.dataset.bserie; store.set("bilanSerie", state.bilanSerie); route(); return; }
   const b = e.target.closest("[data-league]");
   if (b) { state.league = b.dataset.league; store.set("league", state.league); route(); }
 });
@@ -962,6 +1087,9 @@ document.addEventListener("input", e => {
   if (e.target.closest(".valtable")) updateCalc((location.hash || "").slice(1));
   if (e.target.classList.contains("cart-odds")) { cart[+e.target.dataset.i].odds = e.target.value.trim(); cart[+e.target.dataset.i].src = "ta cote"; saveCart(); updateCartTotals(); }
   if (e.target.id === "cart-stake") { store.set("cartStake", e.target.value.trim()); updateCartTotals(); }
+});
+document.addEventListener("change", e => {  // bankroll modifiée : on recalcule les mises des recos
+  if (e.target.id === "bankroll" && (location.hash || "#matchs") === "#matchs") route();
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && document.getElementById("cart").classList.contains("open")) closeCart(); });
 // infobulles

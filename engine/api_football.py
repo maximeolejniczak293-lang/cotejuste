@@ -309,11 +309,35 @@ def _slim_lineups(resp: list) -> list[dict]:
                  xi=players(t.get("startXI")), subs=players(t.get("substitutes"))) for t in resp]
 
 
+def _plain(s: str) -> str:
+    import unicodedata
+    return unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode().lower()
+
+
 def summarize_odds(slim: dict | None) -> dict | None:
-    """Médiane et meilleure cote parmi les bookmakers, + probabilités implicites (marge retirée)."""
+    """Médiane, moyenne et meilleure cote parmi les bookmakers, cote de ton bookmaker (config.BOOKMAKER)
+    s'il est présent, et probabilités implicites tirées de la cote MOYENNE, marge retirée
+    (sur 3 issues pour le 1N2, sur 2 pour +/-2,5)."""
     if not slim or not slim.get("bookmakers"):
         return None
-    out = {"n": len(slim["bookmakers"]), "update": slim.get("update"), "median": {}, "mean": {}, "best": {}}
+    try:
+        from config import BOOKMAKER
+    except ImportError:
+        BOOKMAKER = ""
+    out = {"n": len(slim["bookmakers"]), "update": slim.get("update"), "median": {}, "mean": {}, "best": {},
+           "bookmakers": sorted(b["name"] for b in slim["bookmakers"]), "pref": None}
+    mine = next((b for b in slim["bookmakers"] if BOOKMAKER and _plain(BOOKMAKER) in _plain(b["name"])), None)
+    if mine:
+        odds = {}
+        for key, (bet, side) in {"h": ("1n2", "h"), "d": ("1n2", "d"), "a": ("1n2", "a"),
+                                 "o25": ("ou25", "o"), "u25": ("ou25", "u")}.items():
+            try:
+                v = float((mine.get(bet) or {}).get(side))
+                if v > 1:
+                    odds[key] = v
+            except (TypeError, ValueError):
+                pass
+        out["pref"] = {"name": mine["name"], "odds": odds} if odds else None
     for key, (bet, side) in {"h": ("1n2", "h"), "d": ("1n2", "d"), "a": ("1n2", "a"),
                              "o25": ("ou25", "o"), "u25": ("ou25", "u")}.items():
         vals = []
@@ -329,12 +353,15 @@ def summarize_odds(slim: dict | None) -> dict | None:
             out["mean"][key] = round(statistics.fmean(v for v, _ in vals), 3)
             best = max(vals)
             out["best"][key] = [best[0], best[1]]
-    m = out["median"]
+    m = out["mean"]
     if all(k in m for k in "hda"):
         inv = {k: 1 / m[k] for k in "hda"}
         s = sum(inv.values())
         out["implied"] = {k: round(v / s, 4) for k, v in inv.items()}
         out["margin"] = round(s - 1, 4)
+    if "o25" in m and "u25" in m:
+        io, iu = 1 / m["o25"], 1 / m["u25"]
+        out["implied_ou"] = {"o25": round(io / (io + iu), 4), "u25": round(iu / (io + iu), 4)}
     return out if out["median"] else None
 
 

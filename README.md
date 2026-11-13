@@ -83,11 +83,53 @@ Sous chaque match et dans chaque fiche, les boutons 1, N, 2, +2,5 et −2,5 ajou
 
 Une seule sélection est possible par match, et un avertissement s'affiche au-delà de 3 sélections.
 
+## Réglages : `engine/config.py`
+
+C'est le seul fichier à modifier pour changer :
+- le poids du modèle (`W_MODELE`, 0,5) ;
+- ton bookmaker (`BOOKMAKER`, « Betclic ») ;
+- les seuils des recos, des mises et du bilan.
+
+## Proba finale : modèle + marché
+
+- **Proba marché** : elle part de la cote **moyenne** des bookmakers, marge retirée. `p_marché = (1/cote) ÷ somme des (1/cote)`, sur 3 issues pour le 1N2 et sur 2 pour +/−2,5.
+- **Proba finale** = `W × modèle + (1 − W) × marché`, avec W = 0,5. Sans cotes, c'est le modèle seul (« sans marché ») et aucune reco n'est possible.
+- **Où elle sert** : la fiche match affiche les trois probas. Le calculateur, le combiné et les recos utilisent la proba finale.
+- **Le meilleur W** : à partir de 200 matchs avec cote de clôture, le W qui minimise le log loss est calculé et affiché dans Méthode. Il n'est jamais appliqué automatiquement.
+
+## Recos du jour (en haut de l'onglet Matchs)
+
+**Candidats** : 1, N, 2, +2,5 et −2,5 des matchs pas encore commencés, à moins de 48 h, avec cotes. Valeur = meilleure cote × proba finale.
+
+**Les quatre recos :**
+- **Sécu** : proba ≥ 65 %, cote ≥ 1,30, valeur ≥ 1. On garde la plus haute proba. Cote minimale = 1 ÷ proba.
+- **Valeur** : valeur ≥ 1,05 sur le 1N2 et ≥ 1,08 sur les buts, proba ≥ 35 %. On garde la plus haute valeur. Cote minimale = 1,05 ÷ proba.
+- **Combiné** : 2 ou 3 matchs différents, chaque proba ≥ 55 %, chance ≥ 30 %, valeur ≥ 1. On garde la plus haute valeur combinée.
+- **Grosse cote** (pour s'amuser) : cote ≥ 5 et valeur ≥ 1, mise fixe d'1 €.
+
+**Règles communes :**
+- Une sélection n'apparaît pas dans deux recos à la fois, sauf dans le combiné.
+- **Confiance** : Élevée si modèle et marché sont d'accord à 5 points près *et* que les absents sont connus ; Moyenne si une seule de ces conditions est remplie ; Faible sinon.
+- **Mise** : ¼ de Kelly sur la meilleure cote, plafonnée à 5 %, minimum 0,50 €, arrondie à 0,10 €. Le total reste ≤ 40 % de la bankroll : les mises sont réduites, puis la grosse cote et le combiné sont retirés si besoin.
+- Si rien ne passe les filtres, le site affiche « Rien d'intéressant aujourd'hui ». Aucune reco n'est jamais forcée.
+- **Aucune requête API supplémentaire** : tout est calculé avec les cotes et les absents déjà en cache.
+
 ## Suivi des performances (onglet Bilan)
 
-- `data/journal.csv` : à chaque mise à jour où les cotes d'un match à venir sont relues, une ligne « releve » avec les probabilités du modèle, la cote moyenne et la meilleure cote pour 1, N, 2, +2,5, −2,5. Moins de 30 min avant le match, une ligne « cloture ».
-- `data/paris.csv` : recalculé à chaque fois. Ce sont les paris « valeur » (cote moyenne × probabilité ≥ 1,05) pris au dernier relevé avant le match, avec le résultat, le gain pour 1 € et la CLV (cote prise ÷ cote de clôture − 1).
-- Les deux fichiers s'ouvrent dans Excel (séparateur `;`, virgule décimale). Le robot les enregistre dans le dépôt après chaque mise à jour.
+**Les fichiers :**
+- `data/journal.csv` : une ligne « releve » à chaque relecture des cotes d'un match à venir, et une ligne « cloture » moins de 30 min avant le match. Chaque ligne contient, pour 1, N, 2, +2,5 et −2,5, les probas modèle, marché et finale, ainsi que les cotes moyenne, meilleure et Betclic.
+- `data/recos.csv` : chaque reco au moment où elle apparaît, une par type, par match et par jour (on garde la première). Une ligne par sélection, avec le même `reco_id` pour les sélections d'un combiné.
+- `data/paris.csv` : recalculé à chaque fois, série par série.
+
+**Comment les paris sont jugés :**
+- **Cote prise** : la cote Betclic si l'API la fournit pour ce match, sinon la cote moyenne. La meilleure cote reste affichée, mais seulement à titre d'information.
+- **CLV** = cote prise ÷ cote de clôture − 1, toujours entre deux cotes du même type : Betclic contre Betclic, moyenne contre moyenne.
+- **Séries suivies** : sécu, valeur, combiné, grosse cote, « toutes les valeurs, modèle seul » et « toutes les valeurs, proba finale ». Pour chacune : nombre de paris, taux de réussite, ROI pour 1 € et CLV. Sous 50 paris réglés, le site indique « échantillon trop petit pour conclure ».
+- Les fichiers s'ouvrent dans Excel (séparateur `;`, virgule décimale). Le robot les enregistre dans le dépôt.
+
+**Limites :**
+- Le 13/11/2026, Betclic n'apparaissait pas parmi les bookmakers renvoyés par l'API (une seule réponse vue, en Copa del Rey). Tant qu'il est absent, la cote prise est la moyenne.
+- Les recos sont choisies avec la meilleure cote du marché : la cote minimale indique en dessous de quoi renoncer chez son bookmaker.
 
 ## Ce que vaut le modèle (backtest sur 1 374 matchs jamais vus)
 

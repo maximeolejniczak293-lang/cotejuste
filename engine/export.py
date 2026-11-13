@@ -16,6 +16,8 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import bilan  # noqa: E402
+import recos  # noqa: E402
+from config import W_MODELE  # noqa: E402
 from data import CACHE, CURRENT, calendar, find_missing, load_current, load_league, table  # noqa: E402
 from model import DixonColes  # noqa: E402
 from names import LEAGUES  # noqa: E402
@@ -135,11 +137,16 @@ def build_league(lg, live):
                     for r in h2h.itertuples()][::-1][:6]
         lv = u["live"] or {}
         odds = lv.get("odds")
+        pm = {k: float(v) for k, v in {"h": pr["p_home"], "d": pr["p_draw"], "a": pr["p_away"],
+                                        "o25": pr["over25"], "u25": 1 - pr["over25"]}.items()}
+        pk = dict((odds or {}).get("implied") or {}, **((odds or {}).get("implied_ou") or {})) or None
+        pf = {k: (W_MODELE * v + (1 - W_MODELE) * pk[k]) if pk and k in pk else v for k, v in pm.items()}
         fx = dict(
             id=f"{lg}-{h}-{a}".replace(" ", "_"), league=lg, kickoff=u["kickoff"], time_known=u["time_known"],
             source=u["source"], status=u["status"], round=u["round"], venue=u["venue"], home=h, away=a,
             api_id=lv.get("id"), closing=lv.get("closing"),
             p=dict(h=pr["p_home"], d=pr["p_draw"], a=pr["p_away"]),
+            pm=pm, pk=pk, pf=pf, sans_marche=not pk,
             market=odds.get("implied") if odds else None,
             odds=odds,
             absents=side_lists(lv, "injuries"), lineups=side_lists(lv, "lineups"),
@@ -226,17 +233,31 @@ if __name__ == "__main__":
     if data["missing"]:
         print(f"   ! {len(data['missing'])} résultat(s) manquant(s) signalé(s) sur le site")
 
-    # --- suivi des performances : journal des cotes puis bilan des paris « valeur »
-    added = bilan.record([f for L in data["leagues"] for f in L["fixtures"]])
+    # --- recos du jour (cotes déjà en cache, aucune requête)
+    all_fx = [f for L in data["leagues"] for f in L["fixtures"]]
+    data["recos"] = recos.build(all_fx, {L["code"]: L["teams"] for L in data["leagues"]})
+    data["recos"]["generated"] = data["generated"]
+    data["config"] = dict(w=W_MODELE, bookmaker=recos.C.BOOKMAKER)
+    with_odds = [f for f in all_fx if f.get("odds")]
+    with_bk = [f for f in with_odds if (f["odds"].get("pref") or {}).get("odds")]
+    names = sorted({b for f in with_odds for b in f["odds"].get("bookmakers", [])})
+    print(f"cotes : {len(with_odds)} match(s) avec cotes, {recos.C.BOOKMAKER} présent sur {len(with_bk)} ; "
+          f"cote prise = {recos.C.BOOKMAKER if with_bk else 'cote moyenne'}"
+          + (f" ; bookmakers vus : {', '.join(names)}" if names else ""))
+    print(f"recos : {len(data['recos']['items'])} ({', '.join(i['type'] for i in data['recos']['items']) or 'aucune'}) "
+          f"parmi {data['recos']['candidats']} candidat(s)")
+
+    # --- suivi des performances : journal des cotes et des recos, puis bilan
+    added = bilan.record(all_fx)
+    added_r = bilan.record_recos(data["recos"]["items"])
     results = {}
     for lg in LEAGUES:
         for r in load_current(lg).itertuples():
             results[(lg, r.home, r.away)] = (int(r.hg), int(r.ag))
-    data["bilan"] = bilan.compute(bilan.read_journal(), results)
+    data["bilan"] = bilan.compute(bilan.read_journal(), results, bilan.read_recos())
     bilan.write_paris(data["bilan"])
-    s = data["bilan"]["variants"]["moy"]["summary"]
-    print(f"journal : {added} relevé(s) ajouté(s), {data['bilan']['journal_rows']} au total ; "
-          f"{s['n']} pari(s) valeur dont {s['settled']} réglé(s)")
+    print(f"journal : {added} relevé(s) et {added_r} reco(s) ajouté(s) ; {data['bilan']['journal_rows']} relevé(s), "
+          f"{data['bilan']['recos']} reco(s) au total")
 
     def clean(o):
         if isinstance(o, dict):
