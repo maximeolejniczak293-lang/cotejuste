@@ -16,7 +16,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import bilan  # noqa: E402
-from data import CACHE, CURRENT, calendar, load_current, load_league, table  # noqa: E402
+from data import CACHE, CURRENT, calendar, find_missing, load_current, load_league, table  # noqa: E402
 from model import DixonColes  # noqa: E402
 from names import LEAGUES  # noqa: E402
 
@@ -219,6 +219,12 @@ if __name__ == "__main__":
         live=dict(updated=live.get("generated"), window=live.get("window"), quota=live.get("quota")),
         leagues=[build_league(lg, live) for lg in LEAGUES],
     )
+
+    # --- résultats manquants (bandeau discret sur le site)
+    data["missing"] = [dict(league=m["league"], home=m["home"], away=m["away"], date=m["date"])
+                       for lg in LEAGUES for m in find_missing(lg)]
+    if data["missing"]:
+        print(f"   ! {len(data['missing'])} résultat(s) manquant(s) signalé(s) sur le site")
 
     # --- suivi des performances : journal des cotes puis bilan des paris « valeur »
     added = bilan.record([f for L in data["leagues"] for f in L["fixtures"]])

@@ -213,7 +213,7 @@ class Client:
         return data
 
     # ---- points d'accès
-    def fixtures_on(self, day: str) -> list[dict]:
+    def fixtures_on(self, day: str, max_age: float = 3 * 3600) -> list[dict]:
         """Matchs de Ligue 1, Premier League et LaLiga à cette date (UTC). 1 requête, toutes ligues."""
         d = date.fromisoformat(day)
 
@@ -224,7 +224,7 @@ class Client:
         def final(data):  # journée passée et tous les matchs terminés (ou reportés) : ne changera plus
             return d < utcnow().date() and all(f["status"] in FINISHED | CANCELLED for f in data)
 
-        return self._cached(f"fixtures/{day}", 3 * 3600, fetch, final)
+        return self._cached(f"fixtures/{day}", max_age, fetch, final)
 
     def odds(self, fixture: dict, max_age: float) -> dict:
         def fetch():

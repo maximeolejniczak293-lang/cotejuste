@@ -127,6 +127,40 @@ def store_results():
     return added
 
 
+def catch_up(client):
+    """Rattrapage des résultats manquants : API (hier et aujourd'hui, 2 requêtes au plus), puis openfootball.
+    Renvoie la liste de ce qui manque encore (avertissement GitHub pour chacun)."""
+    import data
+    today = af.utcnow().date()
+    window = {(today - timedelta(days=1)).isoformat(), today.isoformat()}
+    missing = [m for lg in af.LEAGUE_IDS for m in data.find_missing(lg)]
+    if not missing:
+        log("   aucun résultat manquant")
+        return []
+    log(f"   {len(missing)} match(s) joué(s) sans résultat : tentative de rattrapage")
+    for day in sorted({m["date"] for m in missing} & window):
+        try:  # redemandé seulement si la copie en cache a plus de 30 min et n'est pas définitive
+            client.fixtures_on(day, max_age=1800)
+        except af.ApiError as e:
+            warn(f"rattrapage {day} : {e}")
+    for lg, new in store_results().items():
+        for m in new:
+            log(f"   + {lg} {m['date']} {m['home']} {m['hg']}-{m['ag']} {m['away']} (API)")
+    for lg in af.LEAGUE_IDS:
+        rows = [dict(date=m["date"], round=m["round"], home=m["home"], away=m["away"], hg=m["of_score"][0], ag=m["of_score"][1])
+                for m in data.find_missing(lg) if m["of_score"]]
+        for m in data.add_results(lg, rows):
+            log(f"   + {lg} {m['date']} {m['home']} {m['hg']}-{m['ag']} {m['away']} (openfootball)")
+    still = [m for lg in af.LEAGUE_IDS for m in data.find_missing(lg)]
+    for m in still:
+        warn(f"résultat manquant : {m['league']} {m['date']} {m['home']} - {m['away']} "
+             f"(ni l'API ni openfootball ne l'ont : à ajouter à la main dans raw/{m['league']}_2026-27.txt "
+             f"ou dans REPORTES de raw/live_snapshot.py si le match a été reporté)")
+    if not still:
+        log("   tout est rattrapé")
+    return still
+
+
 def verify_all():
     import data
     for lg in af.LEAGUE_IDS:
@@ -163,6 +197,8 @@ def full_update(client):
             log(f"   + {lg} {m['date']} {m['home']} {m['hg']}-{m['ag']} {m['away']}")
     if not added:
         log("   aucun nouveau résultat")
+    log("   rattrapage des résultats manquants")
+    catch_up(client)
     verify_all()
 
     upcoming = sorted([f for f in fixtures if f["status"] not in af.FINISHED | af.CANCELLED

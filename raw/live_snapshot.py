@@ -6,6 +6,11 @@
 #    et change SNAPSHOT_DATE : seuls les matchs joués jusqu'à cette date sont comparés.
 #  - FIXTURES n'est plus utilisé (les matchs à venir viennent de l'API et du calendrier openfootball).
 SNAPSHOT_DATE = "2026-11-13"
+# Matchs reportés connus, pas encore rejoués : (domicile, extérieur) avec les noms de names.py.
+# Ils ne comptent pas comme « résultat manquant » tant que l'API ne les a pas reprogrammés à une date passée.
+REPORTES = {
+    "es1": [("Rayo Vallecano", "Athletic Bilbao")],  # journée 8, prévu le 10/10/2026
+}
 STANDINGS = {
  "fr1": [("Paris Saint-Germain",7,2,1,23),("Lille OSC",6,3,1,21),("Paris FC",6,2,2,20),("Olympique Marseille",6,0,4,18),("Olympique Lyon",5,2,3,17),("OGC Nice",5,2,3,17),("AS Monaco",4,4,2,16),("Stade Rennais FC",5,1,4,16),("Stade Brest 29",4,3,3,15),("FC Lorient",4,3,3,15),("Racing Club De Lens",4,1,5,13),("Toulouse FC",3,4,3,13),("Strasbourg Alsace",3,1,6,10),("AJ Auxerre",3,1,6,10),("Le Mans FC",1,5,4,8),("Angers SCO",2,2,6,8),("ESTAC Troyes",2,2,6,8),("Le Havre AC",0,2,8,2)],
  "en1": [("Arsenal FC",9,0,1,27),("Brighton & Hove Albion",7,1,2,22),("Manchester City",7,0,3,21),("Liverpool FC",5,3,2,18),("Chelsea FC",5,1,4,16),("Everton FC",4,4,2,16),("AFC Bournemouth",4,3,3,15),("Brentford FC",3,5,2,14),("Leeds United",3,5,2,14),("Aston Villa",3,4,3,13),("Tottenham Hotspur",3,3,4,12),("Newcastle United",3,3,4,12),("Hull City",2,5,3,11),("Ipswich Town",3,2,5,11),("Fulham FC",2,4,4,10),("Nottingham Forest",2,3,5,9),("Coventry City",3,0,7,9),("Manchester United",1,5,4,8),("Sunderland AFC",2,2,6,8),("Crystal Palace",2,1,7,7)],

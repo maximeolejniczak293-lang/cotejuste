@@ -154,6 +154,64 @@ def postponed(league: str) -> set:
     return out
 
 
+def find_missing(league: str, now: datetime | None = None) -> list[dict]:
+    """Matchs déjà joués (d'après le calendrier) sans résultat dans raw/.
+
+    Attendus : matchs vus par l'API (cache) dont le coup d'envoi date de plus de 3 h, et matchs du calendrier
+    openfootball datés d'avant-hier ou plus tôt (ses dates sont provisoires, d'où la marge d'un jour).
+    Exclus : reportés ou annulés selon l'API, reprogrammés plus tard selon l'API, reportés connus (live_snapshot.REPORTES).
+    Chaque élément indique si openfootball connaît le score (of_score) pour pouvoir le rattraper."""
+    now = now or datetime.now(timezone.utc)
+    sys.path.insert(0, RAW)
+    import live_snapshot  # noqa
+    known_pst = set(getattr(live_snapshot, "REPORTES", {}).get(league, []))
+    cur = load_current(league)
+    played = set(zip(cur.home, cur.away))
+
+    api = {}  # (dom, ext) -> dernier état connu par l'API
+    for path in sorted(glob.glob(os.path.join(CACHE, "fixtures", "*.json"))):
+        with open(path, encoding="utf-8-sig") as f:
+            for fx in json.load(f)["data"]:
+                if fx["league"] != league:
+                    continue
+                try:
+                    pair = (canon(league, fx["home"]), canon(league, fx["away"]))
+                except KeyError:
+                    continue
+                if pair not in api or fx["kickoff"] >= api[pair]["kickoff"]:
+                    api[pair] = fx
+    of = {}
+    for m in _of_matches(league, CURRENT):
+        try:
+            of[(canon(league, m["team1"]), canon(league, m["team2"]))] = m
+        except KeyError:
+            continue
+
+    limit_api = now - timedelta(hours=3)
+    limit_of = now.date() - timedelta(days=2)
+    out = []
+    for pair in set(api) | set(of):
+        if pair in played:
+            continue
+        a, m = api.get(pair), of.get(pair)
+        if a:
+            if a["status"] in {"PST", "CANC", "ABD", "AWD", "WO"}:
+                continue
+            ko = datetime.fromisoformat(a["kickoff"].replace("Z", "+00:00"))
+            if ko > limit_api:
+                continue  # à venir ou reprogrammé plus tard
+            when, src = a["kickoff"][:10], "api"
+        elif m and date.fromisoformat(m["date"]) <= limit_of and pair not in known_pst:
+            when, src = m["date"], "calendrier"
+        else:
+            continue
+        ft = _ft(m) if m else None
+        out.append(dict(league=league, home=pair[0], away=pair[1], date=when, source=src,
+                        round=_round_num((a or {}).get("round") or (m or {}).get("round")),
+                        of_score=[int(ft[0]), int(ft[1])] if ft else None))
+    return sorted(out, key=lambda x: (x["date"], x["home"]))
+
+
 def table(df: pd.DataFrame) -> pd.DataFrame:
     """Classement calculé à partir des résultats."""
     t = defaultdict(lambda: dict(P=0, W=0, D=0, L=0, GF=0, GA=0, Pts=0))

@@ -74,6 +74,8 @@ nav.tabs a { text-decoration: none; padding: 8px 14px; border-radius: 8px; font:
 nav.tabs a[aria-current="page"] { background: var(--ink); color: var(--surface); }
 nav.tabs a:hover:not([aria-current="page"]) { background: var(--paper); }
 .datebar { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); padding: 0 0 12px; }
+.datebar span.missing { color: var(--ink); cursor: help; }
+.datebar span.missing::before { background: var(--led); }
 .datebar span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 7px; vertical-align: 2px; }
 
 main { padding: 24px 0 64px; display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr); }
@@ -181,6 +183,40 @@ td.r, th.r { text-align: right; }
 details summary { cursor: pointer; color: var(--ink-2); font-size: 14px; }
 .stamp { font-size: 12px; color: var(--muted); }
 
+/* combiné */
+.mwrap { display: grid; }
+.mwrap .match { border-radius: var(--radius) var(--radius) 0 0; }
+.pickbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 7px 14px; font-size: 13px; color: var(--muted);
+  border: 1px solid var(--line); border-top: 0; border-radius: 0 0 var(--radius) var(--radius); background: var(--paper); }
+.pickbar > span { margin-right: 4px; }
+.pick { border: 1px solid var(--line); background: var(--surface); border-radius: 7px; padding: 3px 8px; cursor: pointer; font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+.pick b { color: var(--ink); font-variant-numeric: tabular-nums; margin-left: 3px; }
+.pick.fair b { color: var(--muted); font-weight: 500; }
+.pick[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pick[aria-pressed="true"] b { color: #fff; }
+#cart-btn { position: fixed; right: 16px; bottom: 16px; z-index: 40; border: 0; border-radius: 999px; padding: 12px 18px; background: var(--ink); color: var(--surface);
+  font: 700 16px/1 var(--font-display); text-transform: uppercase; letter-spacing: .05em; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.25); }
+#cart-btn[hidden] { display: none; }
+#cart { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); z-index: 45; background: var(--surface); border-left: 1px solid var(--line);
+  box-shadow: -8px 0 30px rgba(0,0,0,.18); display: grid; grid-template-rows: auto 1fr auto; transform: translateX(105%); transition: transform .18s; }
+#cart.open { transform: none; }
+#cart header { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+#cart header h2 { font-size: 22px; text-transform: uppercase; }
+#cart .body { overflow-y: auto; padding: 14px 18px; display: grid; gap: 10px; align-content: start; }
+#cart .foot { border-top: 1px solid var(--line); padding: 14px 18px; display: grid; gap: 8px; }
+.xbtn { border: 0; background: none; cursor: pointer; color: var(--muted); font-size: 20px; line-height: 1; padding: 4px; }
+.citem { border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 6px; font-size: 14px; }
+.citem .top { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+.citem .sel { font: 700 16px/1.2 var(--font-display); text-transform: uppercase; }
+.citem .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; color: var(--ink-2); font-size: 13px; }
+.citem input, #cart-stake { width: 76px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); text-align: right; font-variant-numeric: tabular-nums; }
+.ctot { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
+.ctot b { font-variant-numeric: tabular-nums; }
+.ctot.big b { font: 700 22px/1 var(--font-display); }
+.cmsg { font-size: 13px; padding: 8px 10px; border-radius: 8px; border-left: 3px solid var(--led); background: var(--paper); color: var(--ink-2); }
+.cmsg.err { border-left-color: var(--critical); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 /* bilan */
 .pos-v { color: var(--good-ink); } .neg-v { color: var(--critical); }
 .chart svg { display: block; width: 100%; height: auto; touch-action: none; }
@@ -263,6 +299,12 @@ footer { border-top: 1px solid var(--line); padding: 20px 0 40px; color: var(--m
 <main class="wrap" id="app"></main>
 <footer><div class="wrap" id="foot"></div></footer>
 <div id="tip" role="tooltip"></div>
+<button id="cart-btn" type="button" hidden aria-controls="cart">Combiné · 0</button>
+<aside id="cart" role="dialog" aria-label="Mon combiné" aria-hidden="true">
+  <header><h2>Mon combiné</h2><button class="xbtn" id="cart-close" type="button" aria-label="Fermer">×</button></header>
+  <div class="body" id="cart-body"></div>
+  <div class="foot" id="cart-foot"></div>
+</aside>
 
 <script type="application/json" id="data">/*__DATA__*/</script>
 <script>
@@ -315,6 +357,8 @@ function renderChrome() {
   if (MATCHES.length) parts.push(`<span>Prochains matchs : ${esc(fmtDay(MATCHES[0].kickoff))} → ${esc(fmtDay(MATCHES[MATCHES.length - 1].kickoff))}</span>`);
   if (upd) parts.push(`<span>Dernière mise à jour API-Football : ${esc(fmtDay(upd))} à ${fmtTime(upd)}</span>`);
   parts.push(`<span>${LEAGUES.reduce((s, L) => s + L.n_matches, 0).toLocaleString("fr-FR")} matchs analysés depuis 2022</span>`);
+  const miss = DATA.missing || [];
+  if (miss.length) parts.push(`<span class="missing" tabindex="0" data-tip="${esc("Matchs joués dont le score n'a pas pu être récupéré : " + miss.map(m => `${m.home} – ${m.away} (${fmtShort(m.date)})`).join(", ") + ". Le modèle et le classement les ignorent en attendant.")}">${miss.length} résultat${miss.length > 1 ? "s" : ""} manquant${miss.length > 1 ? "s" : ""}</span>`);
   document.getElementById("datebar").innerHTML = parts.join("");
   document.getElementById("foot").innerHTML =
     `CoteJuste est un outil d'aide à la décision, pas une garantie : les absents et les compositions sont affichés, mais le modèle n'en tient pas compte. ` +
@@ -404,7 +448,7 @@ function viewMatches() {
     ${controls()}
     ${Object.keys(days).sort().map(k => `
       <div class="day"><h3>${esc(fmtDay(days[k][0].kickoff))}</h3>
-      ${days[k].map(m => `
+      ${days[k].map(m => `<div class="mwrap">
         <a class="match" href="#${m.slug}" aria-label="${esc(m.home)} contre ${esc(m.away)} : voir l'analyse">
           <div class="time">${m.time_known ? fmtTime(m.kickoff) : "–"}<small><span class="flagtag">${TAG[m.league]}</span>${m.source === "calendrier" ? ` <span class="flagtag" data-tip="Date du calendrier, à confirmer. Horaire exact, cotes et absents arrivent quand le match est à moins de 48 h.">PROV.</span>` : ""}${m.lineups ? ` <span class="flagtag" data-tip="Compositions officielles publiées">XI</span>` : ""}</small></div>
           <div class="team h">${esc(m.home)}<small>${m.L.teams[m.home].rank}e · forme ${m.L.teams[m.home].form_pts}/15</small></div>
@@ -412,7 +456,8 @@ function viewMatches() {
           <div class="team a">${esc(m.away)}<small>${m.L.teams[m.away].rank}e · forme ${m.L.teams[m.away].form_pts}/15</small></div>
           <div class="odds num"><span><b>${odd(m.p.h)}</b>1</span><span><b>${odd(m.p.d)}</b>N</span><span><b>${odd(m.p.a)}</b>2</span></div>
           <span class="chev" aria-hidden="true">›</span>
-        </a>`).join("")}
+        </a>
+        <div class="pickbar"><span>Ajouter au combiné :</span>${Object.keys(PICKS).map(k => pickBtn(m, k)).join("")}</div></div>`).join("")}
       </div>`).join("")}
   </section>`;
 }
@@ -494,7 +539,7 @@ function viewMatch(m) {
       <h3 id="calc-t">Calculateur de valeur</h3>
       <p class="hint">${Object.keys(api).length ? `Cotes pré-remplies : médiane de ${m.odds.n} bookmakers (API-Football, relevé le ${esc(stamp(m.checked && m.checked.odds))}). Remplace-les par celles de ton bookmaker.` : "Entre les cotes de ton bookmaker (elles seront pré-remplies quand le match sera à moins de 48 h)."} Valeur = cote × probabilité : au-dessus de 1, le pari est rentable à long terme si le modèle a raison.</p>
       <div class="tablewrap"><table class="valtable">
-        <thead><tr><th>Pari</th><th class="r">Proba</th><th class="r">Cote juste</th><th class="r">Ta cote</th><th>Verdict</th><th class="r">Mise</th></tr></thead>
+        <thead><tr><th>Pari</th><th class="r">Proba</th><th class="r">Cote juste</th><th class="r">Ta cote</th><th>Verdict</th><th class="r">Mise</th><th><span class="sr">Combiné</span></th></tr></thead>
         <tbody>${markets.map(([k, label, p]) => {
           const v = saved[k] !== undefined ? saved[k] : (api[k] || "");
           return `
@@ -502,6 +547,7 @@ function viewMatch(m) {
             <td>${esc(label)}</td><td class="r num">${pct(p, 1)}</td><td class="r num">${odd(p)}</td>
             <td class="r"><input id="o-${k}" inputmode="decimal" placeholder="—" aria-label="Cote bookmaker ${esc(label)}" value="${esc(v)}" data-api="${api[k] || ""}"${api[k] ? ` data-tip="Médiane de ${m.odds.n} bookmakers : ${api[k]}${esc(best(k))}"` : ""}></td>
             <td class="v"></td><td class="r num stake"></td>
+            <td>${PICKS[k] ? `<button class="pick" type="button" data-pick="${m.slug}|${k}" aria-pressed="${inCart(m.id, k)}" data-tip="Ajouter « ${esc(label)} » au combiné">+ Combiné</button>` : ""}</td>
           </tr>`; }).join("")}</tbody>
       </table></div>
       <p class="hint" style="margin:0">Mise conseillée : ¼ du critère de Kelly, plafonnée à 5 % de ta bankroll (${euro(state.bankroll)}). Modifiable dans l'onglet Matchs.${Object.keys(api).length ? ` <button class="linkbtn" id="reset-odds" type="button">Remettre les cotes du marché</button>` : ""}</p>
@@ -785,6 +831,102 @@ function viewMethod() {
   </div></section>`;
 }
 
+// ---------- combiné (panier gardé dans le navigateur)
+const PICKS = { h: "1", d: "N", a: "2", o25: "+2,5", u25: "−2,5" };
+const PICK_LONG = { h: "Victoire ", d: "Match nul", a: "Victoire ", o25: "Plus de 2,5 buts", u25: "Moins de 2,5 buts" };
+const byId = Object.fromEntries(MATCHES.map(m => [m.id, m]));
+let cart = store.get("panier", []);
+if (!Array.isArray(cart)) cart = [];
+let cartMsg = null;
+
+function pickInfo(m, k) {
+  const pModel = { h: m.p.h, d: m.p.d, a: m.p.a, o25: m.markets.over25, u25: 1 - m.markets.over25 }[k];
+  let pMkt = null;
+  if (m.market && m.market[k] != null) pMkt = m.market[k];
+  else if ((k === "o25" || k === "u25") && m.odds && m.odds.median && m.odds.median.o25 && m.odds.median.u25) {
+    const io = 1 / m.odds.median.o25, iu = 1 / m.odds.median.u25; pMkt = (k === "o25" ? io : iu) / (io + iu);
+  }
+  const saved = store.get("odds:" + m.slug, {}), mine = saved[k] ? parseNum(saved[k]) : NaN;
+  const median = m.odds && m.odds.median ? m.odds.median[k] : null;
+  return { pModel, pMkt, median, odds: mine > 1 ? mine : median || null, src: mine > 1 ? "ta cote" : median ? "médiane bookmakers" : "" };
+}
+const inCart = (id, k) => cart.some(c => c.id === id && c.k === k);
+const pickName = (c) => c.k === "h" ? PICK_LONG.h + c.home : c.k === "a" ? PICK_LONG.a + c.away : PICK_LONG[c.k];
+function pickBtn(m, k) {
+  const i = pickInfo(m, k);
+  const shown = i.median ? `<b>${n2(i.median)}</b>` : `<b>${odd(i.pModel)}</b>`;
+  const tipTxt = i.median ? `Cote médiane des bookmakers · proba modèle ${pct(i.pModel)}` : `Pas encore de cote bookmaker : cote juste du modèle (${pct(i.pModel)})`;
+  return `<button class="pick${i.median ? "" : " fair"}" type="button" data-pick="${m.slug}|${k}" aria-pressed="${inCart(m.id, k)}" data-tip="${esc(tipTxt)}">${PICKS[k]}${shown}</button>`;
+}
+function saveCart() { store.set("panier", cart); }
+function togglePick(slug, k) {
+  const m = bySlug[slug]; if (!m) return;
+  const idx = cart.findIndex(c => c.id === m.id);
+  cartMsg = null;
+  if (idx >= 0 && cart[idx].k === k) { cart.splice(idx, 1); }
+  else if (idx >= 0) {
+    cartMsg = { err: true, text: `Une seule sélection par match : « ${pickName(cart[idx])} » est déjà dans le combiné pour ${m.home} – ${m.away}. Retire-la d'abord.` };
+    openCart();
+  } else {
+    const i = pickInfo(m, k);
+    cart.push({ id: m.id, slug, league: m.league, home: m.home, away: m.away, kickoff: m.kickoff, k,
+      odds: i.odds ? n2(i.odds) : "", src: i.src, pModel: i.pModel, pMkt: i.pMkt });
+  }
+  saveCart(); renderCart();
+}
+function cartLines() {  // probabilités relues dans les données du jour si le match y est encore
+  return cart.map(c => {
+    const m = byId[c.id], i = m ? pickInfo(m, c.k) : null;
+    return Object.assign({}, c, { pModel: i ? i.pModel : c.pModel, pMkt: i ? i.pMkt : c.pMkt, o: parseNum(c.odds) });
+  });
+}
+function cartTotals() {
+  const L = cartLines(), prod = a => a.reduce((x, y) => x * y, 1);
+  const allOdds = L.length && L.every(c => c.o > 1), allMkt = L.length && L.every(c => c.pMkt != null);
+  const odds = allOdds ? prod(L.map(c => c.o)) : null, pm = L.length ? prod(L.map(c => c.pModel)) : null;
+  const pk = allMkt ? prod(L.map(c => c.pMkt)) : null;
+  const stake = parseNum(store.get("cartStake", "2")) || 0;
+  return { L, odds, pm, pk, value: odds && pm ? odds * pm : null, mktValue: odds && pk ? odds * pk : null, stake };
+}
+function verdictOf(v) {
+  if (v == null) return `<span class="verdict none">—</span>`;
+  const cls = v >= 1.05 ? "good" : v >= 1 ? "fair" : "bad";
+  return `<span class="verdict ${cls}">${v >= 1.05 ? "✓ Valeur" : v >= 1 ? "≈ Juste prix" : "✕ Pas de valeur"} ${n2(v)}</span>`;
+}
+function renderCart() {
+  const btn = document.getElementById("cart-btn");
+  btn.hidden = !cart.length || document.getElementById("cart").classList.contains("open");
+  btn.textContent = `Combiné · ${cart.length}`;
+  document.querySelectorAll("[data-pick]").forEach(b => { const [s, k] = b.dataset.pick.split("|"); const m = bySlug[s]; b.setAttribute("aria-pressed", String(!!m && inCart(m.id, k))); });
+  const T = cartTotals(), now = Date.now();
+  document.getElementById("cart-body").innerHTML =
+    (cartMsg ? `<div class="cmsg${cartMsg.err ? " err" : ""}" role="alert">${esc(cartMsg.text)}</div>` : "") +
+    (T.L.length > 3 ? `<div class="cmsg" role="status">⚠ ${T.L.length} sélections : chaque match ajouté multiplie la marge du bookmaker.${T.mktValue ? ` Ici, le marché ne te rend que ${pct(T.mktValue)} de ta mise en moyenne (marge cumulée ${pct(1 - T.mktValue)}).` : ""}</div>` : "") +
+    (T.L.length ? T.L.map((c, i) => `<div class="citem">
+      <div class="top"><div><span class="flagtag">${TAG[c.league] || ""}</span> ${esc(c.home)} – ${esc(c.away)}${Date.parse(c.kickoff) < now ? ` <span class="flagtag">COMMENCÉ</span>` : ""}
+        <div class="sel">${esc(pickName(c))}</div></div>
+        <button class="xbtn" type="button" data-cart-rm="${i}" aria-label="Retirer ${esc(pickName(c))}">×</button></div>
+      <div class="row"><label>Cote <input class="cart-odds" data-i="${i}" inputmode="decimal" value="${esc(c.odds)}" placeholder="à saisir" aria-label="Cote pour ${esc(pickName(c))}"></label>
+        <span>modèle ${pct(c.pModel, 1)}</span><span>marché ${c.pMkt != null ? pct(c.pMkt, 1) : "–"}</span></div>
+      ${c.src ? `<span class="stamp">cote pré-remplie : ${esc(c.src)}</span>` : `<span class="stamp">pas de cote bookmaker pour l'instant : saisis la tienne</span>`}
+    </div>`).join("") : `<p class="hint" style="margin:0">Ton combiné est vide. Clique sur 1, N, 2, +2,5 ou −2,5 sous un match pour l'ajouter.</p>`);
+  document.getElementById("cart-foot").innerHTML = T.L.length ? `
+    <div class="ctot"><span>Cote combinée</span><b id="ct-odds">${T.odds ? n2(T.odds) : "complète les cotes"}</b></div>
+    <div class="ctot"><span>Chance selon le modèle</span><b id="ct-pm">${pct(T.pm, 1)}</b></div>
+    <div class="ctot"><span>Chance selon le marché</span><b id="ct-pk">${T.pk != null ? pct(T.pk, 1) : "–"}</b></div>
+    <div class="ctot big"><span>Valeur (cote × chance modèle)</span><b id="ct-val">${verdictOf(T.value)}</b></div>
+    <div class="ctot"><label for="cart-stake">Mise</label><span><input id="cart-stake" inputmode="decimal" value="${esc(String(store.get("cartStake", "2")))}"> €</span></div>
+    <div class="ctot"><span>Gain si tout passe</span><b id="ct-gain">${T.odds ? euro(T.stake * T.odds) + ` (bénéfice ${euro(T.stake * (T.odds - 1))})` : "–"}</b></div>
+    <p class="stamp" style="margin:0">Chances multipliées comme si les matchs étaient indépendants. <button class="linkbtn" id="cart-clear" type="button">Vider le combiné</button></p>` : "";
+}
+function updateCartTotals() {  // pendant la saisie : on ne redessine que les totaux (le curseur reste en place)
+  const T = cartTotals(); const set = (id, h) => { const el = document.getElementById(id); if (el) el.innerHTML = h; };
+  set("ct-odds", T.odds ? n2(T.odds) : "complète les cotes"); set("ct-val", verdictOf(T.value));
+  set("ct-gain", T.odds ? euro(T.stake * T.odds) + ` (bénéfice ${euro(T.stake * (T.odds - 1))})` : "–");
+}
+function openCart() { const c = document.getElementById("cart"); c.classList.add("open"); c.setAttribute("aria-hidden", "false"); document.getElementById("cart-btn").hidden = true; }
+function closeCart() { const c = document.getElementById("cart"); c.classList.remove("open"); c.setAttribute("aria-hidden", "true"); cartMsg = null; renderCart(); }
+
 // ---------- routage
 function route() {
   const h = (location.hash || "#matchs").slice(1);
@@ -798,6 +940,13 @@ function route() {
 }
 
 document.addEventListener("click", e => {
+  const pk = e.target.closest("[data-pick]");
+  if (pk) { e.preventDefault(); const [s, k] = pk.dataset.pick.split("|"); togglePick(s, k); return; }
+  const rm = e.target.closest("[data-cart-rm]");
+  if (rm) { cart.splice(+rm.dataset.cartRm, 1); cartMsg = null; saveCart(); renderCart(); return; }
+  if (e.target.id === "cart-btn") { cartMsg = null; renderCart(); openCart(); return; }
+  if (e.target.id === "cart-close") { closeCart(); return; }
+  if (e.target.id === "cart-clear") { cart = []; cartMsg = null; saveCart(); renderCart(); return; }
   if (e.target.id === "reset-odds") {
     document.querySelectorAll(".valtable input").forEach(inp => { inp.value = inp.dataset.api || ""; });
     updateCalc((location.hash || "").slice(1));
@@ -811,7 +960,10 @@ document.addEventListener("click", e => {
 document.addEventListener("input", e => {
   if (e.target.id === "bankroll") { const v = parseNum(e.target.value); if (v > 0) { state.bankroll = v; store.set("bankroll", v); } }
   if (e.target.closest(".valtable")) updateCalc((location.hash || "").slice(1));
+  if (e.target.classList.contains("cart-odds")) { cart[+e.target.dataset.i].odds = e.target.value.trim(); cart[+e.target.dataset.i].src = "ta cote"; saveCart(); updateCartTotals(); }
+  if (e.target.id === "cart-stake") { store.set("cartStake", e.target.value.trim()); updateCartTotals(); }
 });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && document.getElementById("cart").classList.contains("open")) closeCart(); });
 // infobulles
 const tip = document.getElementById("tip");
 document.addEventListener("pointermove", e => {
@@ -826,6 +978,7 @@ document.addEventListener("pointerleave", () => tip.classList.remove("on"));
 window.addEventListener("hashchange", route);
 renderChrome();
 route();
+renderCart();
 })();
 </script>
 </body>

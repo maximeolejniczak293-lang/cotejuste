@@ -61,8 +61,27 @@ python update.py --lineups    # compositions des matchs qui commencent dans l'he
 | Cotes + absents d'un match dans les 48 h | 2 la veille, 2 le jour du match |
 | Compositions | 1 à 3 par match, dans l'heure avant le coup d'envoi |
 | Cotes de clôture (bilan) | 1 par match, moins de 30 min avant le coup d'envoi |
+| Rattrapage des résultats manquants | 0 à 2 (hier et aujourd'hui, seulement si la copie en cache a plus de 30 min) |
 
 Jour sans match : 3 requêtes. Le matin, le script garde 4 requêtes par match du jour pour les compositions et la clôture, et reporte si besoin les rafraîchissements les moins utiles. Le garde-fou s'arrête à 90.
+
+## Résultats manquants
+
+À chaque mise à jour complète, `update.py` cherche les matchs déjà joués sans résultat dans `raw/`. Il compare deux sources : les matchs vus par l'API, dont le coup d'envoi date de plus de 3 h, et le calendrier openfootball (matchs datés d'avant-hier ou plus tôt). Il tente ensuite de les récupérer avec l'API (hier et aujourd'hui), puis avec openfootball. S'il en manque encore :
+- un avertissement s'affiche dans GitHub Actions ;
+- un bandeau « X résultats manquants » apparaît sur le site, avec la liste des matchs au survol.
+
+Pour le corriger, ajoute le score à la main en haut de `raw/<ligue>_2026-27.txt`. Si le match a été reporté, ajoute-le à `REPORTES` dans `raw/live_snapshot.py`.
+
+## Combinés
+
+Sous chaque match et dans chaque fiche, les boutons 1, N, 2, +2,5 et −2,5 ajoutent une sélection au panier (bouton « Combiné » en bas à droite). Le panier est gardé dans le navigateur. Il affiche :
+- la cote combinée (produit des cotes) ;
+- les chances selon le modèle et selon le marché (produits des probabilités) ;
+- la valeur (cote combinée × chance modèle) ;
+- le gain pour ta mise.
+
+Une seule sélection est possible par match, et un avertissement s'affiche au-delà de 3 sélections.
 
 ## Suivi des performances (onglet Bilan)
 
