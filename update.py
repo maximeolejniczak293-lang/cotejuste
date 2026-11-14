@@ -201,6 +201,26 @@ def full_update(client):
     catch_up(client)
     verify_all()
 
+    log("2 bis) xG Understat de la saison en cours (aucune requête API-Football)")
+    try:
+        import understat
+        if client.offline:
+            log("   mode hors ligne : on garde les xG déjà enregistrés")
+        else:
+            understat.update(years=[understat.CURRENT_YEAR], log=log)
+        import data
+        for lg in af.LEAGUE_IDS:  # contrôle : >= 99 % des matchs Understat associés, scores identiques
+            _, rep = understat.attach(data.load_league(lg, with_xg=False), lg)
+            if not rep["understat"]:
+                continue
+            log(f"   {lg} : {rep['associes']}/{rep['understat']} matchs Understat associés ({rep['taux'] * 100:.1f} %)")
+            if rep["taux"] < 0.99:
+                warn(f"xG {lg} : seulement {rep['taux'] * 100:.1f} % des matchs Understat associés à nos résultats")
+            for e in rep["ecarts"]:
+                warn(f"xG {lg} : écart de score {e}")
+    except Exception as e:  # noqa: BLE001 - Understat ne doit jamais casser la mise à jour
+        warn(f"xG Understat non mis à jour ({e}) : on garde les dernières données connues")
+
     upcoming = sorted([f for f in fixtures if f["status"] not in af.FINISHED | af.CANCELLED
                        and kickoff(f) > now - timedelta(hours=3)], key=kickoff)
     for f in upcoming:  # vérifie les noms tout de suite

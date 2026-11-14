@@ -1,0 +1,143 @@
+date;domicile;exterieur;buts_dom;buts_ext;xg_dom;xg_ext
+2025-08-15;Girona;Rayo Vallecano;1;3;0,795;3,254
+2025-08-15;Villarreal;Oviedo;2;0;2,607;0,856
+2025-08-16;Alavés;Levante;2;1;1,723;0,742
+2025-08-16;Majorque;Barcelone;0;3;0,529;2,024
+2025-08-16;Valence;Real Sociedad;1;1;1,586;1,049
+2025-08-17;Athletic Bilbao;Séville;3;2;2,676;0,902
+2025-08-17;Celta Vigo;Getafe;0;2;0,744;1,501
+2025-08-17;Espanyol;Atlético Madrid;2;1;1,415;1,293
+2025-08-18;Elche;Betis;1;1;0,981;1,596
+2025-08-19;Real Madrid;Osasuna;1;0;1,429;0,201
+2025-08-22;Betis;Alavés;1;0;2,14;1,438
+2025-08-23;Atlético Madrid;Elche;1;1;1,682;0,313
+2025-08-23;Levante;Barcelone;2;3;2,688;2,481
+2025-08-23;Majorque;Celta Vigo;1;1;0,665;0,917
+2025-08-24;Osasuna;Valence;1;0;0,947;0,59
+2025-08-24;Oviedo;Real Madrid;0;3;0,337;1,821
+2025-08-24;Real Sociedad;Espanyol;2;2;1,434;1,872
+2025-08-24;Villarreal;Girona;5;0;2,977;0,14
+2025-08-25;Athletic Bilbao;Rayo Vallecano;1;0;1,688;0,494
+2025-08-25;Séville;Getafe;1;2;0,833;1,329
+2025-08-27;Celta Vigo;Betis;1;1;0,905;0,714
+2025-08-29;Elche;Levante;2;0;1,443;0,97
+2025-08-29;Valence;Getafe;3;0;1,543;0,757
+2025-08-30;Alavés;Atlético Madrid;1;1;0,855;0,961
+2025-08-30;Girona;Séville;0;2;2,009;1,62
+2025-08-30;Oviedo;Real Sociedad;1;0;0,457;0,922
+2025-08-30;Real Madrid;Majorque;2;1;1,841;0,55
+2025-08-31;Betis;Athletic Bilbao;1;2;0,716;1,111
+2025-08-31;Celta Vigo;Villarreal;1;1;0,876;0,97
+2025-08-31;Espanyol;Osasuna;1;0;1,369;1,382
+2025-08-31;Rayo Vallecano;Barcelone;1;1;1,871;2,358
+2025-09-12;Séville;Elche;2;2;0,346;0,781
+2025-09-13;Athletic Bilbao;Alavés;0;1;0,867;0,091
+2025-09-13;Atlético Madrid;Villarreal;2;0;1,511;0,668
+2025-09-13;Getafe;Oviedo;2;0;0,954;0,37
+2025-09-13;Real Sociedad;Real Madrid;1;2;3,148;2,542
+2025-09-14;Barcelone;Valence;6;0;3,46;0,125
+2025-09-14;Celta Vigo;Girona;1;1;1,803;1,412
+2025-09-14;Levante;Betis;2;2;1,024;2,195
+2025-09-14;Osasuna;Rayo Vallecano;2;0;1,401;0,979
+2025-09-15;Espanyol;Majorque;3;2;2,674;2,032
+2025-09-19;Betis;Real Sociedad;3;1;2,536;0,607
+2025-09-20;Alavés;Séville;1;2;0,91;0,892
+2025-09-20;Girona;Levante;0;4;0,424;4,502
+2025-09-20;Real Madrid;Espanyol;2;0;2,061;0,969
+2025-09-20;Valence;Athletic Bilbao;2;0;2,01;0,499
+2025-09-20;Villarreal;Osasuna;2;1;3,564;1,956
+2025-09-21;Barcelone;Getafe;3;0;2,964;0,216
+2025-09-21;Elche;Oviedo;1;0;1,575;1,106
+2025-09-21;Majorque;Atlético Madrid;1;1;0,531;2,088
+2025-09-21;Rayo Vallecano;Celta Vigo;1;1;1,315;1,282
+2025-09-23;Athletic Bilbao;Girona;1;1;2,026;0,857
+2025-09-23;Espanyol;Valence;2;2;3,313;1,008
+2025-09-23;Levante;Real Madrid;1;4;1,701;4,063
+2025-09-23;Séville;Villarreal;1;2;0,836;2,405
+2025-09-24;Atlético Madrid;Rayo Vallecano;3;2;4,95;1,62
+2025-09-24;Getafe;Alavés;1;1;0,576;1,212
+2025-09-24;Real Sociedad;Majorque;1;0;2,829;0,641
+2025-09-25;Osasuna;Elche;1;1;1,175;1,051
+2025-09-25;Oviedo;Barcelone;1;3;1,45;2,07
+2025-09-26;Girona;Espanyol;0;0;1,077;0,949
+2025-09-27;Atlético Madrid;Real Madrid;5;2;2,791;1,028
+2025-09-27;Getafe;Levante;1;1;0,831;1,278
+2025-09-27;Majorque;Alavés;1;0;1,043;0,566
+2025-09-27;Villarreal;Athletic Bilbao;1;0;1,864;1,563
+2025-09-28;Barcelone;Real Sociedad;2;1;3,01;0,957
+2025-09-28;Betis;Osasuna;2;0;1,19;0,578
+2025-09-28;Elche;Celta Vigo;2;1;4,036;0,822
+2025-09-28;Rayo Vallecano;Séville;0;1;1,891;0,58
+2025-09-29;Valence;Oviedo;1;2;1,723;0,997
+2025-10-03;Osasuna;Getafe;2;1;0,692;0,857
+2025-10-04;Athletic Bilbao;Majorque;2;1;1,734;0,214
+2025-10-04;Girona;Valence;2;1;1,164;2,228
+2025-10-04;Oviedo;Levante;0;2;1,086;1,621
+2025-10-04;Real Madrid;Villarreal;3;1;4,323;0,957
+2025-10-05;Alavés;Elche;3;1;2,851;0,662
+2025-10-05;Celta Vigo;Atlético Madrid;1;1;2,273;0,711
+2025-10-05;Espanyol;Betis;1;2;2,07;1,437
+2025-10-05;Real Sociedad;Rayo Vallecano;0;1;0,769;0,685
+2025-10-05;Séville;Barcelone;4;1;2,894;2,482
+2025-10-17;Oviedo;Espanyol;0;2;1,212;4,463
+2025-10-18;Atlético Madrid;Osasuna;1;0;2,244;0,981
+2025-10-18;Barcelone;Girona;2;1;2,42;1,694
+2025-10-18;Séville;Majorque;1;3;1,259;1,956
+2025-10-18;Villarreal;Betis;2;2;0,981;0,896
+2025-10-19;Celta Vigo;Real Sociedad;1;1;0,717;2,136
+2025-10-19;Elche;Athletic Bilbao;0;0;0,824;0,24
+2025-10-19;Getafe;Real Madrid;0;1;0,53;2,146
+2025-10-19;Levante;Rayo Vallecano;0;3;0,941;2,531
+2025-10-20;Alavés;Valence;0;0;1,056;0,318
+2025-10-24;Real Sociedad;Séville;2;1;1,644;0,247
+2025-10-25;Athletic Bilbao;Getafe;0;1;0,359;1,004
+2025-10-25;Espanyol;Elche;1;0;1,703;1,114
+2025-10-25;Girona;Oviedo;3;3;2,241;2,224
+2025-10-25;Valence;Villarreal;0;2;0,641;2,624
+2025-10-26;Majorque;Levante;1;1;1,87;2,358
+2025-10-26;Osasuna;Celta Vigo;2;3;2,318;1,541
+2025-10-26;Rayo Vallecano;Alavés;1;0;1,55;1,415
+2025-10-26;Real Madrid;Barcelone;2;1;3,413;1,124
+2025-10-27;Betis;Atlético Madrid;0;2;1,338;0,877
+2025-10-31;Getafe;Girona;2;1;1,402;1,544
+2025-11-01;Atlético Madrid;Séville;3;0;2,986;0,377
+2025-11-01;Real Madrid;Valence;4;0;2,9;0,292
+2025-11-01;Real Sociedad;Athletic Bilbao;3;2;1,841;1,131
+2025-11-01;Villarreal;Rayo Vallecano;4;0;2,714;1,086
+2025-11-02;Alavés;Espanyol;2;1;2,18;1,043
+2025-11-02;Barcelone;Elche;3;1;2,807;0,549
+2025-11-02;Betis;Majorque;3;0;2,821;0,75
+2025-11-02;Levante;Celta Vigo;1;2;1,237;1,925
+2025-11-03;Oviedo;Osasuna;0;0;0,717;0,626
+2025-11-07;Elche;Real Sociedad;1;1;0,808;1,472
+2025-11-08;Atlético Madrid;Levante;3;1;3,036;1,291
+2025-11-08;Espanyol;Villarreal;0;2;0,476;1,471
+2025-11-08;Girona;Alavés;1;0;1,264;2,008
+2025-11-08;Séville;Osasuna;1;0;1,223;0,967
+2025-11-09;Athletic Bilbao;Oviedo;1;0;2,652;0,183
+2025-11-09;Celta Vigo;Barcelone;2;4;0,512;3,429
+2025-11-09;Majorque;Getafe;1;0;1,304;0,54
+2025-11-09;Rayo Vallecano;Real Madrid;0;0;1,606;0,841
+2025-11-09;Valence;Betis;1;1;1,951;1,589
+2025-11-21;Valence;Levante;1;0;1,65;0,674
+2025-11-22;Alavés;Celta Vigo;0;1;0,306;1,324
+2025-11-22;Barcelone;Athletic Bilbao;4;0;2,329;1,046
+2025-11-22;Osasuna;Real Sociedad;1;3;1,28;1,765
+2025-11-22;Villarreal;Majorque;2;1;2,637;1,385
+2025-11-23;Betis;Girona;1;1;1,578;1,489
+2025-11-23;Elche;Real Madrid;2;2;1,595;3,883
+2025-11-23;Getafe;Atlético Madrid;0;1;0,579;1,477
+2025-11-23;Oviedo;Rayo Vallecano;0;0;0,499;0,923
+2025-11-24;Espanyol;Séville;2;1;1,166;1,8
+2025-11-28;Getafe;Elche;1;0;1,34;0,449
+2025-11-29;Atlético Madrid;Oviedo;2;0;2,407;0,922
+2025-11-29;Barcelone;Alavés;3;1;2,511;2,093
+2025-11-29;Levante;Athletic Bilbao;0;2;1,203;2,809
+2025-11-29;Majorque;Osasuna;2;2;1,106;1,111
+2025-11-30;Celta Vigo;Espanyol;0;1;0,636;0,599
+2025-11-30;Girona;Real Madrid;1;1;1,052;2,214
+2025-11-30;Real Sociedad;Villarreal;2;3;1,371;1,63
+2025-11-30;Séville;Betis;0;2;0,735;1,179
+2025-12-01;Rayo Vallecano;Valence;1;1;2,133;0,898
+2025-12-02;Barcelone;Atlético Madrid;3;1;3,461;1,35
+2025-12-03;Athletic Bilbao;Real Madrid;0;3;0,917;2,367

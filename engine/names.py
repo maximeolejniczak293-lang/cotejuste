@@ -7,7 +7,7 @@ LEAGUES = {
     "es1": {"name": "LaLiga", "country": "Espagne", "flag": "🇪🇸", "of": "es.1"},
 }
 
-# nom canonique -> variantes rencontrées (openfootball, vavel, Sportradar, API-Football)
+# nom canonique -> variantes rencontrées (openfootball, vavel, Sportradar, API-Football, Understat)
 # Si l'API renvoie un nom inconnu, update.py s'arrête avec « nom d'équipe inconnu » :
 # il suffit d'ajouter ce nom dans la liste de l'équipe concernée ci-dessous.
 ALIASES = {
@@ -35,6 +35,8 @@ ALIASES = {
         "Nantes": ["FC Nantes"],
         "Montpellier": ["Montpellier HSC"],
         "Reims": ["Stade de Reims"],
+        "Ajaccio": ["AC Ajaccio"],                              # Understat : Ajaccio
+        "Clermont": ["Clermont Foot 63", "Clermont Foot"],      # Understat : Clermont Foot
     },
     "en1": {
         "Arsenal": ["Arsenal FC", "Arsenal"],
@@ -61,7 +63,9 @@ ALIASES = {
         "Leicester": ["Leicester City FC"],
         "Southampton": ["Southampton FC"],
         "West Ham": ["West Ham United FC"],
-        "Wolves": ["Wolverhampton Wanderers FC"],
+        "Wolves": ["Wolverhampton Wanderers FC", "Wolverhampton Wanderers"],   # Understat : Wolverhampton Wanderers
+        "Luton": ["Luton Town FC", "Luton Town"],                             # Understat : Luton
+        "Sheffield United": ["Sheffield United FC"],
     },
     "es1": {
         "Barcelone": ["FC Barcelona", "Barcelona"],
@@ -86,10 +90,13 @@ ALIASES = {
         "Málaga": ["Málaga CF", "Malaga CF", "Málaga"],
         "Leganés": ["CD Leganés"],
         "Girona": ["Girona FC"],
-        "Majorque": ["RCD Mallorca"],
+        "Majorque": ["RCD Mallorca", "Mallorca"],                 # Understat : Mallorca
         "Oviedo": ["Real Oviedo"],
-        "Valladolid": ["Real Valladolid CF"],
+        "Valladolid": ["Real Valladolid CF", "Real Valladolid"],  # Understat : Real Valladolid
         "Las Palmas": ["UD Las Palmas"],
+        "Almería": ["UD Almería", "Almeria"],                     # Understat : Almeria
+        "Cadix": ["Cádiz CF", "Cadiz"],                           # Understat : Cadiz
+        "Grenade": ["Granada CF", "Granada"],                     # Understat : Granada
     },
 }
 

@@ -1,0 +1,172 @@
+date;domicile;exterieur;buts_dom;buts_ext;xg_dom;xg_ext
+2024-08-16;Le Havre;PSG;1;4;0,197;2,91
+2024-08-17;Brest;Marseille;1;5;1,515;2,965
+2024-08-17;Monaco;Saint-Étienne;1;0;2,784;0,484
+2024-08-17;Reims;Lille;0;2;0,076;2,317
+2024-08-18;Angers;Lens;0;1;0,298;1,041
+2024-08-18;Auxerre;Nice;2;1;3,032;0,581
+2024-08-18;Montpellier;Strasbourg;1;1;1,447;1,105
+2024-08-18;Rennes;Lyon;3;0;2,574;2,201
+2024-08-18;Toulouse;Nantes;0;0;1,509;0,514
+2024-08-23;PSG;Montpellier;6;0;4,937;0,773
+2024-08-24;Lille;Angers;2;0;1,258;0,737
+2024-08-24;Lyon;Monaco;0;2;0,014;2,609
+2024-08-24;Saint-Étienne;Le Havre;0;2;1,488;2,234
+2024-08-25;Lens;Brest;2;0;4,019;0,696
+2024-08-25;Marseille;Reims;2;2;2,94;1,012
+2024-08-25;Nantes;Auxerre;2;0;1,525;0,876
+2024-08-25;Nice;Toulouse;1;1;1,237;0,947
+2024-08-25;Strasbourg;Rennes;3;1;1,589;1,403
+2024-08-30;Lyon;Strasbourg;4;3;3,228;2,447
+2024-08-31;Brest;Saint-Étienne;4;0;3,607;0,257
+2024-08-31;Montpellier;Nantes;1;3;0,746;1,694
+2024-08-31;Toulouse;Marseille;1;3;0,485;1,298
+2024-09-01;Angers;Nice;1;4;1,332;2,534
+2024-09-01;Le Havre;Auxerre;3;1;2,837;0,744
+2024-09-01;Lille;PSG;1;3;1,576;3,241
+2024-09-01;Monaco;Lens;1;1;0,906;1,913
+2024-09-01;Reims;Rennes;2;1;2,009;1,026
+2024-09-13;Saint-Étienne;Lille;1;0;1,177;2,732
+2024-09-14;Auxerre;Monaco;0;3;0,419;3,377
+2024-09-14;Marseille;Nice;2;0;1,027;1,72
+2024-09-14;PSG;Brest;3;1;2,912;1,009
+2024-09-15;Lens;Lyon;0;0;0,624;0,529
+2024-09-15;Nantes;Reims;1;2;1,433;0,549
+2024-09-15;Rennes;Montpellier;3;0;1,269;0,31
+2024-09-15;Strasbourg;Angers;1;1;2,479;0,855
+2024-09-15;Toulouse;Le Havre;2;0;1,867;0,15
+2024-09-20;Nice;Saint-Étienne;8;0;4,5;0,336
+2024-09-21;Lille;Strasbourg;3;3;2,302;3,02
+2024-09-21;Reims;PSG;1;1;0,76;1,903
+2024-09-21;Rennes;Lens;1;1;1,346;0,853
+2024-09-22;Angers;Nantes;1;1;0,825;1,286
+2024-09-22;Brest;Toulouse;2;0;0,709;2,35
+2024-09-22;Lyon;Marseille;2;3;3,893;0,676
+2024-09-22;Monaco;Le Havre;3;1;1,84;0,581
+2024-09-22;Montpellier;Auxerre;3;2;1,784;1,426
+2024-09-27;Auxerre;Brest;3;0;2,95;0,726
+2024-09-27;PSG;Rennes;3;1;3,224;2,026
+2024-09-28;Le Havre;Lille;0;3;0,489;3,571
+2024-09-28;Lens;Nice;0;0;2,064;0,961
+2024-09-28;Monaco;Montpellier;2;1;3,457;0,769
+2024-09-29;Angers;Reims;1;3;1,083;4,181
+2024-09-29;Nantes;Saint-Étienne;2;2;2,616;1,024
+2024-09-29;Strasbourg;Marseille;1;0;1,675;0,782
+2024-09-29;Toulouse;Lyon;1;2;0,717;0,731
+2024-10-04;Marseille;Angers;1;1;0,897;1,194
+2024-10-05;Lille;Toulouse;2;1;1,378;1,437
+2024-10-05;Rennes;Monaco;1;2;0,64;0,499
+2024-10-05;Saint-Étienne;Auxerre;3;1;2,451;0,72
+2024-10-06;Brest;Le Havre;2;0;0,89;2,119
+2024-10-06;Lyon;Nantes;2;0;2,433;0,766
+2024-10-06;Nice;PSG;1;1;0,326;0,822
+2024-10-06;Reims;Montpellier;4;2;3,715;0,874
+2024-10-06;Strasbourg;Lens;2;2;1,311;1,43
+2024-10-18;Monaco;Lille;0;0;1,191;0,164
+2024-10-19;Brest;Rennes;1;1;1,426;1,144
+2024-10-19;PSG;Strasbourg;4;2;4,67;2,22
+2024-10-19;Saint-Étienne;Lens;0;2;0,783;1,356
+2024-10-20;Auxerre;Reims;2;1;2,864;1,229
+2024-10-20;Le Havre;Lyon;0;4;0,36;2,767
+2024-10-20;Montpellier;Marseille;0;5;1,757;3,881
+2024-10-20;Nantes;Nice;1;1;0,832;0,777
+2024-10-20;Toulouse;Angers;1;1;2,438;1,473
+2024-10-25;Rennes;Le Havre;1;0;1,842;0,272
+2024-10-26;Angers;Saint-Étienne;4;2;3,268;1,33
+2024-10-26;Lens;Lille;0;2;0,865;1,476
+2024-10-26;Reims;Brest;1;2;1,449;1,641
+2024-10-27;Lyon;Auxerre;2;2;2,212;1,061
+2024-10-27;Marseille;PSG;0;3;0,278;4,042
+2024-10-27;Montpellier;Toulouse;0;3;0,241;2,887
+2024-10-27;Nice;Monaco;2;1;1,794;0,797
+2024-10-27;Strasbourg;Nantes;3;1;1,997;0,762
+2024-11-01;Lille;Lyon;1;1;1,672;1,58
+2024-11-01;Monaco;Angers;0;1;1,475;0,5
+2024-11-02;Brest;Nice;0;1;1,02;1,921
+2024-11-02;PSG;Lens;1;0;2,769;0,803
+2024-11-02;Saint-Étienne;Strasbourg;2;0;2,827;0,451
+2024-11-03;Auxerre;Rennes;4;0;2,399;0,702
+2024-11-03;Le Havre;Montpellier;1;0;1,8;0,723
+2024-11-03;Nantes;Marseille;1;2;1,259;0,876
+2024-11-03;Toulouse;Reims;1;0;0,91;0,819
+2024-11-08;Marseille;Auxerre;1;3;2,028;2,095
+2024-11-09;Angers;PSG;2;4;1,215;4,381
+2024-11-09;Lens;Nantes;3;2;3,747;1,499
+2024-11-09;Strasbourg;Monaco;1;3;0,771;3,426
+2024-11-10;Le Havre;Reims;0;3;1,51;2,7
+2024-11-10;Lyon;Saint-Étienne;1;0;2,286;0,703
+2024-11-10;Montpellier;Brest;3;1;3,038;1,887
+2024-11-10;Nice;Lille;2;2;1,93;2,196
+2024-11-10;Rennes;Toulouse;0;2;0,313;1,316
+2024-11-22;Monaco;Brest;3;2;2,558;1,387
+2024-11-22;PSG;Toulouse;3;0;1,632;1,842
+2024-11-23;Lens;Marseille;1;3;2,172;1,379
+2024-11-23;Reims;Lyon;1;1;1,173;1,927
+2024-11-23;Saint-Étienne;Montpellier;1;0;1,273;0,863
+2024-11-24;Auxerre;Angers;1;0;0,683;1,141
+2024-11-24;Lille;Rennes;1;0;0,642;0,178
+2024-11-24;Nantes;Le Havre;0;2;0,847;0,977
+2024-11-24;Nice;Strasbourg;2;1;2,038;0,524
+2024-11-29;Reims;Lens;0;2;0,589;1,408
+2024-11-30;Brest;Strasbourg;3;1;2,904;0,93
+2024-11-30;PSG;Nantes;1;1;3,858;0,743
+2024-11-30;Rennes;Saint-Étienne;5;0;3,018;0,168
+2024-12-01;Le Havre;Angers;0;1;0,323;2,104
+2024-12-01;Lyon;Nice;4;1;2,885;2,036
+2024-12-01;Marseille;Monaco;2;1;1,656;0,959
+2024-12-01;Montpellier;Lille;2;2;1,282;2,065
+2024-12-01;Toulouse;Auxerre;2;0;2,786;0,13
+2024-12-06;Auxerre;PSG;0;0;0,342;3,045
+2024-12-06;Lille;Brest;3;1;3,01;0,74
+2024-12-07;Angers;Lyon;0;3;0,505;2,027
+2024-12-07;Monaco;Toulouse;2;0;2,804;0,233
+2024-12-07;Nice;Le Havre;2;1;2,276;1,429
+2024-12-08;Lens;Montpellier;2;0;1,103;1,518
+2024-12-08;Nantes;Rennes;1;0;1,71;0,286
+2024-12-08;Saint-Étienne;Marseille;0;2;0,167;2,985
+2024-12-08;Strasbourg;Reims;0;0;1,095;1,285
+2024-12-13;Toulouse;Saint-Étienne;2;1;1,732;0,388
+2024-12-14;Auxerre;Lens;2;2;0,51;1,738
+2024-12-14;Marseille;Lille;1;1;1,215;1,24
+2024-12-14;Reims;Monaco;0;0;1,521;1,329
+2024-12-15;Brest;Nantes;4;1;2,201;1,399
+2024-12-15;Le Havre;Strasbourg;0;3;1,583;1,392
+2024-12-15;Montpellier;Nice;2;2;2,451;1,552
+2024-12-15;PSG;Lyon;3;1;2,596;1,239
+2024-12-15;Rennes;Angers;2;0;0,627;0,392
+2024-12-18;Monaco;PSG;2;4;3,102;2,407
+2025-01-03;Nice;Rennes;3;2;1,519;1,505
+2025-01-04;Lille;Nantes;1;1;1,134;1,073
+2025-01-04;Lyon;Montpellier;1;0;1,077;1,556
+2025-01-04;Saint-Étienne;Reims;3;1;3,186;1,276
+2025-01-05;Angers;Brest;2;0;1,901;0,609
+2025-01-05;Lens;Toulouse;0;1;1,329;2,192
+2025-01-05;Marseille;Le Havre;5;1;3,175;0,885
+2025-01-05;Strasbourg;Auxerre;3;1;2,897;1,76
+2025-01-10;Auxerre;Lille;0;0;0,601;1,518
+2025-01-10;Nantes;Monaco;2;2;1,412;3,488
+2025-01-11;Brest;Lyon;2;1;1,29;1,401
+2025-01-11;Reims;Nice;2;4;0,951;3,22
+2025-01-11;Rennes;Marseille;1;2;1,766;2,493
+2025-01-12;Le Havre;Lens;1;2;1,842;3,108
+2025-01-12;Montpellier;Angers;1;3;1,447;3,469
+2025-01-12;PSG;Saint-Étienne;2;1;5,071;0,41
+2025-01-12;Toulouse;Strasbourg;1;2;1,193;1,828
+2025-01-17;Lille;Nice;2;1;1,292;2,904
+2025-01-17;Montpellier;Monaco;2;1;2,606;1,75
+2025-01-18;Lens;PSG;1;2;1,349;1,573
+2025-01-18;Lyon;Toulouse;0;0;0,619;1,366
+2025-01-18;Rennes;Brest;1;2;1,927;1,873
+2025-01-19;Angers;Auxerre;2;0;1,218;0,462
+2025-01-19;Marseille;Strasbourg;1;1;3,291;0,855
+2025-01-19;Reims;Le Havre;1;1;1,491;1,295
+2025-01-19;Saint-Étienne;Nantes;1;1;0,836;1,36
+2025-01-24;Auxerre;Saint-Étienne;1;1;0,583;1,191
+2025-01-25;Monaco;Rennes;3;2;3,474;1,852
+2025-01-25;PSG;Reims;1;1;1,796;0,613
+2025-01-25;Strasbourg;Lille;2;1;1,197;1,955
+2025-01-26;Le Havre;Brest;0;1;0,696;2,383
+2025-01-26;Lens;Angers;1;0;2,011;0,081
+2025-01-26;Nantes;Lyon;1;1;1,63;1,618
+2025-01-26;Nice;Marseille;2;0;2,11;1,112
+2025-01-26;Toulouse;Montpellier;1;2;1,343;0,94

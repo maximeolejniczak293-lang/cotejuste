@@ -9,6 +9,9 @@ log(buts attendus extérieur) = mu + attaque[ext] - defense[dom]
   quand il y a peu de matchs.
 - Le paramètre rho de Dixon-Coles corrige la fréquence des petits scores
   (0-0, 1-0, 0-1, 1-1), que le Poisson simple estime mal.
+- xG : attaque et défense sont estimées sur un mélange
+  buts_utilisés = a × xG + (1 − a) × buts réels (vraisemblance de Poisson sur valeurs non entières).
+  Sans xG pour un match, on prend ses buts réels. rho reste estimé sur les vrais scores.
 """
 from dataclasses import dataclass, field
 
@@ -25,6 +28,7 @@ PROMOTED_PRIOR = -0.18  # niveau a priori (attaque et défense) d'un promu, en l
 class DixonColes:
     xi: float = 0.0025      # décroissance temporelle par jour (demi-vie ≈ 277 jours)
     l2: float = 2.0         # force de la pénalité vers le niveau a priori
+    a: float = 0.0          # poids des xG dans les buts utilisés (0 = buts réels seuls)
     teams: list = field(default_factory=list)
     params: dict = field(default_factory=dict)
 
@@ -42,8 +46,14 @@ class DixonColes:
         n = len(teams)
         hi = df.home.map(idx).to_numpy()
         ai = df.away.map(idx).to_numpy()
-        hg = df.hg.to_numpy(float)
+        hg = df.hg.to_numpy(float)          # vrais scores (pour rho)
         ag = df.ag.to_numpy(float)
+        uh, ua = hg, ag                     # buts utilisés pour attaque / défense
+        if self.a > 0 and "xh" in df and "xa" in df:
+            xh = df.xh.to_numpy(float)
+            xa = df.xa.to_numpy(float)
+            uh = np.where(np.isnan(xh), hg, self.a * xh + (1 - self.a) * hg)
+            ua = np.where(np.isnan(xa), ag, self.a * xa + (1 - self.a) * ag)
 
         # a priori : 0 pour une équipe établie, PROMOTED_PRIOR pour un promu
         prior = np.zeros(n)
@@ -64,12 +74,12 @@ class DixonColes:
             lh = mu + home + att[hi] - dfn[ai]
             la = mu + att[ai] - dfn[hi]
             eh, ea = np.exp(lh), np.exp(la)
-            ll = w * (hg * lh - eh + ag * la - ea)
+            ll = w * (uh * lh - eh + ua * la - ea)
             pen = 0.5 * self.l2 * (np.sum((att - prior) ** 2) + np.sum((dfn - prior) ** 2))
             f = -ll.sum() + pen
             # gradient analytique
-            rh = w * (hg - eh)
-            ra = w * (ag - ea)
+            rh = w * (uh - eh)
+            ra = w * (ua - ea)
             g_mu = -(rh.sum() + ra.sum())
             g_home = -rh.sum()
             g_att = -(np.bincount(hi, rh, n) + np.bincount(ai, ra, n)) + self.l2 * (att - prior)

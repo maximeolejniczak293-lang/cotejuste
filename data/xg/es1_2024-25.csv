@@ -1,0 +1,381 @@
+date;domicile;exterieur;buts_dom;buts_ext;xg_dom;xg_ext
+2024-08-15;Athletic Bilbao;Getafe;1;1;0,29;0,538
+2024-08-15;Betis;Girona;1;1;1,806;1,547
+2024-08-16;Celta Vigo;Alavés;2;1;0,794;1,939
+2024-08-16;Las Palmas;Séville;2;2;1,319;2,1
+2024-08-17;Osasuna;Leganés;1;1;1,763;1,339
+2024-08-17;Valence;Barcelone;1;2;1,552;3,488
+2024-08-18;Majorque;Real Madrid;1;1;1,306;0,608
+2024-08-18;Real Sociedad;Rayo Vallecano;1;2;1,566;1,601
+2024-08-19;Valladolid;Espanyol;1;0;1,178;0,516
+2024-08-19;Villarreal;Atlético Madrid;2;2;0,687;1,139
+2024-08-23;Celta Vigo;Valence;3;1;1,306;1,154
+2024-08-23;Séville;Villarreal;1;2;1,238;1,398
+2024-08-24;Barcelone;Athletic Bilbao;2;1;2,416;1,1
+2024-08-24;Espanyol;Real Sociedad;0;1;1,796;0,796
+2024-08-24;Getafe;Rayo Vallecano;0;0;0,513;0,161
+2024-08-24;Osasuna;Majorque;1;0;0,888;0,428
+2024-08-25;Alavés;Betis;0;0;0,173;1,36
+2024-08-25;Atlético Madrid;Girona;3;0;1,424;0,597
+2024-08-25;Leganés;Las Palmas;2;1;1,59;1,234
+2024-08-25;Real Madrid;Valladolid;3;0;2,18;0,379
+2024-08-26;Villarreal;Celta Vigo;4;3;4,382;3,792
+2024-08-27;Majorque;Séville;0;0;0,941;0,61
+2024-08-27;Rayo Vallecano;Barcelone;1;2;0,392;1,519
+2024-08-28;Athletic Bilbao;Valence;1;0;1,516;0,1
+2024-08-28;Atlético Madrid;Espanyol;0;0;3,886;0,856
+2024-08-28;Real Sociedad;Alavés;1;2;0,952;2,626
+2024-08-28;Valladolid;Leganés;0;0;0,774;0,185
+2024-08-29;Girona;Osasuna;4;0;2,602;0,02
+2024-08-29;Las Palmas;Real Madrid;1;1;0,809;3,283
+2024-08-31;Athletic Bilbao;Atlético Madrid;0;1;0,252;1,586
+2024-08-31;Barcelone;Valladolid;7;0;4,94;0,422
+2024-08-31;Espanyol;Rayo Vallecano;2;1;1,847;1,009
+2024-08-31;Leganés;Majorque;0;1;0,521;1,488
+2024-08-31;Valence;Villarreal;1;1;1,143;0,885
+2024-09-01;Alavés;Las Palmas;2;0;2,01;0,547
+2024-09-01;Getafe;Real Sociedad;0;0;0,547;0,021
+2024-09-01;Osasuna;Celta Vigo;3;2;0,78;1,723
+2024-09-01;Real Madrid;Betis;2;0;2,372;0,831
+2024-09-01;Séville;Girona;0;2;0,813;2,364
+2024-09-13;Betis;Leganés;2;0;1,722;0,107
+2024-09-14;Espanyol;Alavés;3;2;1,951;2,369
+2024-09-14;Majorque;Villarreal;1;2;0,345;2,419
+2024-09-14;Real Sociedad;Real Madrid;0;2;1,418;2,276
+2024-09-14;Séville;Getafe;1;0;1,648;0,972
+2024-09-15;Atlético Madrid;Valence;3;0;3,23;0,183
+2024-09-15;Celta Vigo;Valladolid;3;1;1,993;0,383
+2024-09-15;Girona;Barcelone;1;4;1,096;2,594
+2024-09-15;Las Palmas;Athletic Bilbao;2;3;1,519;1,804
+2024-09-16;Rayo Vallecano;Osasuna;3;1;1,484;0,53
+2024-09-17;Majorque;Real Sociedad;1;0;1,569;0,499
+2024-09-18;Betis;Getafe;2;1;3,062;0,864
+2024-09-19;Leganés;Athletic Bilbao;0;2;0,667;1,323
+2024-09-20;Alavés;Séville;2;1;1,406;0,624
+2024-09-21;Osasuna;Las Palmas;2;1;1,972;1,283
+2024-09-21;Real Madrid;Espanyol;4;1;4,895;0,319
+2024-09-21;Valence;Girona;2;0;0,351;0,388
+2024-09-21;Valladolid;Real Sociedad;0;0;0,953;1,391
+2024-09-22;Athletic Bilbao;Celta Vigo;3;1;0,864;1,215
+2024-09-22;Getafe;Leganés;1;1;1,243;0,783
+2024-09-22;Rayo Vallecano;Atlético Madrid;1;1;1,69;0,554
+2024-09-22;Villarreal;Barcelone;1;5;2,396;4,194
+2024-09-23;Betis;Majorque;1;2;1,371;1,437
+2024-09-24;Real Madrid;Alavés;3;2;1,798;0,853
+2024-09-24;Séville;Valladolid;2;1;1,671;0,412
+2024-09-24;Valence;Osasuna;0;0;1,175;0,378
+2024-09-25;Barcelone;Getafe;1;0;2,208;0,93
+2024-09-25;Girona;Rayo Vallecano;0;0;2,158;0,378
+2024-09-26;Celta Vigo;Atlético Madrid;0;1;1,761;0,778
+2024-09-26;Espanyol;Villarreal;1;2;0,355;1,962
+2024-09-26;Las Palmas;Betis;1;1;1,108;2,666
+2024-09-27;Valladolid;Majorque;1;2;1,316;2,49
+2024-09-28;Getafe;Alavés;2;0;2,558;0,415
+2024-09-28;Osasuna;Barcelone;4;2;2,501;0,752
+2024-09-28;Rayo Vallecano;Leganés;1;1;1,152;0,852
+2024-09-28;Real Sociedad;Valence;3;0;3,685;0,806
+2024-09-29;Athletic Bilbao;Séville;1;1;1,83;1,241
+2024-09-29;Atlético Madrid;Real Madrid;1;1;1,055;0,661
+2024-09-29;Betis;Espanyol;1;0;1,979;0,569
+2024-09-29;Celta Vigo;Girona;1;1;0,524;1,413
+2024-09-30;Villarreal;Las Palmas;3;1;4,079;0,802
+2024-10-04;Leganés;Valence;0;0;0,913;0,704
+2024-10-05;Espanyol;Majorque;2;1;0,949;1,798
+2024-10-05;Getafe;Osasuna;1;1;1,348;0,248
+2024-10-05;Las Palmas;Celta Vigo;0;1;0,965;0,814
+2024-10-05;Real Madrid;Villarreal;2;0;0,46;1,462
+2024-10-05;Valladolid;Rayo Vallecano;1;2;1,658;1,647
+2024-10-06;Alavés;Barcelone;0;3;0,795;2,494
+2024-10-06;Girona;Athletic Bilbao;2;1;2,174;3,16
+2024-10-06;Real Sociedad;Atlético Madrid;1;1;1,085;0,562
+2024-10-06;Séville;Betis;1;0;1,828;0,437
+2024-10-18;Alavés;Valladolid;2;3;0,433;2,336
+2024-10-19;Athletic Bilbao;Espanyol;4;1;1,465;0,501
+2024-10-19;Celta Vigo;Real Madrid;1;2;1,791;1,198
+2024-10-19;Girona;Real Sociedad;0;1;0,446;1,861
+2024-10-19;Osasuna;Betis;1;2;2,21;2,792
+2024-10-20;Atlético Madrid;Leganés;3;1;5,214;0,272
+2024-10-20;Barcelone;Séville;5;1;4,085;0,6
+2024-10-20;Majorque;Rayo Vallecano;1;0;2,721;0,465
+2024-10-20;Villarreal;Getafe;1;1;1,147;2,026
+2024-10-21;Valence;Las Palmas;2;3;1,944;1,569
+2024-10-25;Espanyol;Séville;0;2;1,029;0,813
+2024-10-26;Las Palmas;Girona;1;0;1,245;1,047
+2024-10-26;Rayo Vallecano;Alavés;1;0;2,89;0,871
+2024-10-26;Real Madrid;Barcelone;0;4;1,404;2,516
+2024-10-26;Valladolid;Villarreal;1;2;0,978;2,684
+2024-10-27;Betis;Atlético Madrid;1;0;2,204;0,555
+2024-10-27;Getafe;Valence;1;1;2,978;0,638
+2024-10-27;Leganés;Celta Vigo;3;0;1,549;0,767
+2024-10-27;Real Sociedad;Osasuna;0;2;1,677;1,065
+2024-10-28;Majorque;Athletic Bilbao;0;0;0,542;0,755
+2024-11-01;Alavés;Majorque;1;0;1,436;0,708
+2024-11-02;Girona;Leganés;4;3;1,813;0,321
+2024-11-02;Osasuna;Valladolid;1;0;3,217;0,204
+2024-11-03;Athletic Bilbao;Betis;1;1;4,203;1,545
+2024-11-03;Atlético Madrid;Las Palmas;2;0;1,735;0,033
+2024-11-03;Barcelone;Espanyol;3;1;1,944;0,787
+2024-11-03;Séville;Real Sociedad;0;2;0,63;1,218
+2024-11-04;Celta Vigo;Getafe;1;0;2,125;0,425
+2024-11-08;Rayo Vallecano;Las Palmas;1;3;2,64;1,252
+2024-11-09;Leganés;Séville;1;0;1,093;0,54
+2024-11-09;Real Madrid;Osasuna;4;0;3,273;0,068
+2024-11-09;Villarreal;Alavés;3;0;1,443;0,609
+2024-11-10;Betis;Celta Vigo;2;2;1,651;0,942
+2024-11-10;Getafe;Girona;0;1;0,221;0,521
+2024-11-10;Majorque;Atlético Madrid;0;1;0,735;0,939
+2024-11-10;Real Sociedad;Barcelone;1;0;1,885;0,514
+2024-11-10;Valladolid;Athletic Bilbao;1;1;0,888;1,487
+2024-11-22;Getafe;Valladolid;2;0;0,658;0,729
+2024-11-23;Atlético Madrid;Alavés;2;1;2,053;0,786
+2024-11-23;Celta Vigo;Barcelone;2;2;2,76;1,938
+2024-11-23;Girona;Espanyol;4;1;3,285;0,488
+2024-11-23;Las Palmas;Majorque;2;3;1,16;1,458
+2024-11-23;Valence;Betis;4;2;1,673;1,052
+2024-11-24;Athletic Bilbao;Real Sociedad;1;0;1,651;0,799
+2024-11-24;Leganés;Real Madrid;0;3;0,109;2,73
+2024-11-24;Osasuna;Villarreal;2;2;1,327;2,682
+2024-11-24;Séville;Rayo Vallecano;1;0;1,571;0,862
+2024-11-29;Majorque;Valence;2;1;0,721;1,334
+2024-11-30;Alavés;Leganés;1;1;1,289;1,369
+2024-11-30;Barcelone;Las Palmas;1;2;2,184;0,599
+2024-11-30;Espanyol;Celta Vigo;3;1;1,501;1,56
+2024-11-30;Valladolid;Atlético Madrid;0;5;0,437;3,405
+2024-12-01;Rayo Vallecano;Athletic Bilbao;1;2;0,59;0,557
+2024-12-01;Real Madrid;Getafe;2;0;3,236;0,347
+2024-12-01;Real Sociedad;Betis;2;0;0,818;0,366
+2024-12-01;Villarreal;Girona;2;2;1,968;0,516
+2024-12-02;Séville;Osasuna;1;1;1,091;1,048
+2024-12-03;Majorque;Barcelone;1;5;0,922;5,381
+2024-12-04;Athletic Bilbao;Real Madrid;2;1;2,081;1,977
+2024-12-06;Celta Vigo;Majorque;2;0;1,199;1,09
+2024-12-07;Betis;Barcelone;2;2;2,763;1,541
+2024-12-07;Girona;Real Madrid;0;3;0,351;1,16
+2024-12-07;Las Palmas;Valladolid;2;1;1,276;1,308
+2024-12-07;Valence;Rayo Vallecano;0;1;1;1,023
+2024-12-08;Athletic Bilbao;Villarreal;2;0;1,315;0,796
+2024-12-08;Atlético Madrid;Séville;4;3;2,322;0,636
+2024-12-08;Leganés;Real Sociedad;0;3;0,464;1,745
+2024-12-08;Osasuna;Alavés;2;2;2,313;1,501
+2024-12-09;Getafe;Espanyol;1;0;0,53;1,173
+2024-12-13;Valladolid;Valence;1;0;0,532;0,657
+2024-12-14;Espanyol;Osasuna;0;0;0,299;0,214
+2024-12-14;Majorque;Girona;2;1;1,651;0,94
+2024-12-14;Rayo Vallecano;Real Madrid;3;3;1,608;1,154
+2024-12-14;Séville;Celta Vigo;1;0;0,487;0,929
+2024-12-15;Alavés;Athletic Bilbao;1;1;0,804;0,844
+2024-12-15;Atlético Madrid;Getafe;1;0;1,854;0,239
+2024-12-15;Barcelone;Leganés;0;1;2,166;0,772
+2024-12-15;Real Sociedad;Las Palmas;0;0;1,246;0,841
+2024-12-15;Villarreal;Betis;1;2;1,61;1,673
+2024-12-18;Espanyol;Valence;1;1;1,879;1,781
+2024-12-18;Villarreal;Rayo Vallecano;1;1;2,529;1,857
+2024-12-20;Girona;Valladolid;3;0;2,164;0,012
+2024-12-21;Barcelone;Atlético Madrid;1;2;3,374;0,711
+2024-12-21;Celta Vigo;Real Sociedad;2;0;1,222;0,314
+2024-12-21;Getafe;Majorque;0;1;0,735;2,063
+2024-12-21;Osasuna;Athletic Bilbao;1;2;0,418;1,181
+2024-12-22;Betis;Rayo Vallecano;1;1;1,93;0,878
+2024-12-22;Las Palmas;Espanyol;1;0;0,956;0,879
+2024-12-22;Leganés;Villarreal;2;5;1,475;4,01
+2024-12-22;Real Madrid;Séville;4;2;2,901;1,412
+2024-12-22;Valence;Alavés;2;2;1,348;1,543
+2025-01-03;Valence;Real Madrid;1;2;1,353;2,692
+2025-01-10;Rayo Vallecano;Celta Vigo;2;1;1,004;3,258
+2025-01-11;Alavés;Girona;0;1;1,722;0,626
+2025-01-11;Espanyol;Leganés;1;1;1,055;1,925
+2025-01-11;Séville;Valence;1;1;0,734;1,081
+2025-01-11;Valladolid;Betis;1;0;1,624;1,038
+2025-01-12;Atlético Madrid;Osasuna;1;0;2,287;0,392
+2025-01-12;Las Palmas;Getafe;1;2;1,626;1,396
+2025-01-13;Real Sociedad;Villarreal;1;0;0,806;1,225
+2025-01-17;Espanyol;Valladolid;2;1;1,288;1,72
+2025-01-18;Betis;Alavés;1;3;0,501;1,654
+2025-01-18;Getafe;Barcelone;1;1;1,169;3,504
+2025-01-18;Girona;Séville;1;2;1,143;3,092
+2025-01-18;Leganés;Atlético Madrid;1;0;0,77;3,056
+2025-01-19;Celta Vigo;Athletic Bilbao;1;2;0,4;2,497
+2025-01-19;Osasuna;Rayo Vallecano;1;1;0,66;0,798
+2025-01-19;Real Madrid;Las Palmas;4;1;6,405;1,062
+2025-01-19;Valence;Real Sociedad;1;0;1,772;0,758
+2025-01-20;Villarreal;Majorque;4;0;2,354;0,391
+2025-01-24;Las Palmas;Osasuna;1;1;0,833;2,537
+2025-01-25;Atlético Madrid;Villarreal;1;1;1,723;1,785
+2025-01-25;Majorque;Betis;0;1;0,789;0,595
+2025-01-25;Séville;Espanyol;1;1;1,15;1,279
+2025-01-25;Valladolid;Real Madrid;0;3;0,235;2,457
+2025-01-26;Athletic Bilbao;Leganés;0;0;2,273;1,574
+2025-01-26;Barcelone;Valence;7;1;4,359;1,303
+2025-01-26;Rayo Vallecano;Girona;2;1;3,011;1,562
+2025-01-26;Real Sociedad;Getafe;0;3;1,261;2,01
+2025-01-27;Alavés;Celta Vigo;1;1;0,892;0,155
+2025-01-31;Leganés;Rayo Vallecano;0;1;1;2,391
+2025-02-01;Atlético Madrid;Majorque;2;0;1,599;0,422
+2025-02-01;Espanyol;Real Madrid;1;0;0,527;1,528
+2025-02-01;Getafe;Séville;0;0;0,923;0,871
+2025-02-01;Villarreal;Valladolid;5;1;3,894;0,747
+2025-02-02;Barcelone;Alavés;1;0;1,185;0,126
+2025-02-02;Betis;Athletic Bilbao;2;2;1,317;1,759
+2025-02-02;Osasuna;Real Sociedad;2;1;1,111;2,351
+2025-02-02;Valence;Celta Vigo;2;1;1,931;0,515
+2025-02-03;Girona;Las Palmas;2;1;2,192;1,318
+2025-02-07;Rayo Vallecano;Valladolid;1;0;2,873;0,61
+2025-02-08;Athletic Bilbao;Girona;3;0;3,819;0,056
+2025-02-08;Celta Vigo;Betis;3;2;1,751;1,512
+2025-02-08;Las Palmas;Villarreal;1;2;1,906;1,26
+2025-02-08;Real Madrid;Atlético Madrid;1;1;2,556;1,625
+2025-02-09;Alavés;Getafe;0;1;1,259;0,825
+2025-02-09;Real Sociedad;Espanyol;2;1;1,678;0,873
+2025-02-09;Séville;Barcelone;1;4;0,921;1,932
+2025-02-09;Valence;Leganés;2;0;2,032;0,418
+2025-02-10;Majorque;Osasuna;1;1;1,173;1,82
+2025-02-14;Girona;Getafe;1;2;1,287;0,955
+2025-02-15;Atlético Madrid;Celta Vigo;1;1;0,689;1,454
+2025-02-15;Leganés;Alavés;3;3;1,763;1,421
+2025-02-15;Osasuna;Real Madrid;1;1;1,644;2,733
+2025-02-15;Villarreal;Valence;1;1;1,042;0,741
+2025-02-16;Betis;Real Sociedad;3;0;2,494;0,205
+2025-02-16;Espanyol;Athletic Bilbao;1;1;1,196;0,897
+2025-02-16;Majorque;Las Palmas;3;1;2,334;1,044
+2025-02-16;Valladolid;Séville;0;4;0,532;1,483
+2025-02-17;Barcelone;Rayo Vallecano;1;0;2,828;1,309
+2025-02-21;Celta Vigo;Osasuna;1;0;2,319;0,838
+2025-02-22;Alavés;Espanyol;0;1;1,546;0,496
+2025-02-22;Las Palmas;Barcelone;0;2;0,431;1,665
+2025-02-22;Rayo Vallecano;Villarreal;0;1;0,514;0,794
+2025-02-22;Valence;Atlético Madrid;0;3;1,354;2,318
+2025-02-23;Athletic Bilbao;Valladolid;7;1;5,316;0,599
+2025-02-23;Getafe;Betis;1;2;0,863;2,346
+2025-02-23;Real Madrid;Girona;2;0;2,363;0,326
+2025-02-23;Real Sociedad;Leganés;3;0;1,068;0,257
+2025-02-24;Séville;Majorque;1;1;1,582;1,65
+2025-02-28;Valladolid;Las Palmas;1;1;2,174;0,163
+2025-03-01;Atlético Madrid;Athletic Bilbao;1;0;2,016;1,543
+2025-03-01;Betis;Real Madrid;2;1;2,24;1,051
+2025-03-01;Girona;Celta Vigo;2;2;0,895;1,648
+2025-03-01;Rayo Vallecano;Séville;1;1;2,59;0,808
+2025-03-02;Barcelone;Real Sociedad;4;0;3,637;0
+2025-03-02;Leganés;Getafe;1;0;0,555;0,585
+2025-03-02;Majorque;Alavés;1;1;1,832;1,638
+2025-03-02;Osasuna;Valence;3;3;1,268;1,55
+2025-03-08;Alavés;Villarreal;1;0;1,215;2,633
+2025-03-08;Celta Vigo;Leganés;2;1;1,071;0,998
+2025-03-08;Valence;Valladolid;2;1;2,371;0,646
+2025-03-09;Athletic Bilbao;Majorque;1;1;0,939;1,025
+2025-03-09;Betis;Las Palmas;1;0;2,314;0,427
+2025-03-09;Getafe;Atlético Madrid;2;1;1,398;1,021
+2025-03-09;Real Madrid;Rayo Vallecano;2;1;1,594;1,21
+2025-03-09;Real Sociedad;Séville;0;1;0,804;1,012
+2025-03-10;Espanyol;Girona;1;1;0,325;1,588
+2025-03-14;Las Palmas;Alavés;2;2;1,944;1,499
+2025-03-15;Girona;Valence;1;1;1,18;1,22
+2025-03-15;Majorque;Espanyol;2;1;2,57;0,184
+2025-03-15;Valladolid;Celta Vigo;0;1;0,839;1,817
+2025-03-15;Villarreal;Real Madrid;1;2;2,005;1,1
+2025-03-16;Atlético Madrid;Barcelone;2;4;1,094;2,162
+2025-03-16;Leganés;Betis;2;3;1,573;2,928
+2025-03-16;Osasuna;Getafe;1;2;2,085;0,901
+2025-03-16;Rayo Vallecano;Real Sociedad;2;2;0,537;0,906
+2025-03-16;Séville;Athletic Bilbao;0;1;0,459;1,645
+2025-03-27;Barcelone;Osasuna;3;0;4,637;0,534
+2025-03-29;Alavés;Rayo Vallecano;0;2;1,601;0,682
+2025-03-29;Espanyol;Atlético Madrid;1;1;0,985;0,994
+2025-03-29;Real Madrid;Leganés;3;2;3,593;2,384
+2025-03-29;Real Sociedad;Valladolid;2;1;1,328;1,295
+2025-03-30;Athletic Bilbao;Osasuna;0;0;0,759;0,565
+2025-03-30;Barcelone;Girona;4;1;2,753;0,491
+2025-03-30;Betis;Séville;2;1;0,894;0,868
+2025-03-30;Getafe;Villarreal;1;2;0,94;1,385
+2025-03-30;Valence;Majorque;1;0;0,732;0,658
+2025-03-31;Celta Vigo;Las Palmas;1;1;1,077;0,527
+2025-04-04;Rayo Vallecano;Espanyol;0;4;0,501;3,487
+2025-04-05;Barcelone;Betis;1;1;1,468;0,25
+2025-04-05;Girona;Alavés;0;1;1,733;0,806
+2025-04-05;Majorque;Celta Vigo;1;2;0,67;1,121
+2025-04-05;Real Madrid;Valence;1;2;3,361;1,09
+2025-04-06;Las Palmas;Real Sociedad;1;3;1,754;2,815
+2025-04-06;Séville;Atlético Madrid;1;2;0,819;1,237
+2025-04-06;Valladolid;Getafe;0;4;0,301;2,803
+2025-04-06;Villarreal;Athletic Bilbao;0;0;1,595;0,999
+2025-04-07;Leganés;Osasuna;1;1;2,223;2,074
+2025-04-11;Valence;Séville;1;0;1,426;0,911
+2025-04-12;Celta Vigo;Espanyol;0;2;0,824;0,781
+2025-04-12;Getafe;Las Palmas;1;3;1,618;1,542
+2025-04-12;Leganés;Barcelone;0;1;0,599;1,101
+2025-04-12;Real Sociedad;Majorque;0;2;0,617;0,801
+2025-04-13;Alavés;Real Madrid;0;1;0,608;1,265
+2025-04-13;Athletic Bilbao;Rayo Vallecano;3;1;1,977;1,819
+2025-04-13;Betis;Villarreal;1;2;2,04;1,326
+2025-04-13;Osasuna;Girona;2;1;1,688;0,574
+2025-04-14;Atlético Madrid;Valladolid;4;2;4,063;1,38
+2025-04-18;Espanyol;Getafe;1;0;0,367;0,737
+2025-04-19;Barcelone;Celta Vigo;4;3;2,566;2,505
+2025-04-19;Las Palmas;Atlético Madrid;1;0;0,768;0,757
+2025-04-19;Majorque;Leganés;0;0;1,069;0,952
+2025-04-19;Rayo Vallecano;Valence;1;1;0,722;2,063
+2025-04-20;Real Madrid;Athletic Bilbao;1;0;2,407;0,133
+2025-04-20;Séville;Alavés;1;1;1,896;1,303
+2025-04-20;Valladolid;Osasuna;2;3;1,455;2,362
+2025-04-20;Villarreal;Real Sociedad;2;2;2,145;2,298
+2025-04-21;Girona;Betis;1;3;1,103;2,283
+2025-04-22;Barcelone;Majorque;1;0;3,435;0,327
+2025-04-22;Valence;Espanyol;1;1;1,079;0,344
+2025-04-23;Alavés;Real Sociedad;1;0;0,815;0,472
+2025-04-23;Athletic Bilbao;Las Palmas;1;0;2,638;1,018
+2025-04-23;Celta Vigo;Villarreal;3;0;3,197;0,595
+2025-04-23;Getafe;Real Madrid;0;1;2,536;1,748
+2025-04-24;Atlético Madrid;Rayo Vallecano;3;0;3,345;1,132
+2025-04-24;Betis;Valladolid;5;1;2,267;0,84
+2025-04-24;Leganés;Girona;1;1;0,331;0,764
+2025-04-24;Osasuna;Séville;1;0;0,374;0,934
+2025-04-27;Villarreal;Espanyol;1;0;1,354;1,535
+2025-05-02;Rayo Vallecano;Getafe;1;0;1,216;0,804
+2025-05-03;Alavés;Atlético Madrid;0;0;0,908;0,391
+2025-05-03;Las Palmas;Valence;2;3;1,81;1,673
+2025-05-03;Valladolid;Barcelone;1;2;0,746;2,212
+2025-05-03;Villarreal;Osasuna;4;2;2,3;1,414
+2025-05-04;Espanyol;Betis;1;2;0,873;1,056
+2025-05-04;Real Madrid;Celta Vigo;3;2;3,074;2,131
+2025-05-04;Real Sociedad;Athletic Bilbao;0;0;0,893;0,233
+2025-05-04;Séville;Leganés;2;2;2,337;0,805
+2025-05-05;Girona;Majorque;1;0;1,778;0,488
+2025-05-09;Las Palmas;Rayo Vallecano;0;1;0,721;1,008
+2025-05-10;Atlético Madrid;Real Sociedad;4;0;1,715;0,299
+2025-05-10;Celta Vigo;Séville;3;2;0,96;2,614
+2025-05-10;Girona;Villarreal;0;1;0,28;2,282
+2025-05-10;Majorque;Valladolid;2;1;1,756;2,764
+2025-05-10;Valence;Getafe;3;0;2,974;0,59
+2025-05-11;Athletic Bilbao;Alavés;1;0;1,35;0,643
+2025-05-11;Barcelone;Real Madrid;4;3;4,106;2,562
+2025-05-11;Betis;Osasuna;1;1;0,359;2,227
+2025-05-11;Leganés;Espanyol;3;2;2,058;1,577
+2025-05-13;Real Sociedad;Celta Vigo;0;1;3,313;1,299
+2025-05-13;Séville;Las Palmas;1;0;0,931;0,399
+2025-05-13;Valladolid;Girona;0;1;1,307;1,568
+2025-05-14;Alavés;Valence;1;0;2,063;0,585
+2025-05-14;Real Madrid;Majorque;2;1;3,462;0,475
+2025-05-14;Villarreal;Leganés;3;0;2,289;1,19
+2025-05-15;Espanyol;Barcelone;0;2;1,515;0,736
+2025-05-15;Getafe;Athletic Bilbao;0;2;0,734;1,333
+2025-05-15;Osasuna;Atlético Madrid;2;0;1,075;1,341
+2025-05-15;Rayo Vallecano;Betis;2;2;1,302;1,171
+2025-05-18;Atlético Madrid;Betis;4;1;4,943;0,822
+2025-05-18;Barcelone;Villarreal;2;3;1,569;1,962
+2025-05-18;Celta Vigo;Rayo Vallecano;1;2;2,424;0,907
+2025-05-18;Las Palmas;Leganés;0;1;0,514;1,063
+2025-05-18;Majorque;Getafe;1;2;0,809;1,56
+2025-05-18;Osasuna;Espanyol;2;0;1,925;0,572
+2025-05-18;Real Sociedad;Girona;3;2;1,873;1,645
+2025-05-18;Séville;Real Madrid;0;2;0,485;1,96
+2025-05-18;Valence;Athletic Bilbao;0;1;0,389;1,162
+2025-05-18;Valladolid;Alavés;0;1;0,89;1,227
+2025-05-23;Betis;Valence;1;1;1,153;0,648
+2025-05-24;Alavés;Osasuna;1;1;1,575;1,881
+2025-05-24;Espanyol;Las Palmas;2;0;1,722;0,736
+2025-05-24;Getafe;Celta Vigo;1;2;0,359;1,308
+2025-05-24;Leganés;Valladolid;3;0;1,747;0,479
+2025-05-24;Rayo Vallecano;Majorque;0;0;2,12;0,748
+2025-05-24;Real Madrid;Real Sociedad;2;0;2,619;1,185
+2025-05-25;Athletic Bilbao;Barcelone;0;3;0,751;3,364
+2025-05-25;Girona;Atlético Madrid;0;4;0,05;3,106
+2025-05-25;Villarreal;Séville;4;2;1,288;1,648

@@ -1,0 +1,110 @@
+{
+ "en1_2022-23": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:33:52+00:00",
+  "last_match": "2023-05-28",
+  "matches": 380,
+  "source": "archive.org 20231001 (league)",
+  "total": 380
+ },
+ "en1_2023-24": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:34:05+00:00",
+  "last_match": "2024-05-19",
+  "matches": 380,
+  "source": "archive.org 20260807 (getLeagueData)",
+  "total": 380
+ },
+ "en1_2024-25": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:34:19+00:00",
+  "last_match": "2025-05-25",
+  "matches": 380,
+  "source": "archive.org 20260807 (getLeagueData)",
+  "total": 380
+ },
+ "en1_2025-26": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:34:32+00:00",
+  "last_match": "2026-05-24",
+  "matches": 380,
+  "source": "archive.org 20260807 (getLeagueData)",
+  "total": 380
+ },
+ "en1_2026-27": {
+  "checked": "2026-11-14",
+  "complete": false,
+  "fetched": "2026-11-14T10:34:44+00:00",
+  "last_match": "2026-09-14",
+  "matches": 40,
+  "source": "archive.org 20260916 (getLeagueData)",
+  "total": 380
+ },
+ "es1_2022-23": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:41:38+00:00",
+  "last_match": "2023-06-04",
+  "matches": 380,
+  "source": "archive.org 20251107 (league)",
+  "total": 380
+ },
+ "es1_2023-24": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:35:24+00:00",
+  "last_match": "2024-05-26",
+  "matches": 380,
+  "source": "archive.org 20240804 (league)",
+  "total": 380
+ },
+ "es1_2024-25": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:35:42+00:00",
+  "last_match": "2025-05-25",
+  "matches": 380,
+  "source": "archive.org 20250525 (league)",
+  "total": 380
+ },
+ "es1_2025-26": {
+  "checked": "2026-11-14",
+  "complete": false,
+  "fetched": "2026-11-14T10:42:10+00:00",
+  "last_match": "2025-12-03",
+  "matches": 142,
+  "source": "archive.org 20251204 (league)",
+  "total": 380
+ },
+ "fr1_2022-23": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:32:32+00:00",
+  "last_match": "2023-06-03",
+  "matches": 380,
+  "source": "archive.org 20230803 (league)",
+  "total": 380
+ },
+ "fr1_2023-24": {
+  "checked": "2026-11-14",
+  "complete": true,
+  "fetched": "2026-11-14T10:40:32+00:00",
+  "last_match": "2024-05-19",
+  "matches": 306,
+  "source": "archive.org 20250717 (league)",
+  "total": 306
+ },
+ "fr1_2024-25": {
+  "checked": "2026-11-14",
+  "complete": false,
+  "fetched": "2026-11-14T10:40:57+00:00",
+  "last_match": "2025-01-26",
+  "matches": 171,
+  "source": "archive.org 20250131 (league)",
+  "total": 306
+ }
+}

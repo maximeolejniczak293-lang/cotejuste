@@ -98,12 +98,23 @@ def add_results(league: str, matches: list[dict]) -> list[dict]:
     return new
 
 
-def load_league(league: str) -> pd.DataFrame:
+XG_REPORT: dict = {}
+
+
+def load_league(league: str, with_xg: bool = True) -> pd.DataFrame:
     frames = [load_openfootball(league, s) for s in HIST_SEASONS]
     frames.append(load_current(league))
     df = pd.concat([f for f in frames if len(f)], ignore_index=True)
     df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values("date").reset_index(drop=True)
+    df["xh"] = float("nan")
+    df["xa"] = float("nan")
+    if with_xg:
+        try:  # xG Understat (data/xg/) : si absents ou illisibles, le modèle utilise les buts seuls
+            import understat
+            df, XG_REPORT[league] = understat.attach(df, league)
+        except Exception as e:  # noqa: BLE001 - ne jamais casser la mise à jour quotidienne
+            XG_REPORT[league] = {"erreur": str(e)}
     return df
 
 

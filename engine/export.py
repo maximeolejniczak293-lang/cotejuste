@@ -26,9 +26,21 @@ REF_DATE = os.environ.get("REF_DATE") or datetime.now(timezone.utc).strftime("%Y
 with open(os.path.join(HERE, "..", "out", "backtest.json"), encoding="utf-8") as _f:
     BT = json.load(_f)
 XI, L2 = BT["params"]["xi"], BT["params"]["l2"]
+A_XG = BT["params"].get("a", 0.0)   # poids des xG retenu par le backtest (0 = buts seuls)
 LIVE_PATH = os.path.join(CACHE, "live.json")
 HORIZON_DAYS = 14          # on cherche la prochaine journée dans les 14 jours
 CANCELLED = {"PST", "CANC", "ABD", "AWD", "WO"}
+
+
+def _xg_sources() -> dict:
+    """Provenance des fichiers xG (data/xg/_sources.json), pour l'afficher dans Méthode."""
+    try:
+        import understat
+        with open(understat.SOURCES, encoding="utf-8") as f:
+            return {k: dict(source=v.get("source"), matches=v.get("matches"), total=v.get("total"),
+                            last_match=v.get("last_match"), complete=v.get("complete")) for k, v in json.load(f).items()}
+    except Exception:  # noqa: BLE001
+        return {}
 
 
 def load_live() -> dict:
@@ -49,10 +61,29 @@ def team_matches(df, team):
     for r in m.itertuples():
         home = r.home == team
         gf, ga = (r.hg, r.ag) if home else (r.ag, r.hg)
+        xf, xa = (r.xh, r.xa) if home else (r.xa, r.xh)
         out.append(dict(date=r.date.strftime("%Y-%m-%d"), opp=r.away if home else r.home,
                         venue="D" if home else "E", gf=int(gf), ga=int(ga), res=res_letter(gf, ga),
-                        season=r.season))
+                        season=r.season, xgf=None if math.isnan(xf) else round(float(xf), 2),
+                        xga=None if math.isnan(xa) else round(float(xa), 2)))
     return out
+
+
+def xg_summary(allm):
+    """xG pour / contre : moyenne de la saison en cours et des 5 derniers matchs avec xG, et buts − xG."""
+    seas = [m for m in allm if m["season"] == CURRENT and m["xgf"] is not None]
+    last = [m for m in allm if m["xgf"] is not None][-5:]
+
+    def agg(ms):
+        if not ms:
+            return None
+        n = len(ms)
+        gf, ga = sum(m["gf"] for m in ms), sum(m["ga"] for m in ms)
+        xf, xa = sum(m["xgf"] for m in ms), sum(m["xga"] for m in ms)
+        return dict(n=n, xgf=round(xf / n, 2), xga=round(xa / n, 2), gf=round(gf / n, 2), ga=round(ga / n, 2),
+                    xgf_tot=round(xf, 1), xga_tot=round(xa, 1), att_luck=round(gf - xf, 1), def_luck=round(xa - ga, 1),
+                    first=ms[0]["date"], last=ms[-1]["date"])
+    return dict(season=agg(seas), last5=agg(last))
 
 
 def upcoming(lg, cur, live):
@@ -83,15 +114,20 @@ def build_league(lg, live):
     df = load_league(lg)
     cur = df[df.season == CURRENT]
     teams = sorted(set(cur.home) | set(cur.away))
-    model = DixonColes(xi=XI, l2=L2).fit(df, REF_DATE, current_teams=teams)
+    model = DixonColes(xi=XI, l2=L2, a=A_XG).fit(df, REF_DATE, current_teams=teams)
     p = model.params
 
     # --- classement (calculé, vérifié par data.py)
     tab = table(cur)
     standings = []
     for rank, (team, r) in enumerate(tab.iterrows(), 1):
+        mine = cur[((cur.home == team) | (cur.away == team)) & cur.xh.notna()]
+        xgf = float(sum(x.xh if x.home == team else x.xa for x in mine.itertuples()))
+        xga = float(sum(x.xa if x.home == team else x.xh for x in mine.itertuples()))
         standings.append(dict(rank=rank, team=team, P=int(r.P), W=int(r.W), D=int(r.D), L=int(r.L),
-                              GF=int(r.GF), GA=int(r.GA), GD=int(r.GD), Pts=int(r.Pts)))
+                              GF=int(r.GF), GA=int(r.GA), GD=int(r.GD), Pts=int(r.Pts),
+                              xg_n=len(mine), xGF=round(xgf, 1) if len(mine) else None,
+                              xGA=round(xga, 1) if len(mine) else None, xGD=round(xgf - xga, 1) if len(mine) else None))
     rank_of = {s["team"]: s["rank"] for s in standings}
 
     # --- fiches équipes
@@ -114,6 +150,7 @@ def build_league(lg, live):
                         L=sum(m["res"] == "D" for m in ms), GF=sum(m["gf"] for m in ms), GA=sum(m["ga"] for m in ms))
         last5 = allm[-5:]
         team_data[t] = dict(
+            xg=xg_summary(allm),
             rank=rank_of.get(t), power_rank=order.index(t) + 1,
             att=round(strength[t]["att"], 3), dfn=round(strength[t]["dfn"], 3),
             xgf=round(strength[t]["xgf"], 2), xga=round(strength[t]["xga"], 2),
@@ -221,7 +258,8 @@ if __name__ == "__main__":
     live = load_live()
     data = dict(
         generated=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), ref_date=REF_DATE,
-        model=dict(name="Dixon-Coles pondéré", xi=XI, l2=L2, half_life_days=round(math.log(2) / XI)),
+        model=dict(name="Dixon-Coles pondéré", xi=XI, l2=L2, a=A_XG, half_life_days=round(math.log(2) / XI)),
+        xg=dict(a=A_XG, comparison=BT.get("comparison"), sources=_xg_sources()),
         backtest=dict(overall=BT["overall"], leagues=BT["leagues"], calibration=BT["calibration"], over25=BT["over25"]),
         live=dict(updated=live.get("generated"), window=live.get("window"), quota=live.get("quota")),
         leagues=[build_league(lg, live) for lg in LEAGUES],
