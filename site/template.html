@@ -940,13 +940,13 @@ function viewMethod() {
     <p><b>4. Des probabilités aux cotes.</b> <code class="f">cote juste = 1 / probabilité</code> et <code class="f">valeur = cote du bookmaker × probabilité</code>. Mise conseillée : <code class="f">Kelly = (cote × p − 1) / (cote − 1)</code>, divisé par 4 et plafonné à 5 % de la bankroll.</p>
     <p><b>5. Les données du jour.</b> Chaque matin, une tâche automatique interroge API-Football : résultats de la veille, horaires exacts, cotes de plusieurs bookmakers (1N2 et +/− 2,5 buts) et absents des matchs des 48 h à venir. Les compositions sont récupérées dans l'heure qui précède le coup d'envoi. Au-delà de 48 h, les matchs viennent du calendrier officiel (date provisoire).</p>
     <p><b>6. Modèle + marché.</b> La probabilité du marché se lit dans la cote moyenne des bookmakers, une fois leur marge retirée : <code class="f">p_marché = (1/cote) ÷ somme des (1/cote)</code>, sur les 3 issues du 1N2 et sur les 2 issues de +/− 2,5 buts. La <b>proba finale</b> = <code class="f">${String(DATA.config.w).replace(".", ",")} × modèle + ${String(Math.round((1 - DATA.config.w) * 100) / 100).replace(".", ",")} × marché</code>. Sans cotes, c'est le modèle seul (« sans marché ») et aucune reco n'est possible. ${(() => { const W = DATA.bilan && DATA.bilan.w; if (!W) return ""; return W.best == null ? `Le poids idéal sera estimé quand ${W.needed} matchs auront une cote de clôture (${W.n} pour l'instant).` : `Sur ${W.n} matchs, le poids qui aurait minimisé le log loss est <b>${String(W.best).replace(".", ",")}</b> (log loss ${ll3(W.ll_best)} contre ${ll3(W.ll_current)} avec le réglage actuel). Il n'est pas appliqué automatiquement : à changer à la main dans engine/config.py si l'écart se confirme.`; })()}</p>
-    <p><b>7. Recos du jour.</b> Candidats : 1, N, 2, +2,5 et −2,5 des matchs à moins de 48 h, pas encore commencés, avec cotes ; valeur = meilleure cote × proba finale.
+    <p><b>7. Recos du jour.</b> Candidats : 1, N, 2, +2,5 et −2,5 des matchs à moins de 48 h, pas encore commencés, avec cotes ; cote de référence = cote ${esc(BOOK)} si l'API la fournit pour ce match et ce pari, sinon la cote moyenne ; valeur = cote de référence × proba finale (la meilleure cote n'est affichée qu'à titre indicatif).
       <b>Sécu</b> : proba ≥ 65 %, meilleure cote ≥ 1,30, valeur ≥ 1 (on garde la plus haute proba ; cote minimale = 1 ÷ proba).
       <b>Valeur</b> : valeur ≥ 1,05 sur le 1N2 et ≥ 1,08 sur les buts (le modèle y est moins fiable), proba ≥ 35 % (on garde la plus haute valeur ; cote minimale = 1,05 ÷ proba).
       <b>Combiné</b> : 2 ou 3 matchs différents, chaque proba ≥ 55 %, chance combinée ≥ 30 % et valeur combinée ≥ 1.
       <b>Grosse cote</b> : cote ≥ 5 et valeur ≥ 1, mise fixe d'1 €, pour s'amuser.
-      Mise : ¼ de Kelly <code class="f">(cote × p − 1) ÷ (cote − 1)</code> sur la meilleure cote, plafonnée à 5 % de la bankroll, minimum 0,50 €, arrondie à 0,10 € ; total des mises ≤ 40 % de la bankroll. Confiance élevée quand modèle et marché sont d'accord à 5 points près et que les absents sont connus. Si rien ne passe les filtres, il n'y a pas de reco : on n'en force jamais.</p>
-    <p><b>Les limites, honnêtement.</b> Le modèle ne voit que les scores : les absents et les compositions sont affichés mais pas intégrés au calcul, pas plus que la fatigue des Coupes d'Europe. ${DATA.xg && DATA.xg.a > 0 ? "Les xG ne couvrent pas toutes les saisons récentes (Understat en maintenance, copies d'archive incomplètes) : là où ils manquent, le modèle reprend les buts réels." : "Les xG Understat sont récupérés et affichés, mais n'ont pas amélioré le backtest : le calcul reste sur les buts réels."} Les recos sont choisies avec la meilleure cote du marché, qu'on ne trouve pas forcément chez ${esc(BOOK)} : la cote minimale dit en dessous de quoi renoncer, et le Bilan juge les recos à la cote ${esc(BOOK)} (si l'API la donne) ou à la cote moyenne. Il bat nettement un pronostic naïf, mais les bookmakers font en général un peu mieux (log loss ≈ 0,97 contre ${o.model.logloss.toFixed(2).replace(".", ",")} ici). Sur le nombre de buts (+/− 2,5), ${bt.over25.base_brier - bt.over25.brier > 0.002 ? "il fait un peu mieux que la moyenne historique" : "il n'apporte quasiment rien"} (Brier ${bt.over25.brier.toFixed(4).replace(".", ",")} contre ${bt.over25.base_brier.toFixed(4).replace(".", ",")} pour la moyenne). Une « valeur » affichée est donc une piste à vérifier, pas un pari sûr.</p>
+      Mise : ¼ de Kelly <code class="f">(cote × p − 1) ÷ (cote − 1)</code> sur la cote de référence, plafonnée à 5 % de la bankroll, minimum 0,50 €, arrondie à 0,10 € ; total des mises ≤ 40 % de la bankroll. Confiance élevée quand modèle et marché sont d'accord à 5 points près et que les absents sont connus. Si rien ne passe les filtres, il n'y a pas de reco : on n'en force jamais.</p>
+    <p><b>Les limites, honnêtement.</b> Le modèle ne voit que les scores : les absents et les compositions sont affichés mais pas intégrés au calcul, pas plus que la fatigue des Coupes d'Europe. ${DATA.xg && DATA.xg.a > 0 ? "Les xG ne couvrent pas toutes les saisons récentes (Understat en maintenance, copies d'archive incomplètes) : là où ils manquent, le modèle reprend les buts réels." : "Les xG Understat sont récupérés et affichés, mais n'ont pas amélioré le backtest : le calcul reste sur les buts réels."} Les recos, leurs mises et le Bilan utilisent exactement la même cote de référence (${esc(BOOK)} si l'API la donne, sinon la moyenne ; pour un combiné, ${esc(BOOK)} seulement si toutes les sélections en ont une). Si ta cote réelle est plus basse que la cote minimale affichée, renonce. Il bat nettement un pronostic naïf, mais les bookmakers font en général un peu mieux (log loss ≈ 0,97 contre ${o.model.logloss.toFixed(2).replace(".", ",")} ici). Sur le nombre de buts (+/− 2,5), ${bt.over25.base_brier - bt.over25.brier > 0.002 ? "il fait un peu mieux que la moyenne historique" : "il n'apporte quasiment rien"} (Brier ${bt.over25.brier.toFixed(4).replace(".", ",")} contre ${bt.over25.base_brier.toFixed(4).replace(".", ",")} pour la moyenne). Une « valeur » affichée est donc une piste à vérifier, pas un pari sûr.</p>
     <p><b>Prochaines étapes.</b> Tenir compte des absents dans le calcul ; compléter les xG des saisons récentes quand Understat reviendra ; Serie A et Bundesliga ; ajuster le poids modèle/marché quand le Bilan aura assez de matchs.</p>
   </div></section>`;
 }
@@ -980,16 +980,20 @@ function recosBlock() {
   const S = recoStakes(items, state.bankroll);
   const cards = items.map((it, i) => {
     const leg = it.legs[0], single = it.legs.length === 1;
-    const prefTxt = single && leg.pref ? `<div class="cmsg${leg.pref + 1e-9 < it.cote_min ? " err" : ""}">${esc(leg.pref_name || BOOK)} : ${n2(leg.pref)}${leg.pref + 1e-9 < it.cote_min ? " — sous la cote minimale : ne joue pas chez eux" : " — au-dessus de la cote minimale"}</div>` : "";
+    const onBook = it.cote_src === "bookmaker", srcName = onBook ? (it.cote_bk_nom || BOOK) : "moyenne";
+    const partial = !single && !onBook && it.legs.some(l => l.pref);
+    const prefTxt = `<div class="cmsg">${onBook
+      ? `Cote utilisée : <b>${esc(srcName)}</b>, pour la valeur, la mise et le bilan.`
+      : `Cote utilisée : <b>moyenne des bookmakers</b>. ${esc(BOOK)} n'a pas coté ${single ? "ce pari" : "toutes les sélections"}${partial ? " : la moyenne est prise pour tout le combiné, jamais un mélange" : ""}.`}</div>`;
     return `<article class="reco${it.type === "grosse" ? " fun" : ""}">
       <div class="kind"><span>${RECO_KIND[it.type]}</span><span class="conf ${it.confiance}" data-tip="Élevée : modèle et marché d'accord à 5 points près et absents connus. Moyenne : une seule des deux conditions. Faible : aucune.">Confiance ${it.confiance.toLowerCase()}</span></div>
-      ${it.legs.map(l => `<div class="leg"><span class="what">${esc(l.pick)}</span><small><span class="flagtag">${TAG[l.league]}</span> ${esc(l.home)} – ${esc(l.away)} · ${esc(fmtDay(l.kickoff))} à ${fmtTime(l.kickoff)}${single ? "" : ` · ${pct(l.p)} · meilleure ${n2(l.best)}`}</small></div>`).join("")}
+      ${it.legs.map(l => `<div class="leg"><span class="what">${esc(l.pick)}</span><small><span class="flagtag">${TAG[l.league]}</span> ${esc(l.home)} – ${esc(l.away)} · ${esc(fmtDay(l.kickoff))} à ${fmtTime(l.kickoff)}${single ? "" : ` · ${pct(l.p)} · cote ${n2(l.ref || l.mean)}`}</small></div>`).join("")}
       <dl>
-        <div><dt>Cote minimale</dt><dd class="key" data-tip="${it.type === "valeur" ? "1,05 ÷ proba" : "1 ÷ proba"} : en dessous, le pari n'a plus de valeur">${n2(it.cote_min)}</dd></div>
+        <div><dt>Cote utilisée · ${esc(srcName)}</dt><dd class="key">${n2(it.cote)}</dd></div>
+        <div><dt>Cote minimale</dt><dd data-tip="${it.type === "valeur" ? "1,05 ÷ proba" : "1 ÷ proba"} : en dessous, le pari n'a plus de valeur">${n2(it.cote_min)}</dd></div>
         <div><dt>${single ? "Probabilité" : "Chance"}</dt><dd>${pct(it.chance)}</dd></div>
-        <div><dt>Valeur</dt><dd data-tip="Meilleure cote × proba finale">${n2(it.valeur)}</dd></div>
-        <div><dt>Meilleure cote</dt><dd data-tip="À titre d'information${single ? " : " + esc(leg.best_bk) : ""}">${n2(it.cote)}</dd></div>
-        <div><dt>Cote moyenne</dt><dd>${n2(it.cote_moyenne)}</dd></div>
+        <div><dt>Valeur</dt><dd data-tip="Cote utilisée × proba finale">${n2(it.valeur)}</dd></div>
+        <div><dt>Meilleure cote (info)</dt><dd style="color:var(--muted)" data-tip="À titre indicatif seulement, jamais utilisée dans les calculs${single ? " : " + esc(leg.best_bk) : ""}">${n2(it.meilleure_cote != null ? it.meilleure_cote : it.cote)}</dd></div>
         ${single ? `<div><dt>Modèle / marché</dt><dd style="font-size:15px">${pct(leg.pm)} / ${pct(leg.pk)}</dd></div>` : ""}
       </dl>
       ${prefTxt}
@@ -1012,9 +1016,10 @@ function addReco(i) {
     const cur = cart.find(c => c.id === m.id);
     if (cur && cur.k === l.k) return;
     if (cur) { blocked.push(`${m.home} – ${m.away} (déjà « ${pickName(cur)} »)`); return; }
-    const info = pickInfo(m, l.k);
+    const info = pickInfo(m, l.k), ref = l.ref || info.odds;  // même cote de référence que la reco
     cart.push({ id: m.id, slug: m.slug, league: m.league, home: m.home, away: m.away, kickoff: m.kickoff, k: l.k,
-      odds: info.odds ? n2(info.odds) : "", src: info.src, pModel: info.pModel, pMkt: info.pMkt });
+      odds: ref ? n2(ref) : "", src: l.ref ? (l.ref_src === "bookmaker" ? (l.pref_name || BOOK) : "cote moyenne") : info.src,
+      pModel: info.pModel, pMkt: info.pMkt });
   });
   if (blocked.length) cartMsg = { err: true, text: `Une seule sélection par match : non ajouté pour ${blocked.join(", ")}.` };
   saveCart(); renderCart(); openCart();

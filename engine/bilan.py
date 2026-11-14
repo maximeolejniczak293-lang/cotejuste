@@ -170,7 +170,11 @@ def record_recos(items, now=None):
             continue
         known.add(rid)
         for j, l in enumerate(it["legs"], 1):
-            prise, base = (l["pref"], "bookmaker") if l.get("pref") else (l["mean"], "moyenne")
+            # exactement la cote de référence de la reco (même base pour toutes les sélections d'un combiné)
+            if l.get("ref"):
+                prise, base = l["ref"], l["ref_src"]
+            else:  # ancien format
+                prise, base = (l["pref"], "bookmaker") if l.get("pref") else (l["mean"], "moyenne")
             new.append(dict(reco_id=rid, horodatage_utc=now.isoformat(timespec="seconds"), jour=day, type=it["type"],
                             jambe=j, ligue=l["league"], match_id=str(l["api_id"]), coup_envoi_utc=l["kickoff"],
                             domicile=l["home"], exterieur=l["away"], pari=FROM_KEY[l["k"]], p_modele=l["pm"],

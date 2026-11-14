@@ -2,7 +2,11 @@
 
 Calculées à chaque mise à jour du site à partir des cotes déjà en cache (aucune requête API).
 Candidats : 1, N, 2, +2,5, -2,5 des matchs pas encore commencés, à moins de 48 h, avec cotes.
-Valeur = meilleure cote × proba finale. Les seuils sont dans config.py.
+Cote de référence = cote de ton bookmaker (config.BOOKMAKER) si l'API la fournit pour ce match et ce pari,
+sinon la cote moyenne. Valeur = cote de référence × proba finale ; Kelly et cotes de combiné aussi.
+Combiné : produit des cotes de ton bookmaker si toutes les sélections en ont une, sinon produit des cotes
+moyennes (jamais un mélange). La meilleure cote n'est affichée qu'à titre indicatif.
+Le bilan juge chaque reco à exactement cette cote de référence. Les seuils sont dans config.py.
 Les mises en euros sont calculées dans la page (bankroll du visiteur) : ici, on fournit la fraction de Kelly.
 """
 import itertools
@@ -47,10 +51,21 @@ def candidates(fixtures, now):
                 continue
             best, best_bk = o["best"][k]
             p = f["pf"][k]
+            mine = (pref.get("odds") or {}).get(k)
+            ref, src = (mine, "bookmaker") if mine else (o["mean"][k], "moyenne")
             out.append(dict(f=f, k=k, p=p, pm=f["pm"][k], pk=f["pk"][k], best=best, best_bk=best_bk,
-                            mean=o["mean"][k], pref=(pref.get("odds") or {}).get(k), pref_name=pref.get("name"),
-                            valeur=best * p))
+                            mean=o["mean"][k], pref=mine, pref_name=pref.get("name"),
+                            ref=ref, ref_src=src, valeur=ref * p))
     return out
+
+
+def combo_odds(cands):
+    """Cote d'un combiné : ton bookmaker si toutes les sélections en ont une, sinon la moyenne partout."""
+    src = "bookmaker" if all(c["pref"] for c in cands) else "moyenne"
+    cote = 1.0
+    for c in cands:
+        cote *= c["pref"] if src == "bookmaker" else c["mean"]
+    return cote, src
 
 
 def confidence(c):
@@ -112,12 +127,13 @@ def reasons(c, teams):
     return [t for _, t in R[:3]]
 
 
-def _leg(c):
+def _leg(c, src):
     f = c["f"]
     return dict(id=f["id"], api_id=f.get("api_id"), league=f["league"], home=f["home"], away=f["away"],
                 kickoff=f["kickoff"], k=c["k"], label=LABEL[c["k"]], pick=pick_name(f, c["k"]),
                 p=c["p"], pm=c["pm"], pk=c["pk"], best=c["best"], best_bk=c["best_bk"], mean=c["mean"],
                 pref=c["pref"], pref_name=c["pref_name"] if c["pref"] else None,
+                ref=c["pref"] if src == "bookmaker" else c["mean"], ref_src=src,
                 absents_connus=f.get("absents") is not None)
 
 
@@ -125,14 +141,17 @@ def _item(kind, cands, teams_by_league, cote_min_num, fixed=None):
     chance, best, mean = 1.0, 1.0, 1.0
     for c in cands:
         chance *= c["p"]; best *= c["best"]; mean *= c["mean"]
+    ref, src = combo_odds(cands)
     conf = CONF_ORDER[min(CONF_ORDER.index(confidence(c)) for c in cands)]
     if len(cands) == 1:
         why = reasons(cands[0], teams_by_league[cands[0]["f"]["league"]])
     else:
         why = [f"{c['f']['home']} – {c['f']['away']} : {pick_name(c['f'], c['k'])} ({c['p'] * 100:.0f} %). "
                + reasons(c, teams_by_league[c["f"]["league"]])[0] for c in cands]
-    return dict(type=kind, legs=[_leg(c) for c in cands], chance=chance, cote=best, cote_moyenne=mean,
-                valeur=best * chance, cote_min=cote_min_num / chance, kelly=None if fixed else kelly(chance, best),
+    return dict(type=kind, legs=[_leg(c, src) for c in cands], chance=chance,
+                cote=ref, cote_src=src, cote_bk_nom=cands[0]["pref_name"] if src == "bookmaker" else None,
+                meilleure_cote=best, cote_moyenne=mean,
+                valeur=ref * chance, cote_min=cote_min_num / chance, kelly=None if fixed else kelly(chance, ref),
                 mise_fixe=fixed, confiance=conf, raisons=why)
 
 
@@ -143,7 +162,7 @@ def build(fixtures, teams_by_league, now=None):
     key = lambda c: (c["f"]["id"], c["k"])  # noqa: E731
     used, items = set(), []
 
-    secu = [c for c in cands if c["p"] >= C.SECU["p_min"] and c["best"] >= C.SECU["cote_min"]
+    secu = [c for c in cands if c["p"] >= C.SECU["p_min"] and c["ref"] >= C.SECU["cote_min"]
             and c["valeur"] >= C.SECU["valeur_min"]]
     if secu:
         s = max(secu, key=lambda c: (c["p"], c["valeur"]))
@@ -158,21 +177,22 @@ def build(fixtures, teams_by_league, now=None):
         used.add(key(v))
 
     legs = [c for c in cands if c["p"] >= C.COMBI["p_min"]]
-    best = None
+    top = None
     for n in C.COMBI["tailles"]:
         for combo in itertools.combinations(legs, n):
             if len({c["f"]["id"] for c in combo}) < n:
                 continue
-            chance = cote = 1.0
+            chance = 1.0
             for c in combo:
-                chance *= c["p"]; cote *= c["best"]
+                chance *= c["p"]
+            cote, _ = combo_odds(combo)  # ton bookmaker partout, ou la moyenne partout
             v = chance * cote
-            if chance >= C.COMBI["chance_min"] and v >= C.COMBI["valeur_min"] and (best is None or v > best[0]):
-                best = (v, combo)
-    if best:
-        items.append(_item("combine", sorted(best[1], key=lambda c: c["f"]["kickoff"]), teams_by_league, 1.0))
+            if chance >= C.COMBI["chance_min"] and v >= C.COMBI["valeur_min"] and (top is None or v > top[0]):
+                top = (v, combo)
+    if top:
+        items.append(_item("combine", sorted(top[1], key=lambda c: c["f"]["kickoff"]), teams_by_league, 1.0))
 
-    big = [c for c in cands if key(c) not in used and c["best"] >= C.GROSSE["cote_min"]
+    big = [c for c in cands if key(c) not in used and c["ref"] >= C.GROSSE["cote_min"]
            and c["valeur"] >= C.GROSSE["valeur_min"]]
     if big:
         g = max(big, key=lambda c: c["valeur"])

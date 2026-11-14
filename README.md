@@ -103,7 +103,7 @@ C'est le seul fichier à modifier pour changer :
 
 ## Recos du jour (en haut de l'onglet Matchs)
 
-**Candidats** : 1, N, 2, +2,5 et −2,5 des matchs pas encore commencés, à moins de 48 h, avec cotes. Valeur = meilleure cote × proba finale.
+**Candidats** : 1, N, 2, +2,5 et −2,5 des matchs pas encore commencés, à moins de 48 h, avec cotes. **Cote de référence** = cote Betclic si l'API la fournit pour ce match et ce pari, sinon la cote moyenne. Valeur = cote de référence × proba finale. Pour un combiné : produit des cotes Betclic si toutes les sélections en ont une, sinon produit des cotes moyennes (jamais un mélange). La meilleure cote n'est affichée qu'à titre indicatif.
 
 **Les quatre recos :**
 - **Sécu** : proba ≥ 65 %, cote ≥ 1,30, valeur ≥ 1. On garde la plus haute proba. Cote minimale = 1 ÷ proba.
@@ -114,7 +114,7 @@ C'est le seul fichier à modifier pour changer :
 **Règles communes :**
 - Une sélection n'apparaît pas dans deux recos à la fois, sauf dans le combiné.
 - **Confiance** : Élevée si modèle et marché sont d'accord à 5 points près *et* que les absents sont connus ; Moyenne si une seule de ces conditions est remplie ; Faible sinon.
-- **Mise** : ¼ de Kelly sur la meilleure cote, plafonnée à 5 %, minimum 0,50 €, arrondie à 0,10 €. Le total reste ≤ 40 % de la bankroll : les mises sont réduites, puis la grosse cote et le combiné sont retirés si besoin.
+- **Mise** : ¼ de Kelly sur la cote de référence, plafonnée à 5 %, minimum 0,50 €, arrondie à 0,10 €. Le total reste ≤ 40 % de la bankroll : les mises sont réduites, puis la grosse cote et le combiné sont retirés si besoin.
 - Si rien ne passe les filtres, le site affiche « Rien d'intéressant aujourd'hui ». Aucune reco n'est jamais forcée.
 - **Aucune requête API supplémentaire** : tout est calculé avec les cotes et les absents déjà en cache.
 
@@ -133,7 +133,7 @@ C'est le seul fichier à modifier pour changer :
 
 **Limites :**
 - Le 13/11/2026, Betclic n'apparaissait pas parmi les bookmakers renvoyés par l'API (une seule réponse vue, en Copa del Rey). Tant qu'il est absent, la cote prise est la moyenne.
-- Les recos sont choisies avec la meilleure cote du marché : la cote minimale indique en dessous de quoi renoncer chez son bookmaker.
+- Recos, mises et bilan utilisent exactement la même cote de référence : chaque reco indique laquelle (Betclic ou moyenne). Si ta cote réelle est sous la cote minimale, renonce.
 
 ## xG (Understat)
 
