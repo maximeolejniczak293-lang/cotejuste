@@ -204,9 +204,40 @@ def _cache_raw(league, year, matches, source):
 
 
 # --------------------------------------------------------------------------- mise à jour
-def update(years=None, leagues=None, log=print):
+LIVE_OK = False  # devient vrai dès qu'Understat a répondu en direct pendant ce lancement
+
+
+def incomplete_past(leagues=None):
+    """Saisons passées encore incomplètes ou absentes (à compléter quand Understat sera de retour)."""
+    src = _sources()
+    return [(lg, y) for lg in (leagues or CODE) for y in SEASONS if y != CURRENT_YEAR
+            and not (src.get(f"{lg}_{SEASONS[y]}", {}).get("complete") and os.path.exists(csv_path(lg, y)))]
+
+
+def daily(log=print):
+    """Mise à jour quotidienne : saison en cours ; si Understat répond en direct, on complète aussi,
+    une seule fois, les saisons passées incomplètes (en direct uniquement, pas par archive.org).
+    Renvoie la liste des saisons complétées (vide la plupart du temps)."""
+    update(years=[CURRENT_YEAR], log=log)
+    todo = incomplete_past()
+    if not (LIVE_OK and todo):
+        return []
+    log(f"   Understat est de retour : on complète {len(todo)} saison(s) passée(s)")
+    done = []
+    for lg, y in todo:
+        before = _sources().get(f"{lg}_{SEASONS[y]}", {}).get("matches", 0)
+        update(years=[y], leagues=[lg], log=log, live_only=True)
+        after = _sources().get(f"{lg}_{SEASONS[y]}", {})
+        if after.get("matches", 0) > before:
+            done.append(f"{lg}_{SEASONS[y]} ({before} -> {after['matches']} matchs)")
+    return done
+
+
+def update(years=None, leagues=None, log=print, live_only=False):
     """Met à jour les fichiers xG. Par défaut : saisons passées manquantes + saison en cours.
+    live_only : Understat en direct seulement (pas d'archive.org).
     Ne lève jamais d'exception : en cas d'échec, on garde les dernières données connues."""
+    global LIVE_OK
     src = _sources()
     years = years or list(SEASONS)
     leagues = leagues or list(CODE)
@@ -227,10 +258,11 @@ def update(years=None, leagues=None, log=print):
                 try:
                     matches, origin = _from_understat(CODE[lg], year)
                     origin = "understat.com"
+                    LIVE_OK = True
                 except Unavailable as e:
                     errors.append(f"Understat : {e}")
                     live_down = "maintenance" in str(e) or "réseau" in str(e)
-            if matches is None:
+            if matches is None and not live_only:
                 try:
                     matches, origin = _from_archive(CODE[lg], year, current)
                 except Unavailable as e:

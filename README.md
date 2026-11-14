@@ -144,6 +144,7 @@ C'est le seul fichier à modifier pour changer :
   3. les dernières données enregistrées.
 
   Une requête à la fois, 5 s d'écart, User-Agent explicite. Si tout échoue, le modèle utilise les buts réels et la mise à jour continue.
+- **Au retour d'Understat**, la mise à jour du matin complète automatiquement, une seule fois et en direct, les saisons passées encore incomplètes. Un avertissement apparaît alors dans GitHub Actions (« Understat est de retour… ») : il faut ensuite relancer `python engine/backtest.py` pour recalculer le poids des xG.
 - **Le 14/11/2026, Understat était en maintenance**, même dans un navigateur. Les xG viennent donc de copies archivées, incomplètes pour les saisons récentes :
 
 | | 2022-23 | 2023-24 | 2024-25 | 2025-26 | 2026-27 |

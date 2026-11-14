@@ -207,7 +207,10 @@ def full_update(client):
         if client.offline:
             log("   mode hors ligne : on garde les xG déjà enregistrés")
         else:
-            understat.update(years=[understat.CURRENT_YEAR], log=log)
+            done = understat.daily(log=log)
+            if done:  # avertissement visible dans GitHub Actions : il faut relancer le backtest
+                warn("Understat est de retour : xG complétés pour " + ", ".join(done)
+                     + ". Relance le backtest (python engine/backtest.py) pour recalculer le poids des xG.")
         import data
         for lg in af.LEAGUE_IDS:  # contrôle : >= 99 % des matchs Understat associés, scores identiques
             _, rep = understat.attach(data.load_league(lg, with_xg=False), lg)
