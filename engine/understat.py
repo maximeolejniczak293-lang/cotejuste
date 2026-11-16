@@ -157,8 +157,9 @@ def _sources():
 
 def _save_sources(s):
     os.makedirs(XG_DIR, exist_ok=True)
-    with open(SOURCES, "w", encoding="utf-8") as f:
+    with open(SOURCES, "w", encoding="utf-8", newline="\n") as f:  # mêmes fins de ligne sous Windows et sur GitHub
         json.dump(s, f, ensure_ascii=False, indent=1, sort_keys=True)
+        f.write("\n")
 
 
 def csv_path(league, year):
