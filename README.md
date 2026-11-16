@@ -1,4 +1,4 @@
-# CoteJuste : moteur de prédiction foot + site
+# Probalab : moteur de prédiction foot + site
 
 Ligue 1, Premier League, LaLiga. Les données se mettent à jour toutes seules chaque matin grâce à API-Football et à GitHub Actions.
 
@@ -101,7 +101,7 @@ C'est le seul fichier à modifier pour changer :
 - **Où elle sert** : la fiche match affiche les trois probas. Le calculateur, le combiné et les recos utilisent la proba finale.
 - **Le meilleur W** : à partir de 200 matchs avec cote de clôture, le W qui minimise le log loss est calculé et affiché dans Méthode. Il n'est jamais appliqué automatiquement.
 
-## Recos du jour (en haut de l'onglet Matchs)
+## Recos du jour (en haut de l'Accueil)
 
 **Candidats** : 1, N, 2, +2,5 et −2,5 des matchs pas encore commencés, à moins de 48 h, avec cotes. **Cote de référence** = cote Betclic si l'API la fournit pour ce match et ce pari, sinon la cote moyenne. Valeur = cote de référence × proba finale. Pour un combiné : produit des cotes Betclic si toutes les sélections en ont une, sinon produit des cotes moyennes (jamais un mélange). La meilleure cote n'est affichée qu'à titre indicatif.
 
