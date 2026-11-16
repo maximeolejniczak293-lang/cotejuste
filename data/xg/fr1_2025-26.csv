@@ -1,0 +1,37 @@
+date;domicile;exterieur;buts_dom;buts_ext;xg_dom;xg_ext
+2025-08-15;Rennes;Marseille;1;0;1,316;2,079
+2025-08-16;Lens;Lyon;0;1;1,875;1,615
+2025-08-16;Monaco;Le Havre;3;1;1,881;0,433
+2025-08-16;Nice;Toulouse;0;1;1,007;0,569
+2025-08-17;Angers;Paris FC;1;0;0,836;0,711
+2025-08-17;Auxerre;Lorient;1;0;1,492;1,852
+2025-08-17;Brest;Lille;3;3;1,57;1,842
+2025-08-17;Metz;Strasbourg;0;1;0,184;0,732
+2025-08-17;Nantes;PSG;0;1;0,124;1,357
+2025-08-22;PSG;Angers;1;0;2,088;0,177
+2025-08-23;Lyon;Metz;3;0;2,388;0,508
+2025-08-23;Marseille;Paris FC;5;2;3,337;1,055
+2025-08-23;Nice;Auxerre;3;1;2,663;2,29
+2025-08-24;Le Havre;Lens;1;2;2,292;1,291
+2025-08-24;Lille;Monaco;1;0;2,412;1,522
+2025-08-24;Lorient;Rennes;4;0;3,488;0,073
+2025-08-24;Strasbourg;Nantes;1;0;1,835;0,428
+2025-08-24;Toulouse;Brest;2;0;1,324;0,75
+2025-08-29;Lens;Brest;3;1;4,492;0,963
+2025-08-30;Lorient;Lille;1;7;2,271;3,782
+2025-08-30;Nantes;Auxerre;1;0;0,418;1,11
+2025-08-30;Toulouse;PSG;3;6;2,384;2,508
+2025-08-31;Angers;Rennes;1;1;1,586;1,741
+2025-08-31;Le Havre;Nice;3;1;1,756;0,716
+2025-08-31;Lyon;Marseille;1;0;3,537;0,897
+2025-08-31;Monaco;Strasbourg;3;2;2,356;1,773
+2025-08-31;Paris FC;Metz;3;2;3,405;1,625
+2025-09-12;Marseille;Lorient;4;0;2,834;0,189
+2025-09-13;Auxerre;Monaco;1;2;0,904;1,627
+2025-09-13;Nice;Nantes;1;0;2,347;0,776
+2025-09-14;Brest;Paris FC;1;2;2,649;1,976
+2025-09-14;Lille;Toulouse;2;1;2,423;1,225
+2025-09-14;Metz;Angers;1;1;1,763;2,025
+2025-09-14;PSG;Lens;2;0;1,058;1,272
+2025-09-14;Rennes;Lyon;3;1;2,297;1,834
+2025-09-14;Strasbourg;Le Havre;1;0;1,433;0,525

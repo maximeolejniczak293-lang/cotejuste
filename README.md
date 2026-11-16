@@ -149,12 +149,17 @@ C'est le seul fichier à modifier pour changer :
 
 | | 2022-23 | 2023-24 | 2024-25 | 2025-26 | 2026-27 |
 |---|---|---|---|---|---|
-| Ligue 1 | 379/380 | 306/306 | 171/306 | 0 | 0 |
+| Ligue 1 | 379/380 | 306/306 | 306/306 | 36/306 | 0 |
 | Premier League | 380/380 | 380/380 | 380/380 | 380/380 | 40/100 |
 | LaLiga | 380/380 | 380/380 | 370/370 | 142/380 | 0 |
 
+La Ligue 1 2024-25 et le début de 2025-26 viennent des tirs Understat republiés par le projet ouvert
+[worldfootballR_data](https://github.com/JaseZiv/worldfootballR_data/releases/tag/understat_shots) (à jour au 18/09/2025),
+additionnés par match avec `engine/xg_backfill.py` (contrôle : écart médian < 0,01 xG avec Understat, scores identiques).
+Ce script ne fait qu'ajouter des matchs absents et ne sert qu'une fois, à la main (`pip install pyreadr` nécessaire).
+
 - **Contrôle d'association** (même affiche, date à ± 1 jour) :
-  - Ligue 1 : 99,9 % des matchs Understat associés ;
+  - Ligue 1 : 99,8 % des matchs Understat associés (Nantes-Brest 2024-25 est daté du 7/02 chez openfootball, du 9/02 chez Understat) ;
   - Premier League : 100 % ;
   - LaLiga : 99,2 % ;
   - aucun écart de score. Les quelques matchs non associés manquent dans nos propres résultats (openfootball).
@@ -163,14 +168,14 @@ C'est le seul fichier à modifier pour changer :
 
 | | Ancien : buts seuls | Nouveau : xG (a = 0,7) | Naïf |
 |---|---|---|---|
-| Log loss 1N2 | 1,0019 | **1,0008** | 1,067 |
-| RPS | 0,2054 | 0,2050 | 0,227 |
-| Bon favori | 50,6 % | 51,6 % | 45 % |
-| Brier +/− 2,5 buts (moyenne : 0,2493) | 0,2486 | **0,2475** | |
+| Log loss 1N2 | 1,0019 | **0,9991** | 1,067 |
+| RPS | 0,2054 | 0,2045 | 0,227 |
+| Bon favori | 50,6 % | 51,3 % | 45 % |
+| Brier +/− 2,5 buts (moyenne : 0,2493) | 0,2486 | **0,2471** | |
 
 Les attaques et les défenses sont estimées sur `a × xG + (1 − a) × buts`, avec `a` choisi parmi 0 ; 0,3 ; 0,5 ; 0,7 ; 1 sur la saison 2024-25. Le modèle avec xG fait un peu mieux hors échantillon : il est adopté.
 
-Le gain reste **faible**. Il vient surtout de la Premier League, la seule ligue où les xG récents sont complets (log loss 2025-26 : 1,0305 → 1,0245). Il peut encore être dû au hasard, et il devrait grandir quand Understat reviendra.
+Le gain reste **modeste** (0,0028 de log loss), mais il a plus que doublé depuis que la Ligue 1 2024-25 est complète (16/11/2026 : il était de 0,0011). Il vient de la Premier League (2025-26 : 1,0305 → 1,0245) et de la Ligue 1 (2025-26 : 1,0060 → 0,9975), les deux ligues dont les xG des saisons précédentes sont complets. LaLiga ne bouge pas encore. Il devrait grandir quand Understat reviendra avec les xG de 2025-26 et de la saison en cours.
 
 Le plus/moins de 2,5 buts progresse un peu, mais reste à peine meilleur que la moyenne historique. Les bookmakers restent meilleurs (log loss d'environ 0,97) : une « valeur » affichée par le site est une piste, pas une certitude.
 

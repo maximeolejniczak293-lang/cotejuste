@@ -886,7 +886,7 @@ function xgMethod() {
       <tr><td>Brier +/− 2,5 buts (moyenne historique : ${f4(o.over25_base)})</td><td class="r num ${better(o.over25_brier, nw.over25_brier)}">${f4(o.over25_brier)}</td><td class="r num ${better(nw.over25_brier, o.over25_brier)}">${f4(nw.over25_brier)}</td></tr>
       ${Object.keys(o.leagues).map(lg => Object.keys(o.leagues[lg]).map(s => `<tr><td>${NAMES[lg]} ${s} (log loss)</td><td class="r num ${better(o.leagues[lg][s], nw.leagues[lg][s])}">${f4(o.leagues[lg][s])}</td><td class="r num ${better(nw.leagues[lg][s], o.leagues[lg][s])}">${f4(nw.leagues[lg][s])}</td></tr>`).join("")).join("")}
     </tbody></table></div>
-    <p class="hint" style="margin:0">Couverture xG (matchs avec xG / matchs joués). Understat était en maintenance le 14/11/2026 : les données viennent de ses copies archivées sur archive.org, incomplètes pour les saisons récentes. Sans xG, un match compte avec ses buts réels.</p>
+    <p class="hint" style="margin:0">Couverture xG (matchs avec xG / matchs joués). Understat est en maintenance depuis novembre 2026 : les données viennent de ses copies archivées sur archive.org, complétées par les tirs Understat republiés par le projet ouvert worldfootballR (à jour au 18/09/2025). La Ligue 1 et LaLiga manquent donc depuis l'automne 2025. Sans xG, un match compte avec ses buts réels.</p>
     <div class="tablewrap"><table><thead><tr><th>Championnat</th>${seasons.map(s => `<th class="r">${s}</th>`).join("")}</tr></thead><tbody>
       ${Object.keys(cov).map(lg => `<tr><td>${NAMES[lg]}</td>${seasons.map(s => { const c = cov[lg][s]; return `<td class="r num">${c ? `${c.xg}/${c.n}` : "–"}</td>`; }).join("")}</tr>`).join("")}
     </tbody></table></div>
