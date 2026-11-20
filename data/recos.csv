@@ -1,3 +1,7 @@
 ﻿reco_id;horodatage_utc;jour;type;jambe;ligue;match_id;coup_envoi_utc;domicile;exterieur;pari;p_modele;p_marche;p_finale;meilleure_cote;bookmaker_meilleure;cote_moyenne;cote_bk;cote_prise;base_prise;cote_min;valeur;confiance
 2026-11-19-valeur-1552827;2026-11-19T06:13:47+00:00;2026-11-19;valeur;1;fr1;1552827;2026-11-20T19:45:00Z;Troyes;Le Havre;moins25;0,6695;0,4939;0,5817;2;1xBet;1,936;;1,936;moyenne;1,805;1,1262;Moyenne
 2026-11-19-grosse-1570454;2026-11-19T06:13:47+00:00;2026-11-19;grosse;1;es1;1570454;2026-11-20T20:00:00Z;Athletic Bilbao;Espanyol;2;0,2021;0,1407;0,1714;7;Betfair;6,717;;6,717;moyenne;5,8336;1,1514;Moyenne
+2026-11-20-valeur-1570461;2026-11-20T06:20:21+00:00;2026-11-20;valeur;1;es1;1570461;2026-11-21T20:00:00Z;Real Madrid;Celta Vigo;moins25;0,4683;0,3099;0,3891;3,2;Bet365;3,031;;3,031;moyenne;2,6984;1,1794;Moyenne
+2026-11-20-combine-1552827+1552826;2026-11-20T06:20:21+00:00;2026-11-20;combine;1;fr1;1552827;2026-11-20T19:45:00Z;Troyes;Le Havre;moins25;0,6695;0,4956;0,5826;2;1xBet;1,929;;1,929;moyenne;2,7032;1,1888;Moyenne
+2026-11-20-combine-1552827+1552826;2026-11-20T06:20:21+00:00;2026-11-20;combine;2;fr1;1552826;2026-11-21T19:45:00Z;Strasbourg;Brest;plus25;0,6975;0,5725;0,635;1,72;1xBet;1,666;;1,666;moyenne;2,7032;1,1888;Moyenne
+2026-11-20-grosse-1570461;2026-11-20T06:20:21+00:00;2026-11-20;grosse;1;es1;1570461;2026-11-21T20:00:00Z;Real Madrid;Celta Vigo;N;0,1892;0,1235;0,1564;8,25;1xBet;7,689;;7,689;moyenne;6,3954;1,2023;Moyenne
