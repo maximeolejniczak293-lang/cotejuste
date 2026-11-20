@@ -1,12 +1,12 @@
 ﻿serie;coup_envoi;ligue;match;pari;proba;cote;base;cloture;clv;score;resultat;gain
-Pari valeur;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,5817;1,936;moyenne;;;;;
+Pari valeur;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,5817;1,936;moyenne;1,906;0,0157;;;
 Pari valeur;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,3891;3,031;moyenne;;;;;
 Combiné du jour;2026-11-20T19:45:00Z;mix;Troyes – Le Havre + Strasbourg – Brest;−2,5 buts + +2,5 buts;0,37;3,2137;moyenne;;;;;
 Grosse cote;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;2;0,1714;6,717;moyenne;;;;;
 Grosse cote;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1564;7,689;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;2;0,3377;3,266;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;N;0,3205;3,448;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,6695;1,929;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;2;0,3377;3,266;moyenne;3,204;0,0194;;;
+Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;N;0,3205;3,448;moyenne;3,397;0,015;;;
+Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,6695;1,929;moyenne;1,906;0,0121;;;
 Toutes les valeurs, modèle seul;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;2;0,2022;6,603;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;N;0,2782;4,359;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;−2,5 buts;0,5903;2,004;moyenne;;;;;
@@ -29,7 +29,7 @@ Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;1
 Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;2;0,0914;15,417;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1892;7,689;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,4683;3,031;moyenne;;;;;
-Toutes les valeurs, proba finale;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,5826;1,929;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,5826;1,929;moyenne;1,906;0,0121;;;
 Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;2;0,1729;6,603;moyenne;;;;;
 Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;N;0,2479;4,359;moyenne;;;;;
 Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;−2,5 buts;0,5336;2,004;moyenne;;;;;
