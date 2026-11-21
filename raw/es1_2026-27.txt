@@ -1,3 +1,4 @@
+2026-11-20 | 13 | Athletic Bilbao | 0 | 1 | Espanyol
 2026-11-08 | 12 | Atlético de Madrid | 1 | 2 | FC Barcelona
 2026-11-08 | 12 | Celta de Vigo | 0 | 0 | Levante
 2026-11-08 | 12 | Villarreal | 2 | 0 | Getafe
