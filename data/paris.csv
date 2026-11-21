@@ -1,13 +1,15 @@
 ﻿serie;coup_envoi;ligue;match;pari;proba;cote;base;cloture;clv;score;resultat;gain
 Pari valeur;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,5817;1,936;moyenne;1,906;0,0157;3-1;perdu;-1
-Pari valeur;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,3891;3,031;moyenne;;;;;
-Pari valeur;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,3887;3,031;moyenne;;;;;
-Combiné du jour;2026-11-20T19:45:00Z;mix;Troyes – Le Havre + Strasbourg – Brest;−2,5 buts + +2,5 buts;0,37;3,2137;moyenne;;;;;
-Combiné du jour;2026-11-21T19:45:00Z;mix;Lille – Lyon + Strasbourg – Brest;−2,5 buts + +2,5 buts;0,3746;2,9721;moyenne;;;;;
-Combiné du jour;2026-11-21T19:45:00Z;mix;Lille – Lyon + Strasbourg – Brest;−2,5 buts + +2,5 buts;0,3749;2,9721;moyenne;;;;;
+Pari valeur;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,3891;3,031;moyenne;3,069;-0,0124;;;
+Pari valeur;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,3887;3,031;moyenne;3,069;-0,0124;;;
+Pari valeur;2026-11-22T14:00:00Z;en1;Hull – Brighton;−2,5 buts;0,4952;2,205;moyenne;;;;;
+Combiné du jour;2026-11-20T19:45:00Z;mix;Troyes – Le Havre + Strasbourg – Brest;−2,5 buts + +2,5 buts;0,37;3,2137;moyenne;3,5909;-0,105;;;
+Combiné du jour;2026-11-21T19:45:00Z;mix;Lille – Lyon + Strasbourg – Brest;−2,5 buts + +2,5 buts;0,3746;2,9721;moyenne;3,2141;-0,0753;;;
+Combiné du jour;2026-11-21T19:45:00Z;mix;Lille – Lyon + Strasbourg – Brest;−2,5 buts + +2,5 buts;0,3749;2,9721;moyenne;3,2141;-0,0753;;;
 Grosse cote;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;2;0,1714;6,717;moyenne;;;0-1;gagné;5,717
-Grosse cote;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1564;7,689;moyenne;;;;;
-Grosse cote;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1554;7,689;moyenne;;;;;
+Grosse cote;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1564;7,689;moyenne;7,968;-0,035;;;
+Grosse cote;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1554;7,689;moyenne;7,968;-0,035;;;
+Grosse cote;2026-11-22T14:00:00Z;en1;Hull – Brighton;1;0,189;6,228;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;2;0,3377;3,266;moyenne;3,204;0,0194;3-1;perdu;-1
 Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;N;0,3205;3,448;moyenne;3,397;0,015;3-1;perdu;-1
 Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,6695;1,929;moyenne;1,906;0,0121;3-1;perdu;-1
@@ -26,13 +28,13 @@ Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;N;0,2271;
 Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;−2,5 buts;0,4346;2,944;moyenne;3,037;-0,0306;;;
 Toutes les valeurs, modèle seul;2026-11-21T17:30:00Z;en1;Newcastle – Arsenal;1;0,1951;5,482;moyenne;5,823;-0,0586;;;
 Toutes les valeurs, modèle seul;2026-11-21T17:30:00Z;en1;Newcastle – Arsenal;−2,5 buts;0,5181;2,147;moyenne;2,1;0,0224;;;
-Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Lille – Lyon;−2,5 buts;0,6447;1,784;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Monaco – Auxerre;2;0,1535;6,871;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;+2,5 buts;0,6975;1,666;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;1;0,4765;2,231;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;2;0,0914;15,417;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1892;7,689;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,4683;3,031;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Lille – Lyon;−2,5 buts;0,6447;1,784;moyenne;1,706;0,0457;;;
+Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Monaco – Auxerre;2;0,1535;6,871;moyenne;7,506;-0,0846;;;
+Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;+2,5 buts;0,6975;1,666;moyenne;1,884;-0,1157;;;
+Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;1;0,4765;2,231;moyenne;2,236;-0,0022;;;
+Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;2;0,0914;15,417;moyenne;15,069;0,0231;;;
+Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1892;7,689;moyenne;7,968;-0,035;;;
+Toutes les valeurs, modèle seul;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,4683;3,031;moyenne;3,069;-0,0124;;;
 Toutes les valeurs, modèle seul;2026-11-22T14:00:00Z;en1;Hull – Brighton;1;0,226;6,228;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-22T14:00:00Z;en1;Hull – Brighton;N;0,2696;4,419;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-22T14:00:00Z;en1;Hull – Brighton;−2,5 buts;0,5587;2,205;moyenne;;;;;
@@ -45,11 +47,11 @@ Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Es
 Toutes les valeurs, proba finale;2026-11-21T15:00:00Z;en1;Coventry – Crystal Palace;1;0,4396;2,412;moyenne;2,468;-0,0227;;;
 Toutes les valeurs, proba finale;2026-11-21T15:00:00Z;en1;Tottenham – Ipswich;2;0,1969;5,553;moyenne;5,835;-0,0483;;;
 Toutes les valeurs, proba finale;2026-11-21T16:15:00Z;fr1;Nice – PSG;−2,5 buts;0,3774;2,944;moyenne;3,037;-0,0306;;;
-Toutes les valeurs, proba finale;2026-11-21T19:45:00Z;fr1;Lille – Lyon;−2,5 buts;0,59;1,784;moyenne;;;;;
-Toutes les valeurs, proba finale;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;+2,5 buts;0,635;1,666;moyenne;;;;;
-Toutes les valeurs, proba finale;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;2;0,0765;15,417;moyenne;;;;;
-Toutes les valeurs, proba finale;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1564;7,689;moyenne;;;;;
-Toutes les valeurs, proba finale;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,3891;3,031;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-21T19:45:00Z;fr1;Lille – Lyon;−2,5 buts;0,59;1,784;moyenne;1,706;0,0457;;;
+Toutes les valeurs, proba finale;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;+2,5 buts;0,635;1,666;moyenne;1,884;-0,1157;;;
+Toutes les valeurs, proba finale;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;2;0,0765;15,417;moyenne;15,069;0,0231;;;
+Toutes les valeurs, proba finale;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1564;7,689;moyenne;7,968;-0,035;;;
+Toutes les valeurs, proba finale;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;−2,5 buts;0,3891;3,031;moyenne;3,069;-0,0124;;;
 Toutes les valeurs, proba finale;2026-11-22T14:00:00Z;en1;Hull – Brighton;1;0,189;6,228;moyenne;;;;;
 Toutes les valeurs, proba finale;2026-11-22T14:00:00Z;en1;Hull – Brighton;N;0,2419;4,419;moyenne;;;;;
 Toutes les valeurs, proba finale;2026-11-22T14:00:00Z;en1;Hull – Brighton;−2,5 buts;0,4952;2,205;moyenne;;;;;
