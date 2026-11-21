@@ -21,9 +21,9 @@ Toutes les valeurs, modèle seul;2026-11-21T15:00:00Z;en1;Bournemouth – Nottin
 Toutes les valeurs, modèle seul;2026-11-21T15:00:00Z;en1;Coventry – Crystal Palace;+2,5 buts;0,6552;1,694;moyenne;1,754;-0,0342;;;
 Toutes les valeurs, modèle seul;2026-11-21T15:00:00Z;en1;Coventry – Crystal Palace;1;0,4866;2,412;moyenne;2,468;-0,0227;;;
 Toutes les valeurs, modèle seul;2026-11-21T15:00:00Z;en1;Tottenham – Ipswich;2;0,2234;5,553;moyenne;5,835;-0,0483;;;
-Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;1;0,1828;6,025;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;N;0,2271;4,954;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;−2,5 buts;0,4346;2,944;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;1;0,1828;6,025;moyenne;5,878;0,025;;;
+Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;N;0,2271;4,954;moyenne;5,02;-0,0131;;;
+Toutes les valeurs, modèle seul;2026-11-21T16:15:00Z;fr1;Nice – PSG;−2,5 buts;0,4346;2,944;moyenne;3,037;-0,0306;;;
 Toutes les valeurs, modèle seul;2026-11-21T17:30:00Z;en1;Newcastle – Arsenal;1;0,1951;5,482;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-21T17:30:00Z;en1;Newcastle – Arsenal;−2,5 buts;0,5181;2,147;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-21T19:45:00Z;fr1;Lille – Lyon;−2,5 buts;0,6447;1,784;moyenne;;;;;
@@ -44,7 +44,7 @@ Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Es
 Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;−2,5 buts;0,5336;2,004;moyenne;;;0-1;gagné;1,004
 Toutes les valeurs, proba finale;2026-11-21T15:00:00Z;en1;Coventry – Crystal Palace;1;0,4396;2,412;moyenne;2,468;-0,0227;;;
 Toutes les valeurs, proba finale;2026-11-21T15:00:00Z;en1;Tottenham – Ipswich;2;0,1969;5,553;moyenne;5,835;-0,0483;;;
-Toutes les valeurs, proba finale;2026-11-21T16:15:00Z;fr1;Nice – PSG;−2,5 buts;0,3774;2,944;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-21T16:15:00Z;fr1;Nice – PSG;−2,5 buts;0,3774;2,944;moyenne;3,037;-0,0306;;;
 Toutes les valeurs, proba finale;2026-11-21T19:45:00Z;fr1;Lille – Lyon;−2,5 buts;0,59;1,784;moyenne;;;;;
 Toutes les valeurs, proba finale;2026-11-21T19:45:00Z;fr1;Strasbourg – Brest;+2,5 buts;0,635;1,666;moyenne;;;;;
 Toutes les valeurs, proba finale;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;2;0,0765;15,417;moyenne;;;;;
