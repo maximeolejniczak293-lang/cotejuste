@@ -1,3 +1,7 @@
+2026-11-21 | 13 | Séville | 1 | 1 | Betis
+2026-11-21 | 13 | Real Madrid | 2 | 1 | Celta Vigo
+2026-11-21 | 13 | Rayo Vallecano | 0 | 1 | Valence
+2026-11-21 | 13 | Alavés | 3 | 1 | La Corogne
 2026-11-20 | 13 | Athletic Bilbao | 0 | 1 | Espanyol
 2026-11-08 | 12 | Atlético de Madrid | 1 | 2 | FC Barcelona
 2026-11-08 | 12 | Celta de Vigo | 0 | 0 | Levante

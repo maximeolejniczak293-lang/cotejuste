@@ -1,3 +1,10 @@
+2026-11-21 | 11 | Tottenham | 2 | 0 | Ipswich
+2026-11-21 | 11 | Newcastle | 2 | 2 | Arsenal
+2026-11-21 | 11 | Man City | 1 | 1 | Fulham
+2026-11-21 | 11 | Coventry | 3 | 2 | Crystal Palace
+2026-11-21 | 11 | Chelsea | 1 | 4 | Leeds
+2026-11-21 | 11 | Bournemouth | 2 | 0 | Nottingham Forest
+2026-11-21 | 11 | Aston Villa | 0 | 0 | Sunderland
 2026-11-08 | 10 | Manchester United | 4 | 4 | Aston Villa
 2026-11-08 | 10 | Brighton & Hove Albion | 2 | 0 | Brentford
 2026-11-08 | 10 | Crystal Palace | 1 | 3 | Liverpool

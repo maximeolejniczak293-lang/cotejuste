@@ -1,3 +1,8 @@
+2026-11-21 | 11 | Strasbourg | 0 | 1 | Brest
+2026-11-21 | 11 | Nice | 2 | 3 | PSG
+2026-11-21 | 11 | Monaco | 1 | 1 | Auxerre
+2026-11-21 | 11 | Lille | 0 | 1 | Lyon
+2026-11-21 | 11 | Lens | 1 | 1 | Toulouse
 2026-11-20 | 11 | Troyes | 3 | 1 | Le Havre
 2026-11-08 | 10 | Lens | 1 | 2 | Olympique Marseille
 2026-11-08 | 10 | Angers SCO | 0 | 2 | Nice
