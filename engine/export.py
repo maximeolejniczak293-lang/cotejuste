@@ -274,6 +274,7 @@ if __name__ == "__main__":
     # --- recos du jour (cotes déjà en cache, aucune requête)
     all_fx = [f for L in data["leagues"] for f in L["fixtures"]]
     data["recos"] = recos.build(all_fx, {L["code"]: L["teams"] for L in data["leagues"]})
+    data["recos"] = bilan.freeze_recos(data["recos"])  # figées pour la journée au premier passage (le matin)
     data["recos"]["generated"] = data["generated"]
     data["config"] = dict(w=W_MODELE, bookmaker=recos.C.BOOKMAKER)
     with_odds = [f for f in all_fx if f.get("odds")]

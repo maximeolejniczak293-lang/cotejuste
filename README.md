@@ -116,13 +116,15 @@ C'est le seul fichier à modifier pour changer :
 - **Confiance** : Élevée si modèle et marché sont d'accord à 5 points près *et* que les absents sont connus ; Moyenne si une seule de ces conditions est remplie ; Faible sinon.
 - **Mise** : ¼ de Kelly sur la cote de référence, plafonnée à 5 %, minimum 0,50 €, arrondie à 0,10 €. Le total reste ≤ 40 % de la bankroll : les mises sont réduites, puis la grosse cote et le combiné sont retirés si besoin.
 - Si rien ne passe les filtres, le site affiche « Rien d'intéressant aujourd'hui ». Aucune reco n'est jamais forcée.
+- **Recos figées pour la journée** : le premier passage du jour (heure de Paris, normalement celui de 6h15) les fixe dans `data/recos_du_jour.json`. Les passages suivants (compositions, cotes de clôture) ne les changent plus. Une reco disparaît du site dès que son match commence.
 - **Aucune requête API supplémentaire** : tout est calculé avec les cotes et les absents déjà en cache.
 
 ## Suivi des performances (onglet Bilan)
 
 **Les fichiers :**
 - `data/journal.csv` : une ligne « releve » à chaque relecture des cotes d'un match à venir, et une ligne « cloture » moins de 30 min avant le match. Chaque ligne contient, pour 1, N, 2, +2,5 et −2,5, les probas modèle, marché et finale, ainsi que les cotes moyenne, meilleure et Betclic.
-- `data/recos.csv` : chaque reco au moment où elle apparaît, une par type, par match et par jour (on garde la première). Une ligne par sélection, avec le même `reco_id` pour les sélections d'un combiné.
+- `data/recos.csv` : chaque reco au moment où elle apparaît, une par type, par match et par jour (on garde la première). Une ligne par sélection, avec le même `reco_id` pour les sélections d'un combiné. Un pari déjà enregistré (même type, mêmes matchs, mêmes paris) n'est pas réenregistré s'il revient un autre jour.
+- **Bilan des recos** : une seule reco par type et par jour (la première), et chaque pari compté une seule fois. Les lignes en trop des anciens fichiers restent dans `recos.csv` mais ne comptent pas.
 - `data/paris.csv` : recalculé à chaque fois, série par série.
 
 **Comment les paris sont jugés :**

@@ -8,6 +8,12 @@ data/journal.csv (versionné) : une ligne par relevé de cotes d'un match à ven
 
 data/recos.csv (versionné) : chaque reco au moment où elle apparaît (une par type, par match et par jour ;
   on garde la première). Une ligne par sélection (un combiné a 2 ou 3 lignes avec le même reco_id).
+  Un pari déjà enregistré (même type, mêmes matchs, mêmes paris) n'est jamais réenregistré un autre jour.
+
+data/recos_du_jour.json (versionné) : les recos figées du jour. Le premier passage de la journée (heure de
+  Paris, normalement celui du matin) les fixe ; les passages suivants les reprennent telles quelles.
+
+Bilan des recos : une seule reco par type et par jour (la première), et chaque pari compté une seule fois.
 
 data/paris.csv (recalculé) : tous les paris suivis, réglés ou en attente, série par série.
 
@@ -16,6 +22,7 @@ CLV = cote prise / cote de clôture du même type - 1 (ton bookmaker contre ton 
 Format CSV : séparateur « ; » et virgule décimale, pour Excel.
 """
 import csv
+import json
 import math
 import os
 from datetime import datetime, timezone
@@ -27,6 +34,7 @@ DATA_DIR = os.environ.get("CJ_DATA_DIR", os.path.join(ROOT, "data"))
 JOURNAL = os.path.join(DATA_DIR, "journal.csv")
 RECOS = os.path.join(DATA_DIR, "recos.csv")
 PARIS = os.path.join(DATA_DIR, "paris.csv")
+FIGEES = os.path.join(DATA_DIR, "recos_du_jour.json")
 MARKETS = ["1", "N", "2", "plus25", "moins25"]
 LABEL = {"1": "1", "N": "N", "2": "2", "plus25": "+2,5 buts", "moins25": "−2,5 buts"}
 KEY = {"1": "h", "N": "d", "2": "a", "plus25": "o25", "moins25": "u25"}
@@ -156,11 +164,47 @@ def _paris_day(now):
         return now.strftime("%Y-%m-%d")
 
 
+def freeze_recos(result, now=None):
+    """Recos figées pour la journée (heure de Paris) : le premier passage du jour les fixe, les suivants les
+    reprennent telles quelles. Le site masque de lui-même une reco dès qu'un de ses matchs a commencé."""
+    now = now or datetime.now(timezone.utc)
+    day = _paris_day(now)
+    try:
+        with open(FIGEES, encoding="utf-8") as fh:
+            saved = json.load(fh)
+    except (OSError, ValueError):
+        saved = None
+    if saved and saved.get("jour") == day and isinstance(saved.get("items"), list):
+        result["items"] = saved["items"]
+        result["figees"] = saved.get("horodatage")
+        return result
+    stamp = now.isoformat(timespec="seconds")
+    os.makedirs(DATA_DIR, exist_ok=True)
+    tmp = FIGEES + ".tmp"
+    with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(dict(jour=day, horodatage=stamp, items=result["items"]), fh, ensure_ascii=False, indent=1,
+                  default=lambda o: o.item() if hasattr(o, "item") else str(o))
+        fh.write("\n")
+    os.replace(tmp, FIGEES)
+    result["figees"] = stamp
+    return result
+
+
+def _sig(typ, legs):
+    """Signature d'un pari : type + (match, pari) de chaque sélection, pour repérer les doublons."""
+    return typ + "|" + "+".join(sorted(f"{mid}:{pari}" for mid, pari in legs))
+
+
 def record_recos(items, now=None):
-    """Enregistre les recos affichées. Une par type, par match et par jour : on garde la première."""
+    """Enregistre les recos affichées. Une par type, par match et par jour : on garde la première.
+    Un pari déjà enregistré un autre jour (même type, mêmes matchs, mêmes paris) n'est pas réenregistré."""
     now = now or datetime.now(timezone.utc)
     rows = read_recos()
     known = {r["reco_id"] for r in rows}
+    by_id = {}
+    for r in rows:
+        by_id.setdefault(r["reco_id"], []).append(r)
+    sigs = {_sig(L[0]["type"], [(l["match_id"], l["pari"]) for l in L]) for L in by_id.values()}
     day = _paris_day(now)
     new = []
     for it in items:
@@ -168,7 +212,11 @@ def record_recos(items, now=None):
         rid = f"{day}-{it['type']}-{ids}"
         if rid in known or not all(l["api_id"] for l in it["legs"]):
             continue
+        sig = _sig(it["type"], [(str(l["api_id"]), FROM_KEY[l["k"]]) for l in it["legs"]])
+        if sig in sigs:
+            continue
         known.add(rid)
+        sigs.add(sig)
         for j, l in enumerate(it["legs"], 1):
             # exactement la cote de référence de la reco (même base pour toutes les sélections d'un combiné)
             if l.get("ref"):
@@ -260,6 +308,8 @@ def compute(journal, results, reco_rows=None):
     groups = {}
     for r in reco_rows:
         groups.setdefault(r["reco_id"], []).append(r)
+    n_all = len(groups)
+    groups = keep_recos(groups)
     for rid, legs in groups.items():
         legs.sort(key=lambda r: int(r["jambe"]))
         prise, chance, t_all, c_all, settled, won = 1.0, 1.0, 1.0, 1.0, True, True
@@ -294,7 +344,7 @@ def compute(journal, results, reco_rows=None):
         series[first["type"]].append(bet)
 
     out = {"series": {}, "labels": dict(SERIES), "journal_rows": len(journal), "matches": len(by_match),
-           "recos": len(groups), "echantillon_min": C.ECHANTILLON_MIN}
+           "recos": len(groups), "recos_ecartees": n_all - len(groups), "echantillon_min": C.ECHANTILLON_MIN}
     for s, bets in series.items():
         bets.sort(key=lambda b: (b["coup_envoi"], b["match"], b["pari"]))
         out["series"][s] = dict(summary=_summary(bets), bets=bets)
@@ -304,6 +354,24 @@ def compute(journal, results, reco_rows=None):
                           model_close=ll["model_close"] / nc if nc else None,
                           final_close=ll["final_close"] / nc if nc else None, close=ll["close"] / nc if nc else None)
     out["w"] = best_w(wdata)
+    return out
+
+
+def keep_recos(groups):
+    """Recos comptées au bilan : une par type et par jour (la première, celle du matin), puis chaque pari
+    une seule fois (sa première apparition). Le journal recos.csv, lui, garde tout."""
+    first = {}
+    for rid, legs in groups.items():
+        key, t = (legs[0]["jour"], legs[0]["type"]), legs[0]["horodatage_utc"]
+        if key not in first or (t, rid) < first[key]:
+            first[key] = (t, rid)
+    seen, out = set(), {}
+    for t, rid in sorted(first.values()):
+        legs = groups[rid]
+        sig = _sig(legs[0]["type"], [(l["match_id"], l["pari"]) for l in legs])
+        if sig not in seen:
+            seen.add(sig)
+            out[rid] = legs
     return out
 
 

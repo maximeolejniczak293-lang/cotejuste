@@ -607,7 +607,8 @@ function recoCard(it, i, S) {
 }
 function recosSection() {
   const items = liveRecos(), R = DATA.recos || {};
-  const head = `<div class="ctitle"><h2 style="font-size:19px">Recos du jour</h2><span class="small muted">proba finale (modèle + marché)</span></div>`;
+  const fig = R.figees ? ` · figées à ${fmtTime(R.figees)}` : "";
+  const head = `<div class="ctitle"><h2 style="font-size:19px">Recos du jour</h2><span class="small muted" data-tip="Les recos sont fixées au premier passage de la journée et ne changent plus jusqu'au lendemain. Une reco disparaît dès que son match commence.">proba finale (modèle + marché)${fig}</span></div>`;
   if (!items.length) return `<section class="head" aria-label="Recos du jour" style="gap:12px">${head}
     <div class="card"><h2>Rien d'intéressant aujourd'hui</h2><p class="muted">Ne pas parier fait partie de la stratégie.${R.candidats ? ` ${R.candidats} sélection(s) examinée(s) sur ${R.matchs} match(s) avec cotes : aucune ne passe les filtres.` : " Aucun match avec cotes à moins de 48 h pour l'instant : les cotes arrivent deux jours avant chaque match."}</p></div></section>`;
   const S = recoStakes(items, state.bankroll);
@@ -1180,7 +1181,7 @@ function viewBilan() {
   const dLL = L.n ? L.final - L.book : null;
   return head + `
   <div class="chips" role="group" aria-label="Série affichée">${Object.keys(SERIE_SHORT).map(k => `<button class="chip" type="button" data-bserie="${k}" aria-pressed="${sel === k}">${SERIE_SHORT[k]}</button>`).join("")}</div>
-  <p class="small muted">${B.journal_rows} relevé(s) de cotes sur ${B.matches} match(s) · ${B.recos} reco(s) enregistrée(s)</p>
+  <p class="small muted">${B.journal_rows} relevé(s) de cotes sur ${B.matches} match(s) · ${B.recos} reco(s) comptée(s)${B.recos_ecartees ? ` · ${B.recos_ecartees} écartée(s) : pari déjà compté un autre jour, ou reco changée après le matin` : ""}</p>
   ${s.small ? `<div class="note">${I(IC.warn, 18, 2.2)}<span><b>Échantillon trop petit pour conclure</b> : ${s.settled} pari(s) réglé(s) dans « ${esc(B.labels[sel])} », il en faut au moins ${B.echantillon_min}. Les chiffres ci-dessous peuvent encore changer du tout au tout.</span></div>` : ""}
   <div class="kpis">
     <div class="kpi"><span class="v">${s.n}</span><span class="l">Paris · ${esc(B.labels[sel])}</span><span class="c">${s.settled} réglé(s)${s.pending ? `, ${s.pending} en attente` : ""}</span></div>
