@@ -36,9 +36,9 @@
   "total": 380
  },
  "en1_2026-27": {
-  "checked": "2026-11-22",
+  "checked": "2026-11-23",
   "complete": false,
-  "fetched": "2026-11-22T06:03:35+00:00",
+  "fetched": "2026-11-23T06:14:13+00:00",
   "last_match": "2026-09-14",
   "matches": 40,
   "source": "archive.org 20260916 (getLeagueData)",

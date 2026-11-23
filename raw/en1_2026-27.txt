@@ -1,3 +1,5 @@
+2026-11-22 | 11 | Liverpool | 4 | 0 | Man United
+2026-11-22 | 11 | Hull | 2 | 0 | Brighton
 2026-11-21 | 11 | Tottenham | 2 | 0 | Ipswich
 2026-11-21 | 11 | Newcastle | 2 | 2 | Arsenal
 2026-11-21 | 11 | Man City | 1 | 1 | Fulham

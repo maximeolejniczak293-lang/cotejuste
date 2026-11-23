@@ -1,3 +1,7 @@
+2026-11-22 | 13 | Racing Santander | 3 | 2 | Real Sociedad
+2026-11-22 | 13 | Osasuna | 1 | 0 | Málaga
+2026-11-22 | 13 | Getafe | 0 | 3 | Atlético Madrid
+2026-11-22 | 13 | Barcelone | 3 | 2 | Villarreal
 2026-11-21 | 13 | Séville | 1 | 1 | Betis
 2026-11-21 | 13 | Real Madrid | 2 | 1 | Celta Vigo
 2026-11-21 | 13 | Rayo Vallecano | 0 | 1 | Valence
