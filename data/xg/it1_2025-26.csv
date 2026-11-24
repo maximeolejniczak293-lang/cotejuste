@@ -1,0 +1,31 @@
+date;domicile;exterieur;buts_dom;buts_ext;xg_dom;xg_ext
+2025-08-23;AC Milan;Cremonese;1;2;2,123;0,364
+2025-08-23;AS Rome;Bologne;1;0;1,477;0,444
+2025-08-23;Genoa;Lecce;0;0;0,566;0,551
+2025-08-23;Sassuolo;Naples;0;2;0,298;1,641
+2025-08-24;Atalanta;Pise;1;1;2,049;1,032
+2025-08-24;Cagliari;Fiorentina;1;1;1,517;1,143
+2025-08-24;Côme;Lazio;2;0;1,289;0,203
+2025-08-24;Juventus;Parme;2;0;2,755;0,816
+2025-08-25;Inter;Torino;5;0;2,61;0,816
+2025-08-25;Udinese;Vérone;1;1;1,051;0,816
+2025-08-29;Cremonese;Sassuolo;3;2;3,53;1,33
+2025-08-29;Lecce;AC Milan;0;2;0,482;2,136
+2025-08-30;Bologne;Côme;1;0;1,516;0,522
+2025-08-30;Naples;Cagliari;1;0;1,732;0,644
+2025-08-30;Parme;Atalanta;1;1;0,81;1,197
+2025-08-30;Pise;AS Rome;0;1;0,663;0,954
+2025-08-31;Genoa;Juventus;0;1;0,593;1,589
+2025-08-31;Inter;Udinese;1;2;1,749;1,2
+2025-08-31;Lazio;Vérone;4;0;3,966;0,601
+2025-08-31;Torino;Fiorentina;0;0;1,05;1,19
+2025-09-13;Cagliari;Parme;2;0;2,152;1,971
+2025-09-13;Fiorentina;Naples;1;3;1,4;3,605
+2025-09-13;Juventus;Inter;4;3;0,769;1,017
+2025-09-14;AC Milan;Bologne;1;0;1,155;0,199
+2025-09-14;AS Rome;Torino;0;1;1,03;0,805
+2025-09-14;Atalanta;Lecce;4;1;2,685;0,534
+2025-09-14;Pise;Udinese;0;1;1,276;1,761
+2025-09-14;Sassuolo;Lazio;1;0;1,234;0,862
+2025-09-15;Côme;Genoa;1;1;1,823;2,995
+2025-09-15;Vérone;Cremonese;0;0;1,888;0,166

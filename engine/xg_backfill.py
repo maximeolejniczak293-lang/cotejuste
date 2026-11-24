@@ -21,9 +21,10 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import understat as u  # noqa: E402
 
-FILES = {"fr1": "ligue_1_shot_data.rds", "en1": "epl_shot_data.rds", "es1": "la_liga_shot_data.rds"}
+FILES = {"fr1": "ligue_1_shot_data.rds", "en1": "epl_shot_data.rds", "es1": "la_liga_shot_data.rds",
+         "it1": "serie_a_shot_data.rds"}
 EXPECTED = {"fr1": {2022: 380, 2023: 306, 2024: 306, 2025: 306, 2026: 306},
-            "en1": {y: 380 for y in u.SEASONS}, "es1": {y: 380 for y in u.SEASONS}}
+            "en1": {y: 380 for y in u.SEASONS}, "es1": {y: 380 for y in u.SEASONS}, "it1": {y: 380 for y in u.SEASONS}}
 TAG = "worldfootballR (tirs Understat du 18/09/2025)"
 
 

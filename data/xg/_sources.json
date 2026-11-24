@@ -114,5 +114,40 @@
   "matches": 36,
   "source": "worldfootballR (tirs Understat du 18/09/2025)",
   "total": 306
+ },
+ "it1_2022-23": {
+  "checked": "2026-11-24",
+  "complete": true,
+  "fetched": "2026-11-24T09:08:38+00:00",
+  "last_match": "2023-06-04",
+  "matches": 380,
+  "source": "archive.org 20230324 (league) + worldfootballR (tirs Understat du 18/09/2025)",
+  "total": 380
+ },
+ "it1_2023-24": {
+  "checked": "2026-11-24",
+  "complete": true,
+  "fetched": "2026-11-24T09:05:57+00:00",
+  "last_match": "2024-06-02",
+  "matches": 380,
+  "source": "archive.org 20250617 (league)",
+  "total": 380
+ },
+ "it1_2024-25": {
+  "checked": "2026-11-24",
+  "complete": true,
+  "fetched": "2026-11-24T09:06:17+00:00",
+  "last_match": "2025-05-25",
+  "matches": 380,
+  "source": "archive.org 20250717 (league)",
+  "total": 380
+ },
+ "it1_2025-26": {
+  "complete": false,
+  "fetched": "2026-11-24T09:08:38+00:00",
+  "last_match": "2025-09-15",
+  "matches": 30,
+  "source": "worldfootballR (tirs Understat du 18/09/2025)",
+  "total": 380
  }
 }

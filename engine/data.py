@@ -2,7 +2,8 @@
 
 Sources :
   - historique 2022-2026 : openfootball (dossier football.json/, cloné depuis GitHub) ;
-  - saison en cours : raw/<ligue>_2026-27.txt. Les résultats jusqu'au 8/11/2026 ont été saisis à la main ;
+  - saison en cours : raw/<ligue>_2026-27.txt. Les résultats jusqu'au 8/11/2026 ont été saisis à la main
+    (Serie A : jusqu'au 23/11/2026, depuis football-data.co.uk, recoupés avec openfootball) ;
     depuis, update.py y ajoute chaque jour les résultats venant d'API-Football. Le plan gratuit ne permet
     pas de redemander les jours passés : ces fichiers servent donc d'archive et sont conservés dans le dépôt ;
   - calendrier à venir : openfootball (dates provisoires), remplacé par l'API pour les matchs à moins de 48 h.
@@ -26,7 +27,7 @@ RAW = os.path.join(ROOT, "raw")
 CACHE = os.environ.get("CJ_CACHE_DIR", os.path.join(ROOT, "cache"))
 HIST_SEASONS = ["2022-23", "2023-24", "2024-25", "2025-26"]
 CURRENT = "2026-27"
-LOCAL_TZ = {"fr1": "Europe/Paris", "en1": "Europe/London", "es1": "Europe/Madrid"}
+LOCAL_TZ = {"fr1": "Europe/Paris", "en1": "Europe/London", "es1": "Europe/Madrid", "it1": "Europe/Rome"}
 
 
 def _ft(m):
@@ -260,7 +261,9 @@ def verify(league: str) -> tuple[list[str], list[str]]:
 
     ref = cur[cur.date <= SNAPSHOT_DATE]
     t = table(ref)
-    for name, w, d, l, pts in STANDINGS[league]:
+    if league not in STANDINGS:
+        notes.append("pas de classement officiel de référence dans raw/live_snapshot.py : contrôle sauté")
+    for name, w, d, l, pts in STANDINGS.get(league, []):
         c = canon(league, name)
         if c not in t.index:
             issues.append(f"{c} absent des résultats"); continue

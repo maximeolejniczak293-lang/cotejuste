@@ -5,6 +5,7 @@ LEAGUES = {
     "fr1": {"name": "Ligue 1", "country": "France", "flag": "🇫🇷", "of": "fr.1"},
     "en1": {"name": "Premier League", "country": "Angleterre", "flag": "🏴", "of": "en.1"},
     "es1": {"name": "LaLiga", "country": "Espagne", "flag": "🇪🇸", "of": "es.1"},
+    "it1": {"name": "Serie A", "country": "Italie", "flag": "🇮🇹", "of": "it.1"},
 }
 
 # nom canonique -> variantes rencontrées (openfootball, vavel, Sportradar, API-Football, Understat)
@@ -97,6 +98,35 @@ ALIASES = {
         "Almería": ["UD Almería", "Almeria"],                     # Understat : Almeria
         "Cadix": ["Cádiz CF", "Cadiz"],                           # Understat : Cadiz
         "Grenade": ["Granada CF", "Granada"],                     # Understat : Granada
+    },
+    "it1": {
+        "Inter": ["FC Internazionale Milano", "Internazionale", "Inter Milan", "Inter Milano", "FC Inter"],
+        "AC Milan": ["Milan", "AC Milano", "Milan AC"],
+        "Juventus": ["Juventus FC", "Juventus Turin"],
+        "Naples": ["SSC Napoli", "Napoli", "SSC Naples"],
+        "AS Rome": ["AS Roma", "Roma"],
+        "Lazio": ["SS Lazio", "Lazio Rome", "Lazio Roma"],
+        "Atalanta": ["Atalanta BC", "Atalanta Bergamo", "Atalanta Bergamasca Calcio"],
+        "Fiorentina": ["ACF Fiorentina"],
+        "Bologne": ["Bologna FC 1909", "Bologna", "Bologna FC"],
+        "Torino": ["Torino FC"],
+        "Genoa": ["Genoa CFC", "Genoa CFC 1893"],
+        "Sassuolo": ["US Sassuolo Calcio", "US Sassuolo"],
+        "Udinese": ["Udinese Calcio"],
+        "Lecce": ["US Lecce"],
+        "Cagliari": ["Cagliari Calcio"],
+        "Vérone": ["Hellas Verona FC", "Hellas Verona", "Verona"],
+        "Empoli": ["Empoli FC"],
+        "Monza": ["AC Monza"],
+        "Parme": ["Parma Calcio 1913", "Parma", "Parma Calcio"],
+        "Côme": ["Como 1907", "Como"],
+        "Venise": ["Venezia FC", "Venezia"],
+        "Cremonese": ["US Cremonese"],
+        "Pise": ["AC Pisa 1909", "Pisa", "Pisa SC", "AC Pisa"],
+        "Salernitana": ["US Salernitana 1919", "US Salernitana"],
+        "Sampdoria": ["UC Sampdoria"],
+        "Spezia": ["Spezia Calcio"],
+        "Frosinone": ["Frosinone Calcio"],
     },
 }
 

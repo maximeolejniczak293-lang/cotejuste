@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Probalab</title>
-<meta name="description" content="Probalab : probabilités, cotes justes et recos de paris pour la Ligue 1, la Premier League et LaLiga.">
+<meta name="description" content="Probalab : probabilités, cotes justes et recos de paris pour la Ligue 1, la Premier League, LaLiga et la Serie A.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -71,6 +71,7 @@ footer.foot { max-width: 1160px; margin: 28px auto 0; font-size: 12px; line-heig
 .statusline .miss { color: var(--warn); background: var(--warn-bg); border-radius: 999px; padding: 2px 10px; cursor: help; }
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip { border: 0; border-radius: 999px; padding: 10px 16px; font-weight: 600; font-size: 14px; background: var(--surface); color: var(--ink); min-height: 40px; }
+@media (max-width: 420px) { .chip { padding: 10px 13px; } }
 .chip[aria-pressed="true"] { background: var(--ink); color: #fff; font-weight: 700; }
 .pkstrip .chip { background: var(--bg); }
 .pkstrip .chip[aria-pressed="true"] { background: var(--ink); }
@@ -401,8 +402,8 @@ code.f { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-
 "use strict";
 const DATA = JSON.parse(document.getElementById("data").textContent);
 const LEAGUES = DATA.leagues;
-const LG_SHORT = { fr1: "L1", en1: "PL", es1: "LIGA" };
-const LG_CHIP = { fr1: "Ligue 1", en1: "Premier L.", es1: "LaLiga" };
+const LG_SHORT = { fr1: "L1", en1: "PL", es1: "LIGA", it1: "SA" };
+const LG_CHIP = { fr1: "Ligue 1", en1: "Premier L.", es1: "LaLiga", it1: "Serie A" };
 // stockage local (préfixe « probalab: », reprise automatique des réglages enregistrés sous l'ancien nom)
 const store = {
   get(k, d) {
@@ -526,7 +527,7 @@ function statusLine() {
   return `<div class="statusline">${parts.join("")}</div>`;
 }
 function leagueChips(cur = state.league, attr = "data-league", withAll = true) {
-  const opts = (withAll ? [["all", "Tous"]] : []).concat(LEAGUES.map(L => [L.code, withAll ? LG_CHIP[L.code] : L.name]));
+  const opts = (withAll ? [["all", "Tous"]] : []).concat(LEAGUES.map(L => [L.code, LG_CHIP[L.code] || L.name]));
   return `<div class="chips" role="group" aria-label="Championnat">${opts.map(([k, v]) =>
     `<button class="chip" type="button" ${attr}="${k}" aria-pressed="${cur === k}">${esc(v)}</button>`).join("")}</div>`;
 }
@@ -1225,14 +1226,16 @@ function xgMethod() {
   if (!C) return "";
   const o = C.old, nw = C.new, f3 = x => x.toFixed(3).replace(".", ","), f4 = x => x.toFixed(4).replace(".", ","), fr = s => s.replace(/(\d)\.(\d)/g, "$1,$2");
   const better = (a, b) => a < b ? "pos-v" : a > b ? "neg-v" : "";
-  const NAMES = { fr1: "Ligue 1", en1: "Premier League", es1: "LaLiga" };
+  const NAMES = { fr1: "Ligue 1", en1: "Premier League", es1: "LaLiga", it1: "Serie A" };
   const cov = C.xg_coverage || {}, seasons = ["2022-23", "2023-24", "2024-25", "2025-26", "2026-27"];
   return `<section class="card"><h2>xG : buts attendus (Understat)</h2>
     <div class="prose">
       <p>Les xG mesurent la qualité des occasions : un tir de 6 mètres face au but vaut environ 0,4 but attendu, une frappe lointaine 0,03. Ils prédisent mieux l'avenir que les buts, qui contiennent beaucoup de chance. Le modèle estime l'attaque et la défense de chaque équipe sur un mélange : <code class="f">buts utilisés = a × xG + (1 − a) × buts réels</code>. La correction des petits scores (rho) reste calculée sur les vrais scores.</p>
       <p>Valeur de <b>a</b> choisie par le backtest (réglage sur 2024-25, test sur 2025-26 et 2026-27) parmi 0 ; 0,3 ; 0,5 ; 0,7 ; 1 : <b>${String(nw.params.a).replace(".", ",")}</b>. ${C.adopted
-        ? `Le modèle avec xG fait mieux hors échantillon : il est <b>adopté</b> (a = ${String(X.a).replace(".", ",")}). Le gain reste modeste (log loss ${f4(o.logloss)} → ${f4(nw.logloss)}) et vient des ligues dont les xG récents sont les plus complets ; il devrait grandir quand Understat reviendra.`
-        : `Le modèle avec xG ne fait <b>pas</b> mieux hors échantillon que le modèle avec les buts seuls : <b>il n'est pas adopté</b>, le site garde l'ancien modèle (a = 0).`}</p>
+        ? (nw.logloss < o.logloss
+          ? `Le modèle avec xG fait mieux hors échantillon : il est <b>adopté</b> (a = ${String(X.a).replace(".", ",")}). Le gain reste modeste (log loss ${f4(o.logloss)} → ${f4(nw.logloss)}) et vient des ligues dont les xG récents sont les plus complets ; il devrait grandir quand Understat reviendra.`
+          : `Le modèle avec xG est <b>gardé</b> (a = ${String(X.a).replace(".", ",")}). Sur 2024-25, dernière saison aux xG complets, il fait nettement mieux (log loss ${f4(C.tuning_2024_25["0.0"].logloss)} sans xG, ${f4(Object.entries(C.tuning_2024_25).find(([k]) => Number(k) === Number(nw.params.a))[1].logloss)} avec). Hors échantillon, il fait à peine moins bien (${f4(o.logloss)} contre ${f4(nw.logloss)}) : un écart dans le bruit, sur une période où les xG manquent en grande partie. La comparaison sera refaite quand Understat reviendra.`)
+        : `Le modèle avec xG ne fait <b>pas</b> mieux que le modèle avec les buts seuls : <b>il n'est pas adopté</b>, le site garde l'ancien modèle (a = 0).`}</p>
     </div>
     <div class="tablewrap"><table><thead><tr><th>Hors échantillon (${o.n.toLocaleString("fr-FR")} matchs)</th><th class="r">Ancien : buts seuls</th><th class="r">Nouveau : avec xG</th></tr></thead><tbody>
       <tr><td>Réglages</td><td class="r">${fr(`a = 0 · xi ${o.params.xi} · l2 ${o.params.l2}`)}</td><td class="r">${fr(`a = ${nw.params.a} · xi ${nw.params.xi} · l2 ${nw.params.l2}`)}</td></tr>
@@ -1242,7 +1245,7 @@ function xgMethod() {
       <tr><td>Brier +/− 2,5 buts (moyenne historique : ${f4(o.over25_base)})</td><td class="r ${better(o.over25_brier, nw.over25_brier)}">${f4(o.over25_brier)}</td><td class="r ${better(nw.over25_brier, o.over25_brier)}">${f4(nw.over25_brier)}</td></tr>
       ${Object.keys(o.leagues).map(lg => Object.keys(o.leagues[lg]).map(s => `<tr><td>${NAMES[lg]} ${s} (log loss)</td><td class="r ${better(o.leagues[lg][s], nw.leagues[lg][s])}">${f4(o.leagues[lg][s])}</td><td class="r ${better(nw.leagues[lg][s], o.leagues[lg][s])}">${f4(nw.leagues[lg][s])}</td></tr>`).join("")).join("")}
     </tbody></table></div>
-    <p class="small muted">Couverture xG (matchs avec xG / matchs joués). Understat est en maintenance depuis novembre 2026 : les données viennent de ses copies archivées sur archive.org, complétées par les tirs Understat republiés par le projet ouvert worldfootballR (à jour au 18/09/2025). La Ligue 1 et LaLiga manquent donc depuis l'automne 2025. Sans xG, un match compte avec ses buts réels.</p>
+    <p class="small muted">Couverture xG (matchs avec xG / matchs joués). Understat est en maintenance depuis novembre 2026 : les données viennent de ses copies archivées sur archive.org, complétées par les tirs Understat republiés par le projet ouvert worldfootballR (à jour au 18/09/2025). La Ligue 1, LaLiga et la Serie A manquent donc depuis l'automne 2025 (pour la Serie A, archive.org n'a aucune copie utile de la saison 2025-26). Sans xG, un match compte avec ses buts réels.</p>
     <div class="tablewrap"><table><thead><tr><th>Championnat</th>${seasons.map(s => `<th class="r">${s}</th>`).join("")}</tr></thead><tbody>
       ${Object.keys(cov).map(lg => `<tr><td>${NAMES[lg]}</td>${seasons.map(s => { const c = cov[lg][s]; return `<td class="r">${c ? `${c.xg}/${c.n}` : "–"}</td>`; }).join("")}</tr>`).join("")}
     </tbody></table></div>
@@ -1252,7 +1255,7 @@ function viewMethod() {
   const bt = DATA.backtest, o = bt.overall;
   const dLL = (1 - o.model.logloss / o.baseline.logloss) * 100;
   const rows = [];
-  LEAGUES.forEach(L => Object.entries(bt.leagues[L.code]).forEach(([s, r]) => rows.push([L.name, s, r])));
+  LEAGUES.forEach(L => Object.entries(bt.leagues[L.code] || {}).forEach(([s, r]) => rows.push([L.name, s, r])));
   const W = 440, H = 300, P = { l: 64, r: 14, t: 14, b: 40 };
   const X = v => P.l + v * (W - P.l - P.r), Y = v => H - P.b - v * (H - P.t - P.b), ticks = [0, 0.2, 0.4, 0.6, 0.8, 1];
   const svg = `<div class="chart"><svg viewBox="0 0 ${W} ${H}" style="max-width:520px" role="img" aria-label="Calibration : probabilité prédite contre fréquence observée">
@@ -1280,7 +1283,7 @@ function viewMethod() {
   </div>
   ${xgMethod()}
   <section class="card"><h2>Comment ça marche</h2><div class="prose">
-    <p><b>1. Les données.</b> Tous les résultats de Ligue 1, Premier League et LaLiga depuis août 2022, saison en cours comprise (vérifiée équipe par équipe contre le classement officiel).</p>
+    <p><b>1. Les données.</b> Tous les résultats de Ligue 1, Premier League, LaLiga et Serie A depuis août 2022, saison en cours comprise (vérifiée équipe par équipe contre le classement officiel ; pour la Serie A, recoupée entre football-data.co.uk et openfootball).</p>
     <p><b>2. Le modèle de Dixon-Coles.</b> Chaque équipe reçoit une note d'attaque et une note de défense. Les buts attendus d'un match se calculent ainsi : <code class="f">buts domicile = moyenne × avantage domicile × attaque(dom) × défense(ext)</code>. Le nombre de buts suit ensuite une loi de Poisson, avec une correction pour les petits scores (0-0, 1-0, 0-1, 1-1).</p>
     <p><b>3. Les matchs récents comptent plus.</b> Un match pèse <code class="f">exp(−${DATA.model.xi} × jours écoulés)</code>. Les équipes promues partent d'un niveau un peu inférieur à la moyenne, puis le modèle s'ajuste à leurs résultats.</p>
     <p><b>4. Des probabilités aux cotes.</b> <code class="f">cote juste = 1 / probabilité</code> et <code class="f">valeur = cote du bookmaker × probabilité</code>. Mise conseillée : <code class="f">Kelly = (cote × p − 1) / (cote − 1)</code>, divisé par 4 et plafonné à 5 % de la bankroll.</p>
@@ -1293,7 +1296,7 @@ function viewMethod() {
       <b>Grosse cote</b> : cote ≥ 5 et valeur ≥ 1, mise fixe d'1 €, pour s'amuser.
       Mise : ¼ de Kelly <code class="f">(cote × p − 1) ÷ (cote − 1)</code> sur la cote de référence, plafonnée à 5 % de la bankroll, minimum 0,50 €, arrondie à 0,10 € ; total des mises ≤ 40 % de la bankroll. Confiance élevée quand modèle et marché sont d'accord à 5 points près et que les absents sont connus. Si rien ne passe les filtres, il n'y a pas de reco : on n'en force jamais.</p>
     <p><b>Les limites, honnêtement.</b> Le modèle ne voit que les scores : les absents et les compositions sont affichés mais pas intégrés au calcul, pas plus que la fatigue des Coupes d'Europe. ${DATA.xg && DATA.xg.a > 0 ? "Les xG ne couvrent pas toutes les saisons récentes (Understat en maintenance, copies d'archive incomplètes) : là où ils manquent, le modèle reprend les buts réels." : "Les xG Understat sont récupérés et affichés, mais n'ont pas amélioré le backtest : le calcul reste sur les buts réels."} Les recos, leurs mises et le Bilan utilisent exactement la même cote de référence (${esc(BOOK)} si l'API la donne, sinon la moyenne ; pour un combiné, ${esc(BOOK)} seulement si toutes les sélections en ont une). Si ta cote réelle est plus basse que la cote minimale affichée, renonce. Le modèle bat nettement un pronostic naïf, mais les bookmakers font en général un peu mieux (log loss ≈ 0,97 contre ${o.model.logloss.toFixed(2).replace(".", ",")} ici). Sur le nombre de buts (+/− 2,5), ${bt.over25.base_brier - bt.over25.brier > 0.002 ? "il fait un peu mieux que la moyenne historique" : "il n'apporte quasiment rien"} (Brier ${bt.over25.brier.toFixed(4).replace(".", ",")} contre ${bt.over25.base_brier.toFixed(4).replace(".", ",")} pour la moyenne). Une « valeur » affichée est donc une piste à vérifier, pas un pari sûr.</p>
-    <p><b>Prochaines étapes.</b> Tenir compte des absents dans le calcul ; compléter les xG des saisons récentes quand Understat reviendra ; Serie A et Bundesliga ; ajuster le poids modèle/marché quand le Bilan aura assez de matchs.</p>
+    <p><b>Prochaines étapes.</b> Tenir compte des absents dans le calcul ; compléter les xG des saisons récentes quand Understat reviendra ; Bundesliga (le quota gratuit ne permet pas une 5e ligue) ; ajuster le poids modèle/marché quand le Bilan aura assez de matchs.</p>
   </div></section>`;
 }
 

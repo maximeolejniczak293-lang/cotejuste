@@ -1,4 +1,4 @@
-"""xG (buts attendus) par match depuis Understat : Ligue 1, Premier League, LaLiga, saisons 2022-23 à 2026-27.
+"""xG (buts attendus) par match depuis Understat : Ligue 1, Premier League, LaLiga, Serie A, saisons 2022-23 à 2026-27.
 
 Comment Understat sert ses données (vérifié le 14/11/2026) :
   - format actuel : JSON à l'adresse https://understat.com/getLeagueData/<ligue>/<année>
@@ -37,7 +37,7 @@ SOURCES = os.path.join(XG_DIR, "_sources.json")
 CACHE = os.path.join(os.environ.get("CJ_CACHE_DIR", os.path.join(ROOT, "cache")), "understat")
 UA = "CoteJuste/1.0 (projet personnel de prediction football, usage non commercial)"
 DELAY = 5.0
-CODE = {"fr1": "Ligue_1", "en1": "EPL", "es1": "La_liga"}
+CODE = {"fr1": "Ligue_1", "en1": "EPL", "es1": "La_liga", "it1": "Serie_A"}
 SEASONS = {2022: "2022-23", 2023: "2023-24", 2024: "2024-25", 2025: "2025-26", 2026: "2026-27"}
 CURRENT_YEAR = 2026
 COLS = ["date", "domicile", "exterieur", "buts_dom", "buts_ext", "xg_dom", "xg_ext"]

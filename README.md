@@ -1,6 +1,6 @@
 # Probalab : moteur de prédiction foot + site
 
-Ligue 1, Premier League, LaLiga. Les données se mettent à jour toutes seules chaque matin grâce à API-Football et à GitHub Actions.
+Ligue 1, Premier League, LaLiga, Serie A. Les données se mettent à jour toutes seules chaque matin grâce à API-Football et à GitHub Actions.
 
 ## Structure
 
@@ -67,7 +67,7 @@ python update.py --lineups    # compositions des matchs qui commencent dans l'he
 | Cotes de clôture (bilan) | 1 par match, moins de 30 min avant le coup d'envoi |
 | Rattrapage des résultats manquants | 0 à 2 (hier et aujourd'hui, seulement si la copie en cache a plus de 30 min) |
 
-Jour sans match : 3 requêtes. Le matin, le script garde 4 requêtes par match du jour pour les compositions et la clôture, et reporte si besoin les rafraîchissements les moins utiles. Le garde-fou s'arrête à 90.
+Jour sans match : 3 requêtes. Le matin, le script garde 4 requêtes par match du jour pour les compositions et la clôture, et reporte si besoin les rafraîchissements les moins utiles. Le garde-fou s'arrête à 90. Avec 4 ligues, un samedi chargé monte à environ 75 requêtes (estimation) ; une 5e ligue dépasserait la limite.
 
 ## Résultats manquants
 
@@ -187,4 +187,4 @@ Le plus/moins de 2,5 buts progresse un peu, mais reste à peine meilleur que la 
 2. Intégrer au calcul les absents et les compositions (déjà récupérés et affichés).
 3. Ajouter la fatigue : matchs de Coupe d'Europe en milieu de semaine, jours de repos.
 4. Mesurer le modèle contre les cotes de clôture : c'est le vrai test pour savoir s'il peut battre le marché.
-5. Ajouter Serie A et Bundesliga.
+5. Ajouter la Bundesliga : il faudrait un plan API supérieur, le quota gratuit (90 requêtes) ne suffit pas pour 5 ligues.

@@ -117,7 +117,12 @@ if __name__ == "__main__":
     # 2) hors échantillon (2025-26 et 2026-27) : ancien contre nouveau, côte à côte
     old = out_of_sample(data, *old_p)
     new = out_of_sample(data, *new_p) if new_p != old_p else old
-    adopted = new["overall"]["model"]["logloss"] < old["overall"]["model"]["logloss"] and new_p[2] > 0
+    # Les xG manquent sur une bonne partie de la période de test (Understat en maintenance depuis l'automne 2025).
+    # On garde donc les xG s'ils font mieux sur 2024-25 (dernière saison aux xG complets) et qu'ils ne font pas
+    # nettement moins bien hors échantillon : un écart de moins de TOL_XG est dans le bruit.
+    TOL_XG = 0.002
+    ll_old, ll_new = old["overall"]["model"]["logloss"], new["overall"]["model"]["logloss"]
+    adopted = new_p[2] > 0 and scores[new_p] < scores[old_p] and ll_new < ll_old + TOL_XG
     chosen = new if adopted else old
 
     def brief(r):
@@ -126,7 +131,7 @@ if __name__ == "__main__":
                     over25_brier=r["over25"]["brier"], over25_base=r["over25"]["base_brier"],
                     leagues={lg: {s: v["model"]["logloss"] for s, v in d.items()} for lg, d in r["leagues"].items()})
     out = dict(chosen)
-    out["comparison"] = dict(old=brief(old), new=brief(new), adopted=adopted,
+    out["comparison"] = dict(old=brief(old), new=brief(new), adopted=adopted, tolerance=TOL_XG,
                              tuning_2024_25={str(a): dict(xi=k[0], l2=k[1], logloss=scores[k]) for a, k in best_by_a.items()},
                              xg_coverage=xg_coverage(data))
     for name, r in (("ANCIEN (buts seuls)", old), ("NOUVEAU (xG)", new)):

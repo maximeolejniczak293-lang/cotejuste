@@ -1,0 +1,120 @@
+2026-11-23 | 12 | Monza | 3 | 0 | Fiorentina
+2026-11-22 | 12 | Juventus | 4 | 0 | Venise
+2026-11-22 | 12 | Bologne | 1 | 1 | Udinese
+2026-11-22 | 12 | Sassuolo | 0 | 2 | Genoa
+2026-11-22 | 12 | AC Milan | 5 | 1 | Frosinone
+2026-11-22 | 12 | Atalanta | 4 | 4 | Inter
+2026-11-21 | 12 | Côme | 2 | 0 | Cagliari
+2026-11-21 | 12 | Lazio | 3 | 0 | Lecce
+2026-11-21 | 12 | Parme | 1 | 5 | AS Rome
+2026-11-21 | 12 | Naples | 1 | 0 | Torino
+2026-11-08 | 11 | Naples | 1 | 1 | Lazio
+2026-11-08 | 11 | Genoa | 1 | 2 | AC Milan
+2026-11-08 | 11 | Monza | 0 | 1 | Atalanta
+2026-11-08 | 11 | Inter | 2 | 0 | Côme
+2026-11-08 | 11 | Fiorentina | 2 | 2 | Juventus
+2026-11-07 | 11 | Cagliari | 1 | 0 | Frosinone
+2026-11-07 | 11 | Torino | 1 | 1 | Lecce
+2026-11-07 | 11 | Parme | 1 | 2 | Bologne
+2026-11-07 | 11 | AS Rome | 3 | 0 | Sassuolo
+2026-11-06 | 11 | Venise | 2 | 1 | Udinese
+2026-11-02 | 10 | Sassuolo | 2 | 4 | Fiorentina
+2026-11-02 | 10 | Atalanta | 0 | 3 | Parme
+2026-11-01 | 10 | Côme | 1 | 0 | Venise
+2026-11-01 | 10 | Frosinone | 2 | 0 | Torino
+2026-11-01 | 10 | Lazio | 2 | 1 | Cagliari
+2026-11-01 | 10 | Lecce | 1 | 2 | Genoa
+2026-11-01 | 10 | Juventus | 2 | 0 | Naples
+2026-10-31 | 10 | Bologne | 2 | 1 | Monza
+2026-10-31 | 10 | Udinese | 2 | 5 | AS Rome
+2026-10-31 | 10 | AC Milan | 3 | 1 | Inter
+2026-10-29 | 9 | Frosinone | 5 | 1 | Lecce
+2026-10-29 | 9 | Fiorentina | 2 | 2 | Atalanta
+2026-10-28 | 9 | AC Milan | 2 | 4 | Bologne
+2026-10-28 | 9 | Parme | 0 | 0 | Udinese
+2026-10-28 | 9 | Venise | 0 | 2 | Inter
+2026-10-28 | 9 | Genoa | 2 | 0 | Juventus
+2026-10-28 | 9 | Monza | 1 | 4 | Naples
+2026-10-27 | 9 | Sassuolo | 2 | 6 | Lazio
+2026-10-27 | 9 | AS Rome | 4 | 2 | Cagliari
+2026-10-27 | 9 | Torino | 1 | 3 | Côme
+2026-10-25 | 8 | Inter | 2 | 1 | Fiorentina
+2026-10-25 | 8 | Atalanta | 4 | 4 | Frosinone
+2026-10-25 | 8 | Genoa | 1 | 0 | Venise
+2026-10-25 | 8 | Lecce | 0 | 2 | Juventus
+2026-10-25 | 8 | Udinese | 0 | 2 | AC Milan
+2026-10-24 | 8 | Cagliari | 0 | 2 | Bologne
+2026-10-24 | 8 | Côme | 2 | 0 | Sassuolo
+2026-10-24 | 8 | Naples | 3 | 3 | AS Rome
+2026-10-24 | 8 | Lazio | 2 | 1 | Parme
+2026-10-23 | 8 | Torino | 3 | 2 | Monza
+2026-10-19 | 7 | Monza | 4 | 0 | Cagliari
+2026-10-19 | 7 | Parme | 0 | 3 | Torino
+2026-10-18 | 7 | Udinese | 0 | 3 | Lecce
+2026-10-18 | 7 | Fiorentina | 1 | 3 | Côme
+2026-10-18 | 7 | AC Milan | 3 | 2 | Atalanta
+2026-10-18 | 7 | Juventus | 0 | 3 | Lazio
+2026-10-17 | 7 | Venise | 1 | 0 | Naples
+2026-10-17 | 7 | Bologne | 1 | 3 | Inter
+2026-10-17 | 7 | AS Rome | 2 | 0 | Genoa
+2026-10-16 | 7 | Frosinone | 4 | 2 | Sassuolo
+2026-10-12 | 6 | Atalanta | 3 | 1 | Venise
+2026-10-12 | 6 | Torino | 2 | 1 | Udinese
+2026-10-11 | 6 | Côme | 0 | 0 | AS Rome
+2026-10-11 | 6 | Lazio | 3 | 1 | Monza
+2026-10-11 | 6 | Lecce | 1 | 2 | Bologne
+2026-10-11 | 6 | Sassuolo | 1 | 1 | AC Milan
+2026-10-11 | 6 | Cagliari | 1 | 1 | Juventus
+2026-10-10 | 6 | Genoa | 2 | 1 | Fiorentina
+2026-10-10 | 6 | Inter | 3 | 0 | Parme
+2026-10-10 | 6 | Naples | 3 | 0 | Frosinone
+2026-09-20 | 5 | Fiorentina | 1 | 1 | Naples
+2026-09-20 | 5 | Frosinone | 2 | 0 | Côme
+2026-09-20 | 5 | Parme | 2 | 1 | Genoa
+2026-09-20 | 5 | Juventus | 2 | 0 | Atalanta
+2026-09-20 | 5 | AC Milan | 3 | 0 | Lecce
+2026-09-19 | 5 | Bologne | 1 | 1 | Torino
+2026-09-19 | 5 | Udinese | 0 | 1 | Cagliari
+2026-09-19 | 5 | AS Rome | 2 | 2 | Inter
+2026-09-19 | 5 | Venise | 0 | 2 | Lazio
+2026-09-18 | 5 | Monza | 2 | 1 | Sassuolo
+2026-09-14 | 4 | Côme | 2 | 1 | Parme
+2026-09-14 | 4 | Torino | 0 | 2 | AS Rome
+2026-09-14 | 4 | Inter | 5 | 3 | Udinese
+2026-09-13 | 4 | Lecce | 3 | 2 | Monza
+2026-09-13 | 4 | Naples | 1 | 0 | Bologne
+2026-09-13 | 4 | Sassuolo | 3 | 2 | Juventus
+2026-09-12 | 4 | Genoa | 1 | 1 | Frosinone
+2026-09-12 | 4 | Lazio | 2 | 2 | AC Milan
+2026-09-12 | 4 | Atalanta | 1 | 2 | Cagliari
+2026-09-11 | 4 | Venise | 2 | 4 | Fiorentina
+2026-09-07 | 3 | Cagliari | 1 | 0 | Lecce
+2026-09-07 | 3 | Udinese | 1 | 2 | Lazio
+2026-09-06 | 3 | Frosinone | 3 | 2 | Venise
+2026-09-06 | 3 | Parme | 1 | 1 | Monza
+2026-09-06 | 3 | Bologne | 2 | 2 | Sassuolo
+2026-09-06 | 3 | Juventus | 1 | 1 | AC Milan
+2026-09-05 | 3 | Fiorentina | 1 | 2 | Torino
+2026-09-05 | 3 | Inter | 3 | 2 | Naples
+2026-09-05 | 3 | AS Rome | 2 | 1 | Atalanta
+2026-09-04 | 3 | Genoa | 1 | 4 | Côme
+2026-08-31 | 2 | Lecce | 0 | 4 | AS Rome
+2026-08-31 | 2 | Atalanta | 1 | 0 | Bologne
+2026-08-30 | 2 | Naples | 1 | 2 | Côme
+2026-08-30 | 2 | Cagliari | 0 | 1 | Inter
+2026-08-30 | 2 | Lazio | 1 | 0 | Genoa
+2026-08-29 | 2 | Fiorentina | 0 | 3 | Frosinone
+2026-08-29 | 2 | Monza | 2 | 3 | Udinese
+2026-08-29 | 2 | Sassuolo | 2 | 1 | Torino
+2026-08-29 | 2 | Juventus | 2 | 0 | Parme
+2026-08-28 | 2 | AC Milan | 2 | 0 | Venise
+2026-08-24 | 1 | Bologne | 0 | 1 | Lazio
+2026-08-24 | 1 | AS Rome | 4 | 0 | Fiorentina
+2026-08-23 | 1 | Frosinone | 0 | 1 | Juventus
+2026-08-23 | 1 | Venise | 0 | 2 | Lecce
+2026-08-23 | 1 | Atalanta | 2 | 1 | Sassuolo
+2026-08-23 | 1 | Torino | 1 | 2 | AC Milan
+2026-08-22 | 1 | Inter | 4 | 1 | Monza
+2026-08-22 | 1 | Udinese | 1 | 1 | Côme
+2026-08-22 | 1 | Genoa | 0 | 2 | Naples
+2026-08-22 | 1 | Parme | 0 | 1 | Cagliari

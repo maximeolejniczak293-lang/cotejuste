@@ -33,7 +33,7 @@ BASE = "https://v3.football.api-sports.io"
 DAILY_LIMIT = int(os.environ.get("API_DAILY_LIMIT", "90"))
 MIN_INTERVAL = 6.5  # secondes entre deux requêtes : on reste sous 10 par minute
 
-LEAGUE_IDS = {"fr1": 61, "en1": 39, "es1": 140}
+LEAGUE_IDS = {"fr1": 61, "en1": 39, "es1": 140, "it1": 135}
 ID_TO_LEAGUE = {v: k for k, v in LEAGUE_IDS.items()}
 FINISHED = {"FT", "AET", "PEN"}
 CANCELLED = {"PST", "CANC", "ABD", "AWD", "WO"}  # reporté, annulé, arrêté, sur tapis vert
@@ -214,7 +214,7 @@ class Client:
 
     # ---- points d'accès
     def fixtures_on(self, day: str, max_age: float = 3 * 3600) -> list[dict]:
-        """Matchs de Ligue 1, Premier League et LaLiga à cette date (UTC). 1 requête, toutes ligues."""
+        """Matchs de Ligue 1, Premier League, LaLiga et Serie A à cette date (UTC). 1 requête, toutes ligues."""
         d = date.fromisoformat(day)
 
         def fetch():
