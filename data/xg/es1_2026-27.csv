@@ -1,0 +1,130 @@
+date;domicile;exterieur;buts_dom;buts_ext;xg_dom;xg_ext
+2026-08-15;Alavés;Getafe;3;0;1,93;0,24
+2026-08-15;Séville;Rayo Vallecano;2;1;2,19;1,89
+2026-08-16;Espanyol;Levante;3;0;1,56;0,28
+2026-08-16;Racing Santander;Villarreal;2;2;1,87;0,66
+2026-08-17;La Corogne;Elche;1;1;0,34;1,41
+2026-08-19;Atlético Madrid;Málaga;2;0;0,93;0,15
+2026-08-20;Rayo Vallecano;Alavés;1;1;0,42;2
+2026-08-21;Betis;Real Sociedad;1;0;1,24;1,36
+2026-08-22;Athletic Bilbao;Séville;1;3;1,25;0,41
+2026-08-22;Espanyol;Real Madrid;1;2;1,05;2,7
+2026-08-22;Valence;Celta Vigo;0;0;0,58;0,66
+2026-08-23;Atlético Madrid;Villarreal;2;2;0,78;3,6
+2026-08-23;Elche;Barcelone;0;5;0,7;4,38
+2026-08-23;Getafe;Racing Santander;1;0;1,24;1,3
+2026-08-24;Málaga;La Corogne;1;1;1,97;1,11
+2026-08-24;Osasuna;Levante;0;0;0,67;1,31
+2026-08-25;Valence;Betis;0;1;1,12;0,71
+2026-08-26;Real Madrid;Real Sociedad;4;1;3,14;0,56
+2026-08-27;Barcelone;Athletic Bilbao;2;0;3,91;0,25
+2026-08-27;Celta Vigo;Osasuna;1;2;0,13;2,68
+2026-08-28;Alavés;Villarreal;1;0;0,81;1,4
+2026-08-28;Racing Santander;Elche;3;2;1,72;1,04
+2026-08-29;Levante;Betis;5;2;2,76;1,92
+2026-08-29;Real Sociedad;Espanyol;2;1;1,66;0,76
+2026-08-29;Séville;Atlético Madrid;1;3;0,89;0,93
+2026-08-30;Celta Vigo;Athletic Bilbao;0;2;0,57;2,64
+2026-08-30;La Corogne;Valence;3;1;1,42;1,33
+2026-08-30;Real Madrid;Málaga;4;0;2,4;0,72
+2026-08-31;Barcelone;Rayo Vallecano;5;2;2,83;1,09
+2026-08-31;Osasuna;Getafe;1;0;1,67;0,65
+2026-09-03;Real Sociedad;Celta Vigo;0;0;0,97;0,36
+2026-09-04;Betis;Real Madrid;1;0;0,93;3,46
+2026-09-05;Athletic Bilbao;Atlético Madrid;3;0;1,41;1,03
+2026-09-05;Rayo Vallecano;Racing Santander;3;2;1,61;0,48
+2026-09-05;Villarreal;La Corogne;2;3;1,2;0,83
+2026-09-06;Alavés;Osasuna;5;2;1,19;1,63
+2026-09-06;Espanyol;Séville;1;1;1,22;0,53
+2026-09-06;Málaga;Levante;0;0;1,59;0,98
+2026-09-06;Valence;Barcelone;0;5;0,66;4,08
+2026-09-07;Elche;Real Sociedad;2;3;2,47;0,58
+2026-09-07;Getafe;Celta Vigo;1;1;0,81;0,96
+2026-09-11;Séville;Valence;1;0;0,93;0,1
+2026-09-12;Athletic Bilbao;Elche;1;1;2,4;0,84
+2026-09-12;Osasuna;Espanyol;0;2;1,05;1,43
+2026-09-12;Racing Santander;Alavés;2;1;2,02;1,98
+2026-09-12;Real Madrid;Rayo Vallecano;4;1;2,61;1,22
+2026-09-13;Celta Vigo;Málaga;1;1;1,9;0,42
+2026-09-13;Getafe;La Corogne;1;1;0,77;0,86
+2026-09-13;Levante;Barcelone;2;4;2,42;2,59
+2026-09-13;Real Sociedad;Atlético Madrid;0;3;0,27;2,05
+2026-09-14;Villarreal;Betis;1;2;1,9;3,52
+2026-09-15;Alavés;Valence;0;1;1,05;0,65
+2026-09-15;Elche;Real Madrid;2;3;0,78;3,62
+2026-09-15;Rayo Vallecano;Espanyol;2;1;1,71;1,66
+2026-09-16;Atlético Madrid;Osasuna;4;0;3,99;0,48
+2026-09-16;Barcelone;Racing Santander;7;2;6,74;1,98
+2026-09-16;La Corogne;Séville;0;1;0,14;0,73
+2026-09-17;Betis;Getafe;1;0;1,53;0,32
+2026-09-17;Málaga;Villarreal;1;3;0,63;3,33
+2026-09-18;Espanyol;Elche;1;3;1,05;1,44
+2026-09-19;Athletic Bilbao;Alavés;0;0;1,62;0,05
+2026-09-19;Celta Vigo;Racing Santander;5;0;2,08;0,61
+2026-09-19;Osasuna;Rayo Vallecano;1;1;0,53;1,01
+2026-09-19;Séville;Barcelone;1;3;0,45;3,26
+2026-09-20;Atlético Madrid;Real Madrid;2;1;2,35;0,3
+2026-09-20;Getafe;Málaga;1;0;0,95;0,52
+2026-09-20;La Corogne;Betis;1;1;2,09;0,8
+2026-09-20;Valence;Real Sociedad;2;3;1,55;2,65
+2026-09-20;Villarreal;Levante;3;1;4,27;0,45
+2026-10-09;Málaga;Espanyol;1;1;0,59;0,99
+2026-10-10;Alavés;Atlético Madrid;1;2;1,3;2,05
+2026-10-10;Barcelone;Getafe;3;0;1,93;0,14
+2026-10-10;Real Madrid;Villarreal;1;0;1,43;0,59
+2026-10-11;Betis;Osasuna;5;2;2,89;1,94
+2026-10-11;Elche;Celta Vigo;0;0;0,78;0,47
+2026-10-11;Racing Santander;Valence;2;2;1,28;1,8
+2026-10-11;Real Sociedad;La Corogne;3;2;1,44;2,13
+2026-10-12;Levante;Séville;3;3;1,95;2,53
+2026-10-16;La Corogne;Levante;1;1;1,08;0,83
+2026-10-17;Betis;Barcelone;2;5;1,24;3,1
+2026-10-17;Espanyol;Atlético Madrid;0;1;0,51;1,47
+2026-10-17;Valence;Athletic Bilbao;0;0;1,41;0,59
+2026-10-17;Villarreal;Elche;0;0;2,38;0,3
+2026-10-18;Celta Vigo;Alavés;2;1;0,97;1,06
+2026-10-18;Málaga;Real Sociedad;2;5;1,24;2,44
+2026-10-18;Osasuna;Racing Santander;2;0;3,65;0,28
+2026-10-18;Real Madrid;Séville;4;1;2,28;0,75
+2026-10-19;Getafe;Rayo Vallecano;1;1;0,63;2,14
+2026-10-21;Levante;Athletic Bilbao;3;1;1,98;1,9
+2026-10-23;Alavés;Málaga;1;1;1,84;0,71
+2026-10-24;Atlético Madrid;La Corogne;1;0;1,41;1,67
+2026-10-24;Racing Santander;Espanyol;2;1;2,27;0,52
+2026-10-24;Rayo Vallecano;Elche;0;3;1,52;2,52
+2026-10-24;Valence;Villarreal;1;2;1,13;1,5
+2026-10-25;Athletic Bilbao;Getafe;4;0;0,74;0,41
+2026-10-25;Barcelone;Real Madrid;1;2;1,19;1,94
+2026-10-25;Celta Vigo;Betis;0;0;0,76;1,15
+2026-10-25;Real Sociedad;Levante;2;1;2,22;0,48
+2026-10-26;Séville;Osasuna;2;0;1,14;0,77
+2026-10-30;Villarreal;Espanyol;0;1;0,88;0,22
+2026-10-31;Barcelone;Alavés;6;1;3,26;0,76
+2026-10-31;Betis;Málaga;2;1;1,8;1,16
+2026-10-31;Levante;Atlético Madrid;0;2;1,4;0,7
+2026-10-31;Rayo Vallecano;Celta Vigo;3;0;1,09;1,39
+2026-11-01;Athletic Bilbao;Real Sociedad;2;1;3,08;1,15
+2026-11-01;Elche;Valence;0;1;1,25;0,9
+2026-11-01;Getafe;Séville;3;1;1,58;0,77
+2026-11-01;Racing Santander;Real Madrid;0;3;0,97;3,36
+2026-11-02;La Corogne;Osasuna;2;1;2,35;1,1
+2026-11-06;Séville;Alavés;0;0;1,6;0,54
+2026-11-07;Espanyol;La Corogne;0;0;0,7;0,23
+2026-11-07;Málaga;Racing Santander;1;2;2,02;2,31
+2026-11-07;Osasuna;Athletic Bilbao;1;1;0,65;2,28
+2026-11-07;Valence;Real Madrid;0;3;0,18;2,34
+2026-11-08;Atlético Madrid;Barcelone;1;2;1,67;1,61
+2026-11-08;Celta Vigo;Levante;0;0;3,16;0,28
+2026-11-08;Elche;Betis;0;2;0,84;1,78
+2026-11-08;Real Sociedad;Rayo Vallecano;1;0;1,62;1,34
+2026-11-08;Villarreal;Getafe;2;0;2,31;0,82
+2026-11-20;Athletic Bilbao;Espanyol;0;1;1,45;0,53
+2026-11-21;Alavés;La Corogne;3;1;3,33;0,31
+2026-11-21;Rayo Vallecano;Valence;0;1;0,74;0,66
+2026-11-21;Real Madrid;Celta Vigo;2;1;3,76;1,51
+2026-11-21;Séville;Betis;1;1;2,32;0,62
+2026-11-22;Barcelone;Villarreal;3;2;3,22;0,21
+2026-11-22;Getafe;Atlético Madrid;0;3;0,5;4,14
+2026-11-22;Osasuna;Málaga;1;0;1,23;0,64
+2026-11-22;Racing Santander;Real Sociedad;3;2;3,05;3,69
+2026-11-23;Levante;Elche;1;1;0,81;0,34

@@ -36,12 +36,12 @@
   "total": 380
  },
  "en1_2026-27": {
-  "checked": "2026-11-23",
+  "checked": "2026-11-24",
   "complete": false,
-  "fetched": "2026-11-23T06:14:13+00:00",
-  "last_match": "2026-09-14",
-  "matches": 40,
-  "source": "archive.org 20260916 (getLeagueData)",
+  "fetched": "2026-11-24T10:22:16+00:00",
+  "last_match": "2026-11-23",
+  "matches": 110,
+  "source": "football-data.co.uk",
   "total": 380
  },
  "es1_2022-23": {
@@ -80,6 +80,15 @@
   "source": "archive.org 20251204 (league)",
   "total": 380
  },
+ "es1_2026-27": {
+  "checked": "2026-11-24",
+  "complete": false,
+  "fetched": "2026-11-24T10:22:22+00:00",
+  "last_match": "2026-11-23",
+  "matches": 129,
+  "source": "football-data.co.uk",
+  "total": 380
+ },
  "fr1_2022-23": {
   "checked": "2026-11-14",
   "complete": true,
@@ -115,6 +124,15 @@
   "source": "worldfootballR (tirs Understat du 18/09/2025)",
   "total": 306
  },
+ "fr1_2026-27": {
+  "checked": "2026-11-24",
+  "complete": false,
+  "fetched": "2026-11-24T10:22:11+00:00",
+  "last_match": "2026-11-22",
+  "matches": 99,
+  "source": "football-data.co.uk",
+  "total": 306
+ },
  "it1_2022-23": {
   "checked": "2026-11-24",
   "complete": true,
@@ -148,6 +166,15 @@
   "last_match": "2025-09-15",
   "matches": 30,
   "source": "worldfootballR (tirs Understat du 18/09/2025)",
+  "total": 380
+ },
+ "it1_2026-27": {
+  "checked": "2026-11-24",
+  "complete": false,
+  "fetched": "2026-11-24T10:22:27+00:00",
+  "last_match": "2026-11-23",
+  "matches": 120,
+  "source": "football-data.co.uk",
   "total": 380
  }
 }

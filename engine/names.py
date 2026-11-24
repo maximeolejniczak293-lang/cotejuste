@@ -8,12 +8,12 @@ LEAGUES = {
     "it1": {"name": "Serie A", "country": "Italie", "flag": "🇮🇹", "of": "it.1"},
 }
 
-# nom canonique -> variantes rencontrées (openfootball, vavel, Sportradar, API-Football, Understat)
+# nom canonique -> variantes rencontrées (openfootball, vavel, Sportradar, API-Football, Understat, football-data.co.uk)
 # Si l'API renvoie un nom inconnu, update.py s'arrête avec « nom d'équipe inconnu » :
 # il suffit d'ajouter ce nom dans la liste de l'équipe concernée ci-dessous.
 ALIASES = {
     "fr1": {
-        "PSG": ["Paris Saint-Germain FC", "Paris Saint Germain", "Paris Saint-Germain"],
+        "PSG": ["Paris Saint-Germain FC", "Paris Saint Germain", "Paris Saint-Germain", "Paris SG"],
         "Lille": ["Lille OSC", "LOSC Lille"],
         "Paris FC": ["Paris FC", "Paris"],
         "Marseille": ["Olympique de Marseille", "Olympique Marseille"],
@@ -31,7 +31,7 @@ ALIASES = {
         "Angers": ["Angers SCO", "Angers"],
         "Troyes": ["ESTAC Troyes", "Troyes", "ES Troyes AC"],
         "Le Havre": ["Le Havre AC", "Le Havre"],
-        "Saint-Étienne": ["AS Saint-Étienne"],
+        "Saint-Étienne": ["AS Saint-Étienne", "St Etienne"],
         "Metz": ["FC Metz"],
         "Nantes": ["FC Nantes"],
         "Montpellier": ["Montpellier HSC"],
@@ -55,7 +55,7 @@ ALIASES = {
         "Hull": ["Hull City AFC", "Hull City"],
         "Ipswich": ["Ipswich Town FC", "Ipswich Town"],
         "Fulham": ["Fulham FC", "Fulham"],
-        "Nottingham Forest": ["Nottingham Forest FC", "Nottingham Forest"],
+        "Nottingham Forest": ["Nottingham Forest FC", "Nottingham Forest", "Nott'm Forest"],
         "Coventry": ["Coventry City FC", "Coventry City"],
         "Man United": ["Manchester United FC", "Manchester United"],
         "Sunderland": ["Sunderland AFC", "Sunderland"],
@@ -71,18 +71,18 @@ ALIASES = {
     "es1": {
         "Barcelone": ["FC Barcelona", "Barcelona"],
         "Real Madrid": ["Real Madrid CF", "Real Madrid"],
-        "Atlético Madrid": ["Club Atlético de Madrid", "Atlético de Madrid", "Atletico Madrid"],
+        "Atlético Madrid": ["Club Atlético de Madrid", "Atlético de Madrid", "Atletico Madrid", "Ath Madrid"],
         "Betis": ["Real Betis Balompié", "Real Betis", "Real Betis Seville"],
-        "Real Sociedad": ["Real Sociedad de Fútbol", "Real Sociedad", "Real Sociedad San Sebastian"],
+        "Real Sociedad": ["Real Sociedad de Fútbol", "Real Sociedad", "Real Sociedad San Sebastian", "Sociedad"],
         "Séville": ["Sevilla FC", "Sevilla"],
-        "Athletic Bilbao": ["Athletic Club", "Athletic Bilbao"],
+        "Athletic Bilbao": ["Athletic Club", "Athletic Bilbao", "Ath Bilbao"],
         "Villarreal": ["Villarreal CF", "Villarreal"],
-        "La Corogne": ["Deportivo A Coruña", "RC Deportivo de A Coruna", "RC Deportivo La Coruña", "Deportivo La Coruna"],
-        "Racing Santander": ["Racing Santander", "Real Racing Club", "Real Racing Club de Santander"],
-        "Celta Vigo": ["RC Celta de Vigo", "Celta de Vigo"],
+        "La Corogne": ["Deportivo A Coruña", "RC Deportivo de A Coruna", "RC Deportivo La Coruña", "Deportivo La Coruna", "La Coruna"],
+        "Racing Santander": ["Racing Santander", "Real Racing Club", "Real Racing Club de Santander", "Santander"],
+        "Celta Vigo": ["RC Celta de Vigo", "Celta de Vigo", "Celta"],
         "Alavés": ["Deportivo Alavés", "Deportivo Alaves"],
-        "Espanyol": ["RCD Espanyol de Barcelona", "Espanyol", "Espanyol Barcelona"],
-        "Rayo Vallecano": ["Rayo Vallecano de Madrid", "Rayo Vallecano"],
+        "Espanyol": ["RCD Espanyol de Barcelona", "Espanyol", "Espanyol Barcelona", "Espanol"],
+        "Rayo Vallecano": ["Rayo Vallecano de Madrid", "Rayo Vallecano", "Vallecano"],
         "Getafe": ["Getafe CF", "Getafe"],
         "Osasuna": ["CA Osasuna", "Osasuna"],
         "Levante": ["Levante UD", "Levante"],

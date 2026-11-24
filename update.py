@@ -201,7 +201,7 @@ def full_update(client):
     catch_up(client)
     verify_all()
 
-    log("2 bis) xG Understat de la saison en cours (aucune requête API-Football)")
+    log("2 bis) xG de la saison en cours : Understat, sinon football-data.co.uk (aucune requête API-Football)")
     try:
         import understat
         if client.offline:

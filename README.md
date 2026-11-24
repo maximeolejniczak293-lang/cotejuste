@@ -9,7 +9,7 @@ update.py       enchaîne tout : API-Football -> raw/ et cache/ -> export.py -> 
 engine/
   api_football.py  client API : clé lue dans .env, cache disque, arrêt à 90 requêtes/jour
   names.py      normalisation des noms d'équipes entre les sources (API-Football, Understat…)
-  understat.py  xG par match depuis Understat (ou ses copies archive.org), écrit data/xg/
+  understat.py  xG par match depuis Understat (ou ses copies archive.org, ou football-data.co.uk pour la saison en cours), écrit data/xg/
   data.py       chargement des résultats (+ xG associés) et vérifications
   model.py      modèle de Dixon-Coles pondéré dans le temps, sur un mélange xG / buts
   backtest.py   test walk-forward + choix des paramètres (xi, l2 et poids des xG, sur 2024-25)
@@ -19,7 +19,7 @@ raw/
                      complétés chaque jour par update.py : c'est l'archive de la saison
   live_snapshot.py   classement officiel de référence (saisi à la main, daté)
 data/
-  xg/<ligue>_<saison>.csv   xG Understat par match (versionnés), _sources.json : provenance de chaque fichier
+  xg/<ligue>_<saison>.csv   xG par match (versionnés), _sources.json : provenance de chaque fichier
   journal.csv, recos.csv, paris.csv   suivi des cotes, des recos et des paris
 site/
   template.html  le site (HTML/CSS/JS, aucune dépendance)
@@ -137,25 +137,28 @@ C'est le seul fichier à modifier pour changer :
 - Le 13/11/2026, Betclic n'apparaissait pas parmi les bookmakers renvoyés par l'API (une seule réponse vue, en Copa del Rey). Tant qu'il est absent, la cote prise est la moyenne.
 - Recos, mises et bilan utilisent exactement la même cote de référence : chaque reco indique laquelle (Betclic ou moyenne). Si ta cote réelle est sous la cote minimale, renonce.
 
-## xG (Understat)
+## xG (Understat, et football-data.co.uk en relais pour la saison en cours)
 
 - `python engine/understat.py` récupère les xG de toutes les saisons. `--seasons current` limite à la saison en cours, et `--check` contrôle seulement l'association, sans requête. La mise à jour quotidienne ne redemande que la saison en cours.
 - **Sources, dans l'ordre :**
   1. Understat en direct (`getLeagueData`, ou l'ancienne page HTML) ;
-  2. ses copies sur archive.org ;
-  3. les dernières données enregistrées.
+  2. pour la saison en cours seulement : les xG de [football-data.co.uk](https://www.football-data.co.uk) (un CSV par ligue) ;
+  3. les copies d'Understat sur archive.org ;
+  4. les dernières données enregistrées.
+- **Relais football-data.co.uk** : autre fournisseur qu'Understat (non nommé). Vérifié le 24/11/2026 : mêmes scores et mêmes dates que nos archives sur les 458 matchs de la saison, xG corrélés à 0,95 avec Understat sur 40 matchs de Premier League en commun, mais environ 10 % plus bas. Ils sont pris tels quels : la remise à l'échelle n'améliorait pas le modèle. Une saison ne mélange jamais les deux sources : dès qu'Understat répond, il reprend la saison entière.
 
   Une requête à la fois, 5 s d'écart, User-Agent explicite. Si tout échoue, le modèle utilise les buts réels et la mise à jour continue.
 - **Au retour d'Understat**, la mise à jour du matin complète automatiquement, une seule fois et en direct, les saisons passées encore incomplètes. Un avertissement apparaît alors dans GitHub Actions (« Understat est de retour… ») : il faut ensuite relancer `python engine/backtest.py` pour recalculer le poids des xG.
-- **Le 14/11/2026, Understat était en maintenance**, même dans un navigateur. Les xG viennent donc de copies archivées, incomplètes pour les saisons récentes :
+- **Le 14/11/2026, Understat était en maintenance**, même dans un navigateur. Les saisons passées viennent donc de copies archivées, incomplètes pour 2025-26 ; la saison en cours vient de football-data.co.uk (au 24/11/2026) :
 
 | | 2022-23 | 2023-24 | 2024-25 | 2025-26 | 2026-27 |
 |---|---|---|---|---|---|
-| Ligue 1 | 379/380 | 306/306 | 306/306 | 36/306 | 0 |
-| Premier League | 380/380 | 380/380 | 380/380 | 380/380 | 40/100 |
-| LaLiga | 380/380 | 380/380 | 370/370 | 142/380 | 0 |
+| Ligue 1 | 379/380 | 306/306 | 306/306 | 36/306 | 99/99 |
+| Premier League | 380/380 | 380/380 | 380/380 | 380/380 | 110/110 |
+| LaLiga | 380/380 | 380/380 | 370/370 | 142/380 | 129/129 |
+| Serie A | 380/380 | 379/380 | 370/370 | 30/380 | 120/120 |
 
-La Ligue 1 2024-25 et le début de 2025-26 viennent des tirs Understat republiés par le projet ouvert
+La Ligue 1 2024-25, la Serie A 2022-23 et le début de 2025-26 viennent des tirs Understat republiés par le projet ouvert
 [worldfootballR_data](https://github.com/JaseZiv/worldfootballR_data/releases/tag/understat_shots) (à jour au 18/09/2025),
 additionnés par match avec `engine/xg_backfill.py` (contrôle : écart médian < 0,01 xG avec Understat, scores identiques).
 Ce script ne fait qu'ajouter des matchs absents et ne sert qu'une fois, à la main (`pip install pyreadr` nécessaire).
@@ -163,27 +166,28 @@ Ce script ne fait qu'ajouter des matchs absents et ne sert qu'une fois, à la ma
 - **Contrôle d'association** (même affiche, date à ± 1 jour) :
   - Ligue 1 : 99,8 % des matchs Understat associés (Nantes-Brest 2024-25 est daté du 7/02 chez openfootball, du 9/02 chez Understat) ;
   - Premier League : 100 % ;
-  - LaLiga : 99,2 % ;
+  - LaLiga : 99,3 % ;
+  - Serie A : 99,2 % ;
   - aucun écart de score. Les quelques matchs non associés manquent dans nos propres résultats (openfootball).
 
-## Ce que vaut le modèle (backtest sur 1 374 matchs jamais vus, 2025-26 et 2026-27)
+## Ce que vaut le modèle (backtest sur 1 903 matchs jamais vus, 2025-26 et 2026-27, 4 ligues)
 
-| | Ancien : buts seuls | Nouveau : xG (a = 0,7) | Naïf |
+| | Buts seuls (a = 0) | Avec xG (a = 0,7) | Naïf |
 |---|---|---|---|
-| Log loss 1N2 | 1,0019 | **0,9991** | 1,067 |
-| RPS | 0,2054 | 0,2045 | 0,227 |
-| Bon favori | 50,6 % | 51,3 % | 45 % |
-| Brier +/− 2,5 buts (moyenne : 0,2493) | 0,2486 | **0,2471** | |
+| Log loss 1N2 | **0,9928** | 0,9937 | 1,071 |
+| RPS | 0,2031 | 0,2032 | |
+| Bon favori | 51,7 % | 52,2 % | |
+| Brier +/− 2,5 buts (moyenne : 0,2497) | 0,2495 | **0,2485** | |
 
-Les attaques et les défenses sont estimées sur `a × xG + (1 − a) × buts`, avec `a` choisi parmi 0 ; 0,3 ; 0,5 ; 0,7 ; 1 sur la saison 2024-25. Le modèle avec xG fait un peu mieux hors échantillon : il est adopté.
+Les attaques et les défenses sont estimées sur `a × xG + (1 − a) × buts`, avec `a` choisi parmi 0 ; 0,3 ; 0,5 ; 0,7 ; 1 sur la saison 2024-25 (la dernière aux xG complets), où les xG aident nettement : log loss 0,9705 avec, 0,9778 sans.
 
-Le gain reste **modeste** (0,0028 de log loss), mais il a plus que doublé depuis que la Ligue 1 2024-25 est complète (16/11/2026 : il était de 0,0011). Il vient de la Premier League (2025-26 : 1,0305 → 1,0245) et de la Ligue 1 (2025-26 : 1,0060 → 0,9975), les deux ligues dont les xG des saisons précédentes sont complets. LaLiga ne bouge pas encore. Il devrait grandir quand Understat reviendra avec les xG de 2025-26 et de la saison en cours.
+**Règle de choix** (`engine/backtest.py`) : on garde les xG s'ils font mieux sur 2024-25 et pas moins bien de plus de 0,002 hors échantillon. Hors échantillon, l'écart sur le 1N2 est aujourd'hui dans le bruit (0,0009), sur une période où les xG de 2025-26 manquent en grande partie ; le relais football-data améliore en revanche le +/− 2,5 buts. Réglages retenus : a = 0,7, xi = 0,004, l2 = 1. À refaire quand Understat reviendra.
 
-Le plus/moins de 2,5 buts progresse un peu, mais reste à peine meilleur que la moyenne historique. Les bookmakers restent meilleurs (log loss d'environ 0,97) : une « valeur » affichée par le site est une piste, pas une certitude.
+Le plus/moins de 2,5 buts reste à peine meilleur que la moyenne historique. Les bookmakers restent meilleurs (log loss d'environ 0,97) : une « valeur » affichée par le site est une piste, pas une certitude.
 
 ## Idées d'amélioration, par ordre d'impact
 
-1. Compléter les xG récents (Ligue 1, LaLiga) quand Understat sera de nouveau en ligne : relancer `python engine/understat.py`, puis `python engine/backtest.py`.
+1. Compléter les xG de 2025-26 (Ligue 1, LaLiga, Serie A) quand Understat sera de nouveau en ligne : relancer `python engine/understat.py`, puis `python engine/backtest.py`.
 2. Intégrer au calcul les absents et les compositions (déjà récupérés et affichés).
 3. Ajouter la fatigue : matchs de Coupe d'Europe en milieu de semaine, jours de repos.
 4. Mesurer le modèle contre les cotes de clôture : c'est le vrai test pour savoir s'il peut battre le marché.

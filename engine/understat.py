@@ -9,6 +9,11 @@ Comment Understat sert ses données (vérifié le 14/11/2026) :
   même dans un vrai navigateur : on se rabat alors sur la copie archivée par la Wayback Machine (archive.org).
 
 Ordre des sources : Understat en direct -> archive.org -> dernières données déjà enregistrées (data/xg/).
+Saison en cours : Understat en direct -> football-data.co.uk -> archive.org -> données déjà enregistrées.
+  football-data.co.uk publie les xG de la saison en cours (autre fournisseur qu'Understat, non nommé). Vérifié le
+  24/11/2026 : scores et dates identiques aux nôtres sur 458 matchs ; xG corrélés à 0,95 avec Understat (40 matchs
+  de Premier League en commun), environ 10 % plus bas. Utilisés tels quels : la remise à l'échelle n'améliorait rien.
+  On ne mélange jamais les deux sources dans une saison : dès qu'Understat répond, il reprend toute la saison.
 Politesse : cache local, une requête à la fois avec 5 s d'écart, User-Agent explicite.
 Saisons passées : récupérées une seule fois (complètes), ensuite seule la saison en cours est mise à jour.
 
@@ -101,6 +106,31 @@ def _from_understat(code, year):
             if "maintenance" in str(e):
                 break  # inutile d'insister : tout le site est en maintenance
     raise Unavailable(" / ".join(errs))
+
+
+FD_CODE = {"fr1": "F1", "en1": "E0", "es1": "SP1", "it1": "I1"}
+FD_TAG = "football-data.co.uk"
+
+
+def _from_footballdata(league, year):
+    """xG de la saison en cours chez football-data.co.uk (CSV, une ligne par match joué), au format Understat."""
+    season = f"{year % 100:02d}{(year + 1) % 100:02d}"
+    text = _get(f"https://www.football-data.co.uk/mmz4281/{season}/{FD_CODE[league]}.csv").lstrip("﻿")
+    rows = list(csv.DictReader(text.splitlines()))
+    if not rows or "HxG" not in rows[0]:
+        raise Unavailable("pas de colonnes xG")
+    matches = []
+    for r in rows:
+        if not r.get("HomeTeam") or not r.get("HxG") or not r.get("AxG") or r.get("FTHG", "") == "":
+            continue
+        d, m, y = r["Date"].split("/")
+        y = ("20" + y) if len(y) == 2 else y
+        matches.append({"isResult": True, "datetime": f"{y}-{m}-{d} {(r.get('Time') or '00:00')}:00",
+                        "h": {"title": r["HomeTeam"]}, "a": {"title": r["AwayTeam"]},
+                        "goals": {"h": r["FTHG"], "a": r["FTAG"]}, "xG": {"h": r["HxG"], "a": r["AxG"]}})
+    if not matches:
+        raise Unavailable("aucun xG renseigné")
+    return matches, FD_TAG
 
 
 def _captures(target):
@@ -263,6 +293,11 @@ def update(years=None, leagues=None, log=print, live_only=False):
                 except Unavailable as e:
                     errors.append(f"Understat : {e}")
                     live_down = "maintenance" in str(e) or "réseau" in str(e)
+            if matches is None and current and not live_only:
+                try:
+                    matches, origin = _from_footballdata(lg, year)
+                except Unavailable as e:
+                    errors.append(f"football-data : {e}")
             if matches is None and not live_only:
                 try:
                     matches, origin = _from_archive(CODE[lg], year, current)
@@ -275,6 +310,9 @@ def update(years=None, leagues=None, log=print, live_only=False):
                 report.append(msg)
                 continue
             played, total = _write(lg, year, matches)
+            if origin == FD_TAG:  # football-data ne liste que les matchs joués : total = n équipes × (n − 1)
+                n = len({m["h"]["title"] for m in matches} | {m["a"]["title"] for m in matches})
+                total = n * (n - 1)
             _cache_raw(lg, year, matches, origin)
             last = max((m["datetime"][:10] for m in matches if m.get("isResult")), default=None)
             complete = played == total and total > 0
