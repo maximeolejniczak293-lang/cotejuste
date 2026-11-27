@@ -13,6 +13,7 @@ Combiné du jour;2026-11-27T20:00:00Z;mix;Nottingham Forest – Chelsea + Levant
 Grosse cote;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;2;0,1714;6,717;moyenne;;;0-1;gagné;5,717
 Grosse cote;2026-11-21T20:00:00Z;es1;Real Madrid – Celta Vigo;N;0,1564;7,689;moyenne;7,968;-0,035;2-1;perdu;-1
 Grosse cote;2026-11-22T14:00:00Z;en1;Hull – Brighton;1;0,1853;6,349;moyenne;6,535;-0,0285;2-0;gagné;5,349
+Grosse cote;2026-11-28T20:00:00Z;es1;Real Madrid – Alavés;2;0,0725;17,585;moyenne;;;;;
 Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;2;0,3377;3,266;moyenne;3,204;0,0194;3-1;perdu;-1
 Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;N;0,3205;3,448;moyenne;3,397;0,015;3-1;perdu;-1
 Toutes les valeurs, modèle seul;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,6695;1,929;moyenne;1,906;0,0121;3-1;perdu;-1
@@ -55,12 +56,34 @@ Toutes les valeurs, modèle seul;2026-11-22T20:00:00Z;es1;Getafe – Atlético M
 Toutes les valeurs, modèle seul;2026-11-22T20:00:00Z;es1;Getafe – Atlético Madrid;−2,5 buts;0,6782;1,775;moyenne;1,688;0,0515;0-3;perdu;-1
 Toutes les valeurs, modèle seul;2026-11-23T20:00:00Z;en1;Brentford – Everton;1;0,5199;2,315;moyenne;2,318;-0,0013;4-0;gagné;1,315
 Toutes les valeurs, modèle seul;2026-11-23T20:00:00Z;es1;Levante – Elche;1;0,4846;2,173;moyenne;2,162;0,0051;1-1;perdu;-1
-Toutes les valeurs, modèle seul;2026-11-27T19:45:00Z;fr1;Brest – Paris FC;1;0,3418;3,236;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-27T19:45:00Z;it1;Venise – Bologne;+2,5 buts;0,5641;2,02;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-27T19:45:00Z;it1;Venise – Bologne;2;0,4991;2,176;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-27T20:00:00Z;es1;Levante – Racing Santander;+2,5 buts;0,7805;1,46;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-27T20:00:00Z;es1;Levante – Racing Santander;1;0,5841;2,083;moyenne;;;;;
-Toutes les valeurs, modèle seul;2026-11-27T20:00:00Z;en1;Nottingham Forest – Chelsea;1;0,4238;2,527;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-27T19:45:00Z;fr1;Brest – Paris FC;1;0,3419;3,318;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-27T19:45:00Z;it1;Venise – Bologne;+2,5 buts;0,564;2,103;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-27T19:45:00Z;it1;Venise – Bologne;2;0,4991;2,218;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-27T20:00:00Z;es1;Levante – Racing Santander;+2,5 buts;0,7805;1,407;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-27T20:00:00Z;es1;Levante – Racing Santander;1;0,5841;2,032;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-27T20:00:00Z;en1;Nottingham Forest – Chelsea;+2,5 buts;0,5886;1,861;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-27T20:00:00Z;en1;Nottingham Forest – Chelsea;1;0,4238;2,517;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T13:00:00Z;es1;Betis – Rayo Vallecano;2;0,2311;5,153;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T13:00:00Z;es1;Betis – Rayo Vallecano;N;0,2457;4,3;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T13:00:00Z;es1;Betis – Rayo Vallecano;−2,5 buts;0,4559;2,397;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T14:00:00Z;it1;Frosinone – Parme;2;0,2312;5,562;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T15:00:00Z;en1;Man United – Brentford;2;0,3473;3,214;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T15:15:00Z;es1;Málaga – Athletic Bilbao;1;0,2248;4,695;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T15:15:00Z;es1;Málaga – Athletic Bilbao;−2,5 buts;0,5749;1,98;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T17:30:00Z;es1;Elche – Atlético Madrid;1;0,2536;6,201;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T17:30:00Z;es1;Elche – Atlético Madrid;N;0,2521;4,668;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T17:30:00Z;es1;Elche – Atlético Madrid;−2,5 buts;0,4618;2,424;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;Le Mans – Lille;+2,5 buts;0,5157;2,089;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;Le Mans – Lille;1;0,3489;3,682;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;Nice – Troyes;2;0,2973;4,85;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;Nice – Troyes;N;0,2695;4,009;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;Nice – Troyes;−2,5 buts;0,5133;2,213;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;PSG – Lorient;2;0,1278;12,234;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;PSG – Lorient;N;0,2017;6,738;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T19:45:00Z;fr1;PSG – Lorient;−2,5 buts;0,4445;2,726;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T20:00:00Z;es1;Real Madrid – Alavés;2;0,0911;17,585;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T20:00:00Z;es1;Real Madrid – Alavés;N;0,1573;9,042;moyenne;;;;;
+Toutes les valeurs, modèle seul;2026-11-28T20:00:00Z;es1;Real Madrid – Alavés;−2,5 buts;0,3413;3,306;moyenne;;;;;
 Toutes les valeurs, proba finale;2026-11-20T19:45:00Z;fr1;Troyes – Le Havre;−2,5 buts;0,5826;1,929;moyenne;1,906;0,0121;3-1;perdu;-1
 Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;2;0,1729;6,603;moyenne;;;0-1;gagné;5,603
 Toutes les valeurs, proba finale;2026-11-20T20:00:00Z;es1;Athletic Bilbao – Espanyol;N;0,2479;4,359;moyenne;;;0-1;perdu;-1
@@ -82,4 +105,16 @@ Toutes les valeurs, proba finale;2026-11-22T20:00:00Z;es1;Getafe – Atlético M
 Toutes les valeurs, proba finale;2026-11-22T20:00:00Z;es1;Getafe – Atlético Madrid;N;0,2716;3,976;moyenne;3,885;0,0234;0-3;perdu;-1
 Toutes les valeurs, proba finale;2026-11-22T20:00:00Z;es1;Getafe – Atlético Madrid;−2,5 buts;0,6085;1,775;moyenne;1,688;0,0515;0-3;perdu;-1
 Toutes les valeurs, proba finale;2026-11-23T20:00:00Z;en1;Brentford – Everton;1;0,4653;2,315;moyenne;2,318;-0,0013;4-0;gagné;1,315
-Toutes les valeurs, proba finale;2026-11-27T20:00:00Z;es1;Levante – Racing Santander;1;0,5191;2,083;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-27T19:45:00Z;it1;Venise – Bologne;+2,5 buts;0,5093;2,103;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-27T20:00:00Z;es1;Levante – Racing Santander;1;0,5251;2,032;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T13:00:00Z;es1;Betis – Rayo Vallecano;2;0,2071;5,153;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T14:00:00Z;it1;Frosinone – Parme;2;0,2005;5,562;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T17:30:00Z;es1;Elche – Atlético Madrid;1;0,203;6,201;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T17:30:00Z;es1;Elche – Atlético Madrid;N;0,2272;4,668;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T19:45:00Z;fr1;Le Mans – Lille;1;0,303;3,682;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T19:45:00Z;fr1;Nice – Troyes;2;0,2462;4,85;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T19:45:00Z;fr1;PSG – Lorient;2;0,1026;12,234;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T19:45:00Z;fr1;PSG – Lorient;N;0,1711;6,738;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T19:45:00Z;fr1;PSG – Lorient;−2,5 buts;0,3949;2,726;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T20:00:00Z;es1;Real Madrid – Alavés;2;0,0725;17,585;moyenne;;;;;
+Toutes les valeurs, proba finale;2026-11-28T20:00:00Z;es1;Real Madrid – Alavés;N;0,1311;9,042;moyenne;;;;;
