@@ -1,3 +1,4 @@
+2026-11-27 | 12 | Brest | 1 | 0 | Paris FC
 2026-11-22 | 11 | Paris FC | 4 | 0 | Angers
 2026-11-22 | 11 | Marseille | 2 | 3 | Le Mans
 2026-11-22 | 11 | Lorient | 1 | 1 | Rennes

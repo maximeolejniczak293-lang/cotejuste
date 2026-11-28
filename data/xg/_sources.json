@@ -36,9 +36,9 @@
   "total": 380
  },
  "en1_2026-27": {
-  "checked": "2026-11-27",
+  "checked": "2026-11-28",
   "complete": false,
-  "fetched": "2026-11-27T06:10:29+00:00",
+  "fetched": "2026-11-28T06:07:20+00:00",
   "last_match": "2026-11-23",
   "matches": 110,
   "source": "football-data.co.uk",
@@ -81,9 +81,9 @@
   "total": 380
  },
  "es1_2026-27": {
-  "checked": "2026-11-27",
+  "checked": "2026-11-28",
   "complete": false,
-  "fetched": "2026-11-27T06:10:35+00:00",
+  "fetched": "2026-11-28T06:07:27+00:00",
   "last_match": "2026-11-23",
   "matches": 129,
   "source": "football-data.co.uk",
@@ -125,9 +125,9 @@
   "total": 306
  },
  "fr1_2026-27": {
-  "checked": "2026-11-27",
+  "checked": "2026-11-28",
   "complete": false,
-  "fetched": "2026-11-27T06:10:23+00:00",
+  "fetched": "2026-11-28T06:07:14+00:00",
   "last_match": "2026-11-22",
   "matches": 99,
   "source": "football-data.co.uk",
@@ -169,9 +169,9 @@
   "total": 380
  },
  "it1_2026-27": {
-  "checked": "2026-11-27",
+  "checked": "2026-11-28",
   "complete": false,
-  "fetched": "2026-11-27T06:10:41+00:00",
+  "fetched": "2026-11-28T06:07:33+00:00",
   "last_match": "2026-11-23",
   "matches": 120,
   "source": "football-data.co.uk",

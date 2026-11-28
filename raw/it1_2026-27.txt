@@ -1,3 +1,4 @@
+2026-11-27 | 13 | Venise | 0 | 0 | Bologne
 2026-11-23 | 12 | Monza | 3 | 0 | Fiorentina
 2026-11-22 | 12 | Juventus | 4 | 0 | Venise
 2026-11-22 | 12 | Bologne | 1 | 1 | Udinese
